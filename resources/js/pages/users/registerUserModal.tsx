@@ -118,6 +118,11 @@ export function RegisterUserModal({ open, onClose }: RegisterUserModalProps) {
                                 setData('password_confirmation', e.target.value)
                             }
                         />
+                        {errors.password_confirmation && (
+                            <p className="text-xs text-destructive">
+                                {errors.password_confirmation}
+                            </p>
+                        )}
                     </div>
 
                     <DialogFooter className="flex gap-2 pt-2">
