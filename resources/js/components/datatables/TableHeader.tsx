@@ -28,10 +28,7 @@ const TableHeader: FC<TableHeaderProps> = ({
                     />
                 )}
                 {onCreate && (
-                    <Button
-                        onClick={onCreate}
-                        className="bg-blue-600 text-white"
-                    >
+                    <Button onClick={onCreate} size={'sm'}>
                         Create
                     </Button>
                 )}
