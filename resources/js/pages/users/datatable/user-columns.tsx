@@ -62,10 +62,10 @@ export const userColumns: ColumnDef<User>[] = [
         cell: ({ row }) => (
             <div className="flex items-center-safe justify-center gap-3">
                 <Link aria-label={`Edit action ${row.original.name}`}>
-                    <UserRoundPen className="h-5 w-5" />
+                    <UserRoundPen className="h-4 w-4" />
                 </Link>
                 <Link aria-label={`Delete action ${row.original.name}`}>
-                    <Trash2 className="h-5 w-5 text-red-500 dark:text-red-800" />
+                    <Trash2 className="h-4 w-4 text-red-500 dark:text-red-800" />
                 </Link>
             </div>
         ),

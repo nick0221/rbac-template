@@ -1,10 +1,12 @@
 import { Head } from '@inertiajs/react';
+import { useState } from 'react';
 
 import { DataTable } from '@/components/datatables/DataTable';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
 
 import { userColumns } from './datatable/user-columns';
+import { RegisterUserModal } from './registerUserModal';
 
 import type { BreadcrumbItem } from '@/types';
 import type { User, UsersIndexPageProps } from '@/types/users';
@@ -24,6 +26,8 @@ export default function UsersIndexPage({
     users,
     filters,
 }: UsersIndexPageProps) {
+    const [open, setOpen] = useState(false);
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
@@ -35,11 +39,16 @@ export default function UsersIndexPage({
                         columns={userColumns}
                         title="Users"
                         total={users.total}
-                        onCreate={() => console.log('Create new user')}
+                        onCreate={() => setOpen(true)}
                         currentPage={users.current_page}
                         lastPage={users.last_page}
                         perPage={users.per_page}
                         search={filters.search}
+                    />
+
+                    <RegisterUserModal
+                        open={open}
+                        onClose={() => setOpen(false)}
                     />
                 </div>
             </div>
