@@ -1,3 +1,6 @@
+import { Link } from '@inertiajs/react';
+import { Trash2, UserRoundPen } from 'lucide-react';
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 import type { ColumnDef } from '@tanstack/react-table';
@@ -43,7 +46,6 @@ export const userColumns: ColumnDef<User>[] = [
             </div>
         ),
     },
-
     {
         accessorKey: 'created_at',
         header: 'Created At',
@@ -53,5 +55,19 @@ export const userColumns: ColumnDef<User>[] = [
                 day: 'numeric',
                 year: 'numeric',
             }),
+    },
+    {
+        id: 'userTableActions',
+        header: 'Actions',
+        cell: ({ row }) => (
+            <div className="flex items-center-safe justify-center gap-3">
+                <Link aria-label={`Edit action ${row.original.name}`}>
+                    <UserRoundPen className="h-5 w-5" />
+                </Link>
+                <Link aria-label={`Delete action ${row.original.name}`}>
+                    <Trash2 className="h-5 w-5 text-red-500 dark:text-red-800" />
+                </Link>
+            </div>
+        ),
     },
 ];
