@@ -19,11 +19,7 @@ import {
 import { DataTablePagination } from './Pagination';
 import TableHeader from './TableHeader';
 
-import type {
-    CellContext,
-    ColumnDef,
-    Table as TanStackTable,
-} from '@tanstack/react-table';
+import type { ColumnDef, Table as TanStackTable } from '@tanstack/react-table';
 
 interface DataTableProps<T> {
     data: T[];
@@ -75,11 +71,11 @@ export const DataTable = <T,>({
     });
 
     // Type-safe render header
-    const renderHeader = (cell: CellContext<T, unknown>) => {
-        const header = cell.column.columnDef.header;
-        if (typeof header === 'string') return header;
-        return flexRender(header, cell.getContext());
-    };
+    // const renderHeader = (cell: CellContext<T, unknown>) => {
+    //     const header = cell.column.columnDef.header;
+    //     if (typeof header === 'string') return header;
+    //     return flexRender(header, cell.getContext());
+    // };
 
     return (
         <div className="flex flex-col gap-2">
@@ -106,53 +102,108 @@ export const DataTable = <T,>({
             ) : (
                 <>
                     {/* Compact Table */}
-                    <Table className="table-auto rounded-xl border border-sidebar-border/70 text-sm dark:border-sidebar-border">
-                        <ShadTableHeader>
-                            {table.getHeaderGroups().map((headerGroup) => (
-                                <TableRow key={headerGroup.id}>
-                                    {headerGroup.headers.map((header) => (
-                                        <TableHead
-                                            key={header.id}
-                                            className="px-2 py-1"
-                                        >
-                                            {header.isPlaceholder
-                                                ? null
-                                                : typeof header.column.columnDef
-                                                        .header === 'string'
-                                                  ? header.column.columnDef
-                                                        .header
-                                                  : flexRender(
-                                                        header.column.columnDef
-                                                            .header,
-                                                        header.getContext(),
-                                                    )}
-                                        </TableHead>
-                                    ))}
-                                </TableRow>
-                            ))}
-                        </ShadTableHeader>
+                    <div className="overflow-x-auto rounded-lg border border-border">
+                        <Table className="w-full table-fixed border-separate border-spacing-0 text-sm">
+                            <ShadTableHeader>
+                                {table.getHeaderGroups().map((headerGroup) => (
+                                    <TableRow
+                                        key={headerGroup.id}
+                                        className="bg-muted"
+                                    >
+                                        {headerGroup.headers.map(
+                                            (header, idx) => {
+                                                let classes =
+                                                    'px-2 py-1 border-b border-border';
+                                                if (idx === 0)
+                                                    classes += ' rounded-tl-lg';
+                                                if (
+                                                    idx ===
+                                                    headerGroup.headers.length -
+                                                        1
+                                                )
+                                                    classes += ' rounded-tr-lg';
+                                                return (
+                                                    <TableHead
+                                                        key={header.id}
+                                                        className={classes}
+                                                    >
+                                                        {header.isPlaceholder
+                                                            ? null
+                                                            : typeof header
+                                                                    .column
+                                                                    .columnDef
+                                                                    .header ===
+                                                                'string'
+                                                              ? header.column
+                                                                    .columnDef
+                                                                    .header
+                                                              : flexRender(
+                                                                    header
+                                                                        .column
+                                                                        .columnDef
+                                                                        .header,
+                                                                    header.getContext(),
+                                                                )}
+                                                    </TableHead>
+                                                );
+                                            },
+                                        )}
+                                    </TableRow>
+                                ))}
+                            </ShadTableHeader>
 
-                        <TableBody>
-                            {table.getRowModel().rows.map((row) => (
-                                <TableRow
-                                    key={row.id}
-                                    className="even:bg-muted"
-                                >
-                                    {row.getVisibleCells().map((cell) => (
-                                        <TableCell
-                                            key={cell.id}
-                                            className="px-2 py-1"
+                            <TableBody>
+                                {table
+                                    .getRowModel()
+                                    .rows.map((row, rowIndex) => (
+                                        <TableRow
+                                            key={row.id}
+                                            className={`even:bg-muted ${rowIndex === table.getRowModel().rows.length - 1 ? '' : ''}`}
                                         >
-                                            {flexRender(
-                                                cell.column.columnDef.cell,
-                                                cell.getContext(),
-                                            )}
-                                        </TableCell>
+                                            {row
+                                                .getVisibleCells()
+                                                .map((cell, cellIndex) => {
+                                                    let classes =
+                                                        'px-2 py-1 border-b border-border';
+                                                    const lastRow =
+                                                        rowIndex ===
+                                                        table.getRowModel().rows
+                                                            .length -
+                                                            1;
+                                                    const lastCell =
+                                                        cellIndex ===
+                                                        row.getVisibleCells()
+                                                            .length -
+                                                            1;
+                                                    const firstCell =
+                                                        cellIndex === 0;
+
+                                                    if (lastRow && firstCell)
+                                                        classes +=
+                                                            ' rounded-bl-lg';
+                                                    if (lastRow && lastCell)
+                                                        classes +=
+                                                            ' rounded-br-lg';
+
+                                                    return (
+                                                        <TableCell
+                                                            key={cell.id}
+                                                            className={classes}
+                                                        >
+                                                            {flexRender(
+                                                                cell.column
+                                                                    .columnDef
+                                                                    .cell,
+                                                                cell.getContext(),
+                                                            )}
+                                                        </TableCell>
+                                                    );
+                                                })}
+                                        </TableRow>
                                     ))}
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
+                            </TableBody>
+                        </Table>
+                    </div>
 
                     {/* Pagination */}
                     <DataTablePagination

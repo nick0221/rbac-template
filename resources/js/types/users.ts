@@ -5,6 +5,28 @@ export interface User {
     created_at: string;
 }
 
+export interface PaginationLinks {
+    active: boolean;
+    label: string;
+    url: string;
+    page: number;
+}
+
 export interface UsersIndexPageProps {
-    users: User[];
+    users?: {
+        data: User[];
+        total: number;
+        per_page: number;
+        current_page: number;
+        first_page: number;
+        last_page: number;
+        from: number;
+        to: number;
+        path: string;
+        link: PaginationLinks[];
+        first_page_url: string;
+        next_page_url: string;
+        last_page_url: string;
+        prev_page_url: string;
+    };
 }

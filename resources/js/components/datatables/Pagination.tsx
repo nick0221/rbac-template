@@ -47,7 +47,7 @@ export function DataTablePagination<TData>({
     };
 
     return (
-        <div className="flex flex-col gap-3 border-t px-2 py-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 px-2 py-3 sm:flex-row sm:items-center sm:justify-between">
             {/* Rows info */}
             <div className="text-xs text-muted-foreground">
                 Showing <strong>{(currentPage - 1) * perPage + 1}</strong> to{' '}
@@ -56,7 +56,7 @@ export function DataTablePagination<TData>({
             </div>
 
             {/* Controls */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center justify-end gap-2 sm:justify-between">
                 {/* Rows per page */}
                 <Select
                     value={String(perPage)}
