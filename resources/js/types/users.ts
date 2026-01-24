@@ -13,7 +13,7 @@ export interface PaginationLinks {
 }
 
 export interface UsersIndexPageProps {
-    users?: {
+    users: {
         data: User[];
         total: number;
         per_page: number;

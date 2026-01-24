@@ -7,7 +7,7 @@ import { dashboard } from '@/routes';
 import { userColumns } from './datatable/user-columns';
 
 import type { BreadcrumbItem } from '@/types';
-import type { UsersIndexPageProps } from '@/types/users';
+import type { User, UsersIndexPageProps } from '@/types/users';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -21,19 +21,20 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function UsersIndexPage({ users }: UsersIndexPageProps) {
-    console.log(users);
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                    <DataTable
-                        data={users?.data ?? []}
+                    <DataTable<User>
+                        data={users.data}
                         columns={userColumns}
                         title="Users"
-                        totalItems={users?.total ?? 0}
-                        perPage={10}
+                        total={users.total}
                         onCreate={() => console.log('Create new user')}
+                        currentPage={users.current_page}
+                        lastPage={users.last_page}
+                        perPage={users.per_page}
                     />
                 </div>
             </div>

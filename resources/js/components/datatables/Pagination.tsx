@@ -1,3 +1,4 @@
+import { router } from '@inertiajs/react';
 import {
     ChevronLeft,
     ChevronRight,
@@ -14,56 +15,57 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 
-import type { Table as TanStackTable } from '@tanstack/react-table';
-
-interface PaginationProps<TData> {
-    table: TanStackTable<TData>;
-    current_page?: number;
-    last_page?: number;
-    per_page?: number;
-    total?: number;
+interface PaginationProps {
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    total: number;
+    baseUrl?: string;
 }
 
-export function DataTablePagination<TData>({
-    table,
+export function DataTablePagination({
     current_page,
     last_page,
     per_page,
     total,
-}: PaginationProps<TData>) {
-    const currentPage = current_page ?? 1;
-    const perPage = per_page ?? 10;
-    const lastPage = last_page ?? 1;
-    const totalEntries = total ?? 0;
+    baseUrl = window.location.pathname,
+}: PaginationProps) {
+    const from = (current_page - 1) * per_page + 1;
+    const to = Math.min(current_page * per_page, total);
 
-    const formatCount = (value: number): string => {
-        if (value < 1000) return String(value);
-        if (value < 1_000_000) {
-            const num = value / 1000;
-            return `${num % 1 === 0 ? num : num.toFixed(1)}k`;
-        }
-        const num = value / 1_000_000;
-        return `${num % 1 === 0 ? num : num.toFixed(1)}M`;
+    const goToPage = (page: number) => {
+        router.get(
+            baseUrl,
+            { page, per_page },
+            { preserveScroll: true, preserveState: true },
+        );
+    };
+
+    const changePerPage = (size: number) => {
+        router.get(
+            baseUrl,
+            { page: 1, per_page: size },
+            { preserveScroll: true, preserveState: true },
+        );
     };
 
     return (
         <div className="flex flex-col gap-3 px-2 py-3 sm:flex-row sm:items-center sm:justify-between">
-            {/* Rows info */}
+            {/* Info */}
             <div className="text-xs text-muted-foreground">
-                Showing <strong>{(currentPage - 1) * perPage + 1}</strong> to{' '}
-                <strong>{Math.min(currentPage * perPage, totalEntries)}</strong>{' '}
-                of <strong>{formatCount(totalEntries)}</strong> records
+                Showing <strong>{from}</strong> to <strong>{to}</strong> of{' '}
+                <strong>{total}</strong> records
             </div>
 
             {/* Controls */}
-            <div className="flex items-center justify-end gap-2 sm:justify-between">
-                {/* Rows per page */}
+            <div className="flex items-center gap-2">
+                {/* Per page */}
                 <Select
-                    value={String(perPage)}
-                    onValueChange={(value) => table.setPageSize(Number(value))}
+                    value={String(per_page)}
+                    onValueChange={(v) => changePerPage(Number(v))}
                 >
                     <SelectTrigger className="h-8 w-[100px] text-xs">
-                        <SelectValue placeholder="Rows" />
+                        <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
                         {[10, 20, 50].map((size) => (
@@ -79,26 +81,26 @@ export function DataTablePagination<TData>({
                     size="icon"
                     variant="outline"
                     className="h-8 w-8"
-                    onClick={() => table.setPageIndex(0)}
-                    disabled={currentPage === 1}
+                    onClick={() => goToPage(1)}
+                    disabled={current_page === 1}
                 >
                     <ChevronsLeft className="h-4 w-4" />
                 </Button>
 
-                {/* Previous */}
+                {/* Prev */}
                 <Button
                     size="icon"
                     variant="outline"
                     className="h-8 w-8"
-                    onClick={() => table.previousPage()}
-                    disabled={currentPage === 1}
+                    onClick={() => goToPage(current_page - 1)}
+                    disabled={current_page === 1}
                 >
                     <ChevronLeft className="h-4 w-4" />
                 </Button>
 
-                {/* Page info */}
+                {/* Info */}
                 <span className="text-xs font-medium">
-                    Page {currentPage} of {lastPage}
+                    Page {current_page} of {last_page}
                 </span>
 
                 {/* Next */}
@@ -106,8 +108,8 @@ export function DataTablePagination<TData>({
                     size="icon"
                     variant="outline"
                     className="h-8 w-8"
-                    onClick={() => table.nextPage()}
-                    disabled={currentPage === lastPage}
+                    onClick={() => goToPage(current_page + 1)}
+                    disabled={current_page === last_page}
                 >
                     <ChevronRight className="h-4 w-4" />
                 </Button>
@@ -117,8 +119,8 @@ export function DataTablePagination<TData>({
                     size="icon"
                     variant="outline"
                     className="h-8 w-8"
-                    onClick={() => table.setPageIndex(lastPage - 1)}
-                    disabled={currentPage === lastPage}
+                    onClick={() => goToPage(last_page)}
+                    disabled={current_page === last_page}
                 >
                     <ChevronsRight className="h-4 w-4" />
                 </Button>
