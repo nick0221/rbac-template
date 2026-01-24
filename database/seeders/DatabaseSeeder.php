@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
         // Bulk insert
         // User::insert($users);
 
-        for ($i=1; $i < 50; $i++) {
+        for ($i=1; $i < 30; $i++) {
             User::factory()->create([
                'name' => 'User '.$i,
                 'email' => 'user'.$i.'@admin.com',

@@ -58,6 +58,10 @@ export function DataTable<TData>({
     const table = useReactTable({
         data,
         columns,
+        meta: {
+            currentPage,
+            perPage,
+        },
         getCoreRowModel: getCoreRowModel(),
     });
     const [loading, setLoading] = useState(true);
@@ -94,7 +98,11 @@ export function DataTable<TData>({
                                         {group.headers.map((header) => (
                                             <TableHead
                                                 key={header.id}
-                                                className="px-2 py-1"
+                                                className={`px-2 py-1 text-center whitespace-nowrap ${
+                                                    header.column.id === 'index'
+                                                        ? 'w-8'
+                                                        : ''
+                                                }`}
                                             >
                                                 {header.isPlaceholder
                                                     ? null
@@ -139,7 +147,12 @@ export function DataTable<TData>({
                                                   .map((cell) => (
                                                       <TableCell
                                                           key={cell.id}
-                                                          className="px-2 py-1"
+                                                          className={`px-2 py-1 text-center whitespace-nowrap ${
+                                                              cell.column.id ===
+                                                              'index'
+                                                                  ? 'w-8'
+                                                                  : ''
+                                                          }`}
                                                       >
                                                           {flexRender(
                                                               cell.column

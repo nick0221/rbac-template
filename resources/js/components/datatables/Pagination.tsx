@@ -52,19 +52,19 @@ export function DataTablePagination({
     return (
         <div className="flex flex-col gap-3 px-2 py-3 sm:flex-row sm:items-center sm:justify-between">
             {/* Info */}
-            <div className="text-xs text-muted-foreground">
+            <div className="text-center text-xs text-muted-foreground sm:text-left">
                 Showing <strong>{from}</strong> to <strong>{to}</strong> of{' '}
                 <strong>{total}</strong> records
             </div>
 
             {/* Controls */}
-            <div className="flex items-center gap-2">
+            <div className="flex w-full items-center justify-between gap-2 sm:w-auto sm:flex-row sm:items-center sm:gap-2">
                 {/* Per page */}
                 <Select
                     value={String(per_page)}
                     onValueChange={(v) => changePerPage(Number(v))}
                 >
-                    <SelectTrigger className="h-8 w-[100px] text-xs">
+                    <SelectTrigger className="alignself-start h-8 w-1/3 text-xs sm:w-[110px]">
                         <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -76,54 +76,57 @@ export function DataTablePagination({
                     </SelectContent>
                 </Select>
 
-                {/* First */}
-                <Button
-                    size="icon"
-                    variant="outline"
-                    className="h-8 w-8"
-                    onClick={() => goToPage(1)}
-                    disabled={current_page === 1}
-                >
-                    <ChevronsLeft className="h-4 w-4" />
-                </Button>
+                {/* Pager buttons */}
+                <div className="flex items-center justify-center gap-2">
+                    {/* First */}
+                    <Button
+                        size="icon"
+                        variant="outline"
+                        className="h-8 w-8"
+                        onClick={() => goToPage(1)}
+                        disabled={current_page === 1}
+                    >
+                        <ChevronsLeft className="h-4 w-4" />
+                    </Button>
 
-                {/* Prev */}
-                <Button
-                    size="icon"
-                    variant="outline"
-                    className="h-8 w-8"
-                    onClick={() => goToPage(current_page - 1)}
-                    disabled={current_page === 1}
-                >
-                    <ChevronLeft className="h-4 w-4" />
-                </Button>
+                    {/* Prev */}
+                    <Button
+                        size="icon"
+                        variant="outline"
+                        className="h-8 w-8"
+                        onClick={() => goToPage(current_page - 1)}
+                        disabled={current_page === 1}
+                    >
+                        <ChevronLeft className="h-4 w-4" />
+                    </Button>
 
-                {/* Info */}
-                <span className="text-xs font-medium">
-                    Page {current_page} of {last_page}
-                </span>
+                    {/* Page info */}
+                    <span className="text-xs font-medium whitespace-nowrap">
+                        Page {current_page} of {last_page}
+                    </span>
 
-                {/* Next */}
-                <Button
-                    size="icon"
-                    variant="outline"
-                    className="h-8 w-8"
-                    onClick={() => goToPage(current_page + 1)}
-                    disabled={current_page === last_page}
-                >
-                    <ChevronRight className="h-4 w-4" />
-                </Button>
+                    {/* Next */}
+                    <Button
+                        size="icon"
+                        variant="outline"
+                        className="h-8 w-8"
+                        onClick={() => goToPage(current_page + 1)}
+                        disabled={current_page === last_page}
+                    >
+                        <ChevronRight className="h-4 w-4" />
+                    </Button>
 
-                {/* Last */}
-                <Button
-                    size="icon"
-                    variant="outline"
-                    className="h-8 w-8"
-                    onClick={() => goToPage(last_page)}
-                    disabled={current_page === last_page}
-                >
-                    <ChevronsRight className="h-4 w-4" />
-                </Button>
+                    {/* Last */}
+                    <Button
+                        size="icon"
+                        variant="outline"
+                        className="h-8 w-8"
+                        onClick={() => goToPage(last_page)}
+                        disabled={current_page === last_page}
+                    >
+                        <ChevronsRight className="h-4 w-4" />
+                    </Button>
+                </div>
             </div>
         </div>
     );
