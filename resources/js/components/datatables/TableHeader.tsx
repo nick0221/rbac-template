@@ -1,4 +1,5 @@
 import { router } from '@inertiajs/react';
+import { UserPlus2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -32,19 +33,19 @@ export default function TableHeader({
 
     return (
         <div className="flex items-center justify-between gap-2">
-            <h2 className="text-lg font-semibold">{title}</h2>
+            <h1 className="text-2xl font-semibold">{title}</h1>
 
             <div className="flex items-center gap-2">
                 <Input
                     className="h-8 w-[200px]"
                     placeholder="Search…"
-                    value={value}
+                    value={value ?? ''}
                     onChange={(e) => setValue(e.target.value)}
                 />
 
                 {onCreate && (
                     <Button size="sm" onClick={onCreate}>
-                        Create
+                        <UserPlus2 className="h-4 w-4" /> Register
                     </Button>
                 )}
             </div>

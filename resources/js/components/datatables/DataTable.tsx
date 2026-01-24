@@ -4,6 +4,7 @@ import {
     useReactTable,
     type ColumnDef,
 } from '@tanstack/react-table';
+import { TriangleAlert, UserPlus2 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -61,10 +62,14 @@ export function DataTable<TData>({
             {/* Empty state */}
             {!hasRows ? (
                 <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-border py-10 text-sm">
+                    <p className="text-muted-foreground">
+                        <TriangleAlert size={30} />{' '}
+                    </p>
                     <p className="text-muted-foreground">No records found.</p>
                     {onCreate && (
-                        <Button size="sm" onClick={onCreate}>
-                            Create New {title.slice(0, -1)}
+                        <Button onClick={onCreate} size={'sm'}>
+                            <UserPlus2 className="h-4 w-4" /> Register{' '}
+                            {title.slice(0, -1)}
                         </Button>
                     )}
                 </div>
