@@ -31,7 +31,7 @@ export default function UsersIndexPage({ users }: UsersIndexPageProps) {
                         data={users?.data ?? []}
                         columns={userColumns}
                         title="Users"
-                        totalItems={0}
+                        totalItems={users?.total ?? 0}
                         perPage={10}
                         onCreate={() => console.log('Create new user')}
                     />
