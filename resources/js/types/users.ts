@@ -29,4 +29,8 @@ export interface UsersIndexPageProps {
         last_page_url: string;
         prev_page_url: string;
     };
+
+    filters: {
+        search: string;
+    };
 }

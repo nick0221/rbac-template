@@ -20,7 +20,10 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-export default function UsersIndexPage({ users }: UsersIndexPageProps) {
+export default function UsersIndexPage({
+    users,
+    filters,
+}: UsersIndexPageProps) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
@@ -35,6 +38,7 @@ export default function UsersIndexPage({ users }: UsersIndexPageProps) {
                         currentPage={users.current_page}
                         lastPage={users.last_page}
                         perPage={users.per_page}
+                        search={filters.search}
                     />
                 </div>
             </div>

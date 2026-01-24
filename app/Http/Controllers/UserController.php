@@ -9,20 +9,24 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
-        $per_page = $request->input('per_page', 10);
 
-        $query = User::query();
+        $perPage = $request->input('per_page', 10);
+        $search = $request->input('search');
 
-        if ($request->has('search')) {
-            $query->where('name', 'like', '%' . $request->input('search') . '%');
-        }
-
-        $users = $query->latest()->paginate($per_page)->withQueryString();
-
-
+        $users = User::query()
+            ->when($search, function ($query, $search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate($perPage)
+            ->withQueryString();
 
         return inertia('users/index', [
             'users' => $users,
+            'filters' => [
+                'search' => $search,
+            ],
         ]);
     }
 

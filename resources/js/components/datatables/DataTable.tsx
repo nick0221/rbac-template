@@ -28,6 +28,7 @@ interface DataTableProps<TData> {
     lastPage: number;
     perPage: number;
     total: number;
+    search?: string;
 
     onSearch?: (value: string) => void;
     onCreate?: () => void;
@@ -41,7 +42,7 @@ export function DataTable<TData>({
     lastPage,
     perPage,
     total,
-    onSearch,
+    search,
     onCreate,
 }: DataTableProps<TData>) {
     const table = useReactTable({
@@ -55,11 +56,7 @@ export function DataTable<TData>({
     return (
         <div className="flex flex-col gap-2">
             {/* Header */}
-            <TableHeader
-                title={title}
-                onSearch={onSearch}
-                onCreate={onCreate}
-            />
+            <TableHeader title={title} search={search} onCreate={onCreate} />
 
             {/* Empty state */}
             {!hasRows ? (
