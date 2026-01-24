@@ -37,7 +37,7 @@ export default function TableHeader({
             <h1 className="text-lg font-semibold sm:text-2xl">{title}</h1>
 
             {/* Actions */}
-            <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
+            <div className="flex w-full flex-col gap-2 py-2 sm:w-auto sm:flex-row sm:items-center">
                 {/* Search */}
                 <Input
                     className="h-8 w-full sm:w-[200px]"
@@ -53,7 +53,7 @@ export default function TableHeader({
                         onClick={onCreate}
                         className="w-full sm:w-auto"
                     >
-                        <UserPlus2 className="mr-1 h-4 w-4" />
+                        <UserPlus2 className="h-4 w-4" />
                         Register
                     </Button>
                 )}
