@@ -5,6 +5,7 @@ import {
     type ColumnDef,
 } from '@tanstack/react-table';
 import { TriangleAlert, UserPlus2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -15,6 +16,8 @@ import {
     TableHead,
     TableRow,
 } from '@/components/ui/table';
+
+import { Skeleton } from '../ui/skeleton';
 
 import { DataTablePagination } from './Pagination';
 import TableHeader from './TableHeader';
@@ -33,6 +36,8 @@ interface DataTableProps<TData> {
 
     onSearch?: (value: string) => void;
     onCreate?: () => void;
+
+    loading?: boolean;
 }
 
 export function DataTable<TData>({
@@ -46,11 +51,16 @@ export function DataTable<TData>({
     search,
     onCreate,
 }: DataTableProps<TData>) {
+    useEffect(() => {
+        setLoading(false);
+    }, [data]);
+
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
     });
+    const [loading, setLoading] = useState(true);
 
     const hasRows = data.length > 0;
 
@@ -98,8 +108,51 @@ export function DataTable<TData>({
                                     </TableRow>
                                 ))}
                             </ShadTableHeader>
-
                             <TableBody>
+                                {loading
+                                    ? Array.from({ length: perPage }).map(
+                                          (_, rowIdx) => (
+                                              <TableRow key={rowIdx}>
+                                                  {columns.map((_, colIdx) => (
+                                                      <TableCell
+                                                          key={colIdx}
+                                                          className="px-2 py-1"
+                                                      >
+                                                          <Skeleton
+                                                              className="h-4 w-full animate-pulse"
+                                                              style={{
+                                                                  animationDelay: `${colIdx * 300}ms`,
+                                                              }}
+                                                          />
+                                                      </TableCell>
+                                                  ))}
+                                              </TableRow>
+                                          ),
+                                      )
+                                    : table.getRowModel().rows.map((row) => (
+                                          <TableRow
+                                              key={row.id}
+                                              className="even:bg-muted/50"
+                                          >
+                                              {row
+                                                  .getVisibleCells()
+                                                  .map((cell) => (
+                                                      <TableCell
+                                                          key={cell.id}
+                                                          className="px-2 py-1"
+                                                      >
+                                                          {flexRender(
+                                                              cell.column
+                                                                  .columnDef
+                                                                  .cell,
+                                                              cell.getContext(),
+                                                          )}
+                                                      </TableCell>
+                                                  ))}
+                                          </TableRow>
+                                      ))}
+                            </TableBody>
+                            {/* <TableBody>
                                 {table.getRowModel().rows.map((row) => (
                                     <TableRow
                                         key={row.id}
@@ -118,7 +171,7 @@ export function DataTable<TData>({
                                         ))}
                                     </TableRow>
                                 ))}
-                            </TableBody>
+                            </TableBody> */}
                         </Table>
                     </div>
 

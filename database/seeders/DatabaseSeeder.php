@@ -16,18 +16,26 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        $users = [];
-        for ($i = 1; $i <= 10000; $i++) {
-            $users[] = [
-                'name' => 'User '.$i,
-                'email' => 'user'.$i.'@admin.com',
-                'password' => Hash::make('password'), // or use bcrypt('password')
-                'created_at' => now(),
-                'updated_at' => now(),
-            ];
-        }
+        // $users = [];
+        // for ($i = 1; $i <= 10000; $i++) {
+        //     $users[] = [
+        //         'name' => 'User '.$i,
+        //         'email' => 'user'.$i.'@admin.com',
+        //         'password' => Hash::make('password'), // or use bcrypt('password')
+        //         'created_at' => now(),
+        //         'updated_at' => now(),
+        //     ];
+        // }
+
         // Bulk insert
-        User::insert($users);
+        // User::insert($users);
+
+        for ($i=1; $i < 50; $i++) {
+            User::factory()->create([
+               'name' => 'User '.$i,
+                'email' => 'user'.$i.'@admin.com',
+            ]);
+        }
 
         User::factory()->create([
             'name' => 'Default User',
