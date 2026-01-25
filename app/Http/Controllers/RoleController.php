@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller
 {
@@ -25,9 +26,18 @@ class RoleController extends Controller
             ->paginate($perPage, ['*'], 'role_page', 1)
             ->withQueryString();
 
+        $permissions = Permission::query()
+            ->when($search, function ($query, $search) {
+                $query->where('name', 'like', "%{$search}%") ;
+            })
+            ->latest()
+            ->paginate($perPage, ['*'], 'permission_page', 1)
+            ->withQueryString();
+
 
         return Inertia::render('rolesPermissions/index', [
             'roles' => $roles,
+            'permissions' => $permissions,
             'filters' => [
                 'search' => $search,
             ],
