@@ -37,7 +37,5 @@ export interface UsersIndexPageProps {
     flash: {
         success?: string;
         error?: string;
-        warning?: string;
-        info?: string;
     };
 }

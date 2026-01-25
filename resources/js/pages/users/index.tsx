@@ -1,5 +1,5 @@
 import { Head } from '@inertiajs/react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 import { DataTable } from '@/components/datatables/DataTable';
@@ -29,15 +29,10 @@ export default function UsersIndexPage({
     flash,
 }: UsersIndexPageProps) {
     const [open, setOpen] = useState(false);
-    const hasShownToast = useRef(false);
 
     useEffect(() => {
-        if (!hasShownToast.current && flash) {
-            if (flash.success) toast.success(flash.success);
-            if (flash.error) toast.error(flash.error);
-
-            hasShownToast.current = true;
-        }
+        if (flash?.success) toast.success(flash.success);
+        if (flash?.error) toast.error(flash.error, { richColors: true });
     }, [flash]);
 
     return (

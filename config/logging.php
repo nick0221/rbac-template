@@ -2,6 +2,7 @@
 
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
+use App\Logging\PrettyLogFormatter;
 use Monolog\Handler\SyslogUdpHandler;
 use Monolog\Processor\PsrLogMessageProcessor;
 
@@ -125,6 +126,13 @@ return [
 
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
+        ],
+
+        'pretty' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/laravel.log'),
+            'level' => 'debug',
+            'tap' => [PrettyLogFormatter::class],
         ],
 
     ],
