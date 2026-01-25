@@ -1,5 +1,6 @@
 import { Head } from '@inertiajs/react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { toast } from 'sonner';
 
 import { DataTable } from '@/components/datatables/DataTable';
 import AppLayout from '@/layouts/app-layout';
@@ -25,8 +26,19 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function UsersIndexPage({
     users,
     filters,
+    flash,
 }: UsersIndexPageProps) {
     const [open, setOpen] = useState(false);
+    const hasShownToast = useRef(false);
+
+    useEffect(() => {
+        if (!hasShownToast.current && flash) {
+            if (flash.success) toast.success(flash.success);
+            if (flash.error) toast.error(flash.error);
+
+            hasShownToast.current = true;
+        }
+    }, [flash]);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
