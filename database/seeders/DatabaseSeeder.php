@@ -16,20 +16,19 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        // $users = [];
-        // for ($i = 1; $i <= 10000; $i++) {
-        //     $users[] = [
-        //         'name' => 'User '.$i,
-        //         'email' => 'user'.$i.'@admin.com',
-        //         'password' => Hash::make('password'), // or use bcrypt('password')
-        //         'created_at' => now(),
-        //         'updated_at' => now(),
-        //     ];
-        // }
+        // include the RolesSeeder  for seeding data
+        $this->call([
+            RoleSeeder::class
+        ]);
 
-        // Bulk insert
-        // User::insert($users);
+        //  Create Default User
+        User::factory()->create([
+            'name' => 'Default User',
+            'email' => 'default@admin.com',
+        ]);
 
+
+        // Create 30 Users
         for ($i=1; $i < 30; $i++) {
             User::factory()->create([
                'name' => 'User '.$i,
@@ -37,9 +36,6 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        User::factory()->create([
-            'name' => 'Default User',
-            'email' => 'default@admin.com',
-        ]);
+
     }
 }

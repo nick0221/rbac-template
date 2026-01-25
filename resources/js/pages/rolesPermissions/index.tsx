@@ -4,6 +4,7 @@ import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
 
 import type { BreadcrumbItem } from '@/types';
+import type { RolesPermissionsPageProps } from '@/types/roles-permissions';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -15,7 +16,12 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '#',
     },
 ];
-export default function RolesPermissionsPage() {
+
+export default function RolesPermissionsPage({
+    roles,
+}: RolesPermissionsPageProps) {
+    console.log(roles);
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
