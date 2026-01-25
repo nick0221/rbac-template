@@ -17,12 +17,12 @@ class RoleController extends Controller
         $perPage = $request->input('per_page', 10);
         $search = $request->input('search');
 
-        $roles = Role::query()
+        $roles = Role::query()->with(['permissions.page'])
             ->when($search, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%") ;
             })
             ->latest()
-            ->paginate($perPage)
+            ->paginate($perPage, ['*'], 'role_page', 1)
             ->withQueryString();
 
 
