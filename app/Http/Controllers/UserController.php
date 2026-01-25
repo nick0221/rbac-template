@@ -54,7 +54,7 @@ class UserController extends Controller
             User::create([
                 'name' => $validated['name'],
                 'email' => $validated['email'],
-                'password' => Hash::make($validated['password']),
+                'password' => $validated['password'],
             ]);
 
             // redirect to users index page

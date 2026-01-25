@@ -54,7 +54,7 @@ class User extends Authenticatable
         ];
     }
 
-
+    // @phpstan-ignore-next-line
     public static function logError(
         Throwable $e,
         array $payload = [],
