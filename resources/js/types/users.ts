@@ -31,7 +31,7 @@ export interface UsersIndexPageProps {
     };
 
     filters: {
-        search: string;
+        search?: string;
     };
 
     flash: {

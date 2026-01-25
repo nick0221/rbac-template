@@ -1,13 +1,12 @@
 import type { ColumnDef } from '@tanstack/react-table';
 
-export type Role = {
+export type Permission = {
     id: number;
     name: string;
     created_at: string;
-    guard_name: string;
 };
 
-export const rolesColumns: ColumnDef<Role>[] = [
+export const permissionColumns: ColumnDef<Permission>[] = [
     {
         id: 'index',
         header: '#',
@@ -27,10 +26,7 @@ export const rolesColumns: ColumnDef<Role>[] = [
             </div>
         ),
     },
-    {
-        accessorKey: 'guard_name',
-        header: 'Guard Name',
-    },
+
     {
         accessorKey: 'created_at',
         header: 'Created At',

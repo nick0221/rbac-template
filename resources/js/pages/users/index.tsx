@@ -1,4 +1,5 @@
 import { Head, usePage } from '@inertiajs/react';
+import { UserPlus2 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -25,7 +26,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function UsersIndexPage({
     users,
-    filters,
+
     flash,
 }: UsersIndexPageProps) {
     const [open, setOpen] = useState(false);
@@ -63,7 +64,8 @@ export default function UsersIndexPage({
                         currentPage={users.current_page}
                         lastPage={users.last_page}
                         perPage={users.per_page}
-                        search={filters.search}
+                        createButtonIcon={UserPlus2}
+                        filterKey="users_search"
                     />
 
                     <RegisterUserModal

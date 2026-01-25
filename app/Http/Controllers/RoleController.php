@@ -16,10 +16,11 @@ class RoleController extends Controller
     {
 
         $perPage = $request->input('per_page', 10);
-        $search = $request->input('search');
+        $roleSearch = $request->string('roles_search');
+        $permissionSearch = $request->string('permissions_search');
 
         $roles = Role::query()->with(['permissions.page'])
-            ->when($search, function ($query, $search) {
+            ->when($roleSearch, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%") ;
             })
             ->latest()
@@ -27,7 +28,7 @@ class RoleController extends Controller
             ->withQueryString();
 
         $permissions = Permission::query()
-            ->when($search, function ($query, $search) {
+            ->when($permissionSearch, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%") ;
             })
             ->latest()
@@ -39,7 +40,8 @@ class RoleController extends Controller
             'roles' => $roles,
             'permissions' => $permissions,
             'filters' => [
-                'search' => $search,
+                'roles_search' => $roleSearch,
+                'permissions_search' => $permissionSearch,
             ],
         ]);
     }

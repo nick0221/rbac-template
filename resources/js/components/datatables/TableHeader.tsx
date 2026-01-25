@@ -1,60 +1,76 @@
 import { router } from '@inertiajs/react';
-import { UserPlus2 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { Plus, type LucideIcon } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 interface TableHeaderProps {
     title: string;
-    search?: string;
     onCreate?: () => void;
+    hideFilter?: boolean;
+    createButtonLabel?: string | null;
+    createButtonIcon?: LucideIcon | null;
+    filterKey?: string;
 }
 
 export default function TableHeader({
     title,
-    search = '',
     onCreate,
+    hideFilter,
+    createButtonIcon,
+    createButtonLabel = 'Create',
+    filterKey = 'search',
 }: TableHeaderProps) {
-    const [value, setValue] = useState(search);
+    //  initialize from URL
+    const [value, setValue] = useState(
+        new URLSearchParams(window.location.search).get(filterKey) ?? '',
+    );
 
-    // debounce search
+    const isFirstRender = useRef(true);
+    const Icon = createButtonIcon;
+
     useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            return;
+        }
+
         const timeout = setTimeout(() => {
             router.get(
                 window.location.pathname,
-                { search: value, page: 1 },
-                { preserveState: true, preserveScroll: true },
+                value ? { [filterKey]: value, page: 1 } : { page: 1 },
+                {
+                    preserveState: true,
+                    preserveScroll: true,
+                    replace: true,
+                },
             );
         }, 400);
 
         return () => clearTimeout(timeout);
-    }, [value]);
+    }, [value, filterKey]);
 
     return (
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            {/* Title */}
             <h1 className="text-lg font-semibold sm:text-2xl">{title}</h1>
 
-            {/* Actions */}
             <div className="flex w-full flex-col gap-2 py-2 sm:w-auto sm:flex-row sm:items-center">
-                {/* Search */}
-                <Input
-                    className="h-8 w-full sm:w-[200px]"
-                    placeholder="Search…"
-                    value={value ?? ''}
-                    onChange={(e) => setValue(e.target.value)}
-                />
+                {hideFilter ?? (
+                    <Input
+                        className="h-8 w-full sm:w-[200px]"
+                        placeholder="Search…"
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
+                    />
+                )}
 
-                {/* Create button */}
                 {onCreate && (
-                    <Button
-                        size="sm"
-                        onClick={onCreate}
-                        className="w-full sm:w-auto"
-                    >
-                        <UserPlus2 className="h-4 w-4" />
-                        Register
+                    <Button size="sm" onClick={onCreate}>
+                        {(Icon && <Icon className="mr-1 h-4 w-4" />) || (
+                            <Plus className="mr-1 h-4 w-4" />
+                        )}
+                        {createButtonLabel}
                     </Button>
                 )}
             </div>

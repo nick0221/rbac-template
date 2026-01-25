@@ -22,7 +22,7 @@ class UserController extends Controller
         try {
 
             $perPage = $request->input('per_page', 10);
-            $search = $request->input('search');
+            $search = $request->input('users_search');
 
             $users = User::query()
                 ->when($search, function ($query, $search) {
@@ -36,7 +36,7 @@ class UserController extends Controller
             return inertia('users/index', [
                 'users' => $users,
                 'filters' => [
-                    'search' => $search,
+                    'users_search' => $search,
                 ],
             ]);
 

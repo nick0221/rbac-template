@@ -4,7 +4,7 @@ import {
     useReactTable,
     type ColumnDef,
 } from '@tanstack/react-table';
-import { TriangleAlert, UserPlus2 } from 'lucide-react';
+import { Plus, TriangleAlert } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -22,6 +22,8 @@ import { Skeleton } from '../ui/skeleton';
 import { DataTablePagination } from './Pagination';
 import TableHeader from './TableHeader';
 
+import type { LucideIcon } from 'lucide-react';
+
 interface DataTableProps<TData> {
     data: TData[];
     columns: ColumnDef<TData, unknown>[];
@@ -34,8 +36,13 @@ interface DataTableProps<TData> {
     total: number;
     search?: string;
 
+    // Table Header actions
     onSearch?: (value: string) => void;
     onCreate?: () => void;
+    hideFilter?: boolean;
+    createButtonLabel?: string | null;
+    createButtonIcon?: LucideIcon | null;
+    filterKey?: string;
 
     loading?: boolean;
 }
@@ -48,9 +55,15 @@ export function DataTable<TData>({
     lastPage,
     perPage,
     total,
-    search,
+
     onCreate,
+    hideFilter,
+    createButtonLabel = null,
+    createButtonIcon,
+    filterKey,
 }: DataTableProps<TData>) {
+    const Icon = createButtonIcon;
+
     useEffect(() => {
         setLoading(false);
     }, [data]);
@@ -71,7 +84,14 @@ export function DataTable<TData>({
     return (
         <div className="flex flex-col gap-2">
             {/* Header */}
-            <TableHeader title={title} search={search} onCreate={onCreate} />
+            <TableHeader
+                createButtonIcon={createButtonIcon}
+                createButtonLabel={createButtonLabel}
+                title={title}
+                hideFilter={hideFilter}
+                filterKey={filterKey}
+                onCreate={onCreate}
+            />
 
             {/* Empty state */}
             {!hasRows ? (
@@ -82,8 +102,8 @@ export function DataTable<TData>({
                     <p className="text-muted-foreground">No records found.</p>
                     {onCreate && (
                         <Button onClick={onCreate} size={'sm'}>
-                            <UserPlus2 className="h-4 w-4" /> Register{' '}
-                            {title.slice(0, -1)}
+                            {(Icon && <Icon />) || <Plus />}
+                            {createButtonLabel || 'Create new'}
                         </Button>
                     )}
                 </div>
