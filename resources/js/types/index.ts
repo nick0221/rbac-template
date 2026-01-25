@@ -12,6 +12,7 @@ export type SharedData = {
         error?: string;
         warning?: string;
         info?: string;
+        generalError?: string;
     };
     sidebarOpen: boolean;
     [key: string]: unknown;

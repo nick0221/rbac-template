@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -18,25 +19,45 @@ class UserController extends Controller
     // index
     public function index(Request $request)
     {
+        try {
 
-        $perPage = $request->input('per_page', 10);
-        $search = $request->input('search');
+            $perPage = $request->input('per_page', 10);
+            $search = $request->input('search');
 
-        $users = User::query()
-            ->when($search, function ($query, $search) {
-                $query->where('name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%");
-            })
-            ->latest()
-            ->paginate($perPage)
-            ->withQueryString();
+            $users = User::query()
+                ->when($search, function ($query, $search) {
+                    $query->where('name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%");
+                })
+                ->latest()
+                ->paginate($perPage)
+                ->withQueryString();
 
-        return inertia('users/index', [
-            'users' => $users,
-            'filters' => [
-                'search' => $search,
-            ],
-        ]);
+            return inertia('users/index', [
+                'users' => $users,
+                'filters' => [
+                    'search' => $search,
+                ],
+            ]);
+
+
+        } catch (\Throwable $e) {
+
+            User::logError($e, $request->all(), 'index');
+
+            return Inertia::render('users/index', [
+                'users' => User::noRecordsFoundTable(),
+                'filters' => [
+                    'search' => '',
+                ],
+
+            ])
+            ->with('generalError', 'Failed to fetch users, please try again.')
+            ->toResponse($request)
+            ->setStatusCode(500);
+        }
+
+
     }
 
     // store user

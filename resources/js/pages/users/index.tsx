@@ -1,5 +1,5 @@
-import { Head } from '@inertiajs/react';
-import { useEffect, useState } from 'react';
+import { Head, usePage } from '@inertiajs/react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'sonner';
 
 import { DataTable } from '@/components/datatables/DataTable';
@@ -9,7 +9,7 @@ import { dashboard } from '@/routes';
 import { userColumns } from './datatable/user-columns';
 import { RegisterUserModal } from './registerUserModal';
 
-import type { BreadcrumbItem } from '@/types';
+import type { BreadcrumbItem, SharedData } from '@/types';
 import type { User, UsersIndexPageProps } from '@/types/users';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -29,6 +29,19 @@ export default function UsersIndexPage({
     flash,
 }: UsersIndexPageProps) {
     const [open, setOpen] = useState(false);
+    const { generalError = '' } = usePage<SharedData>().props;
+    const hasShownToast = useRef(false);
+
+    useEffect(() => {
+        if (!hasShownToast.current && generalError)
+            toast.error(
+                typeof generalError === 'string'
+                    ? generalError
+                    : String(generalError),
+                { richColors: true },
+            );
+        hasShownToast.current = true;
+    }, [generalError]);
 
     useEffect(() => {
         if (flash?.success) toast.success(flash.success);

@@ -76,4 +76,29 @@ class User extends Authenticatable
             'payload' => $payload,
         ]);
     }
+
+
+    public static function noRecordsFoundTable(): array
+    {
+        $tableProps = [
+            'data' => [],
+            'total' => 0,
+            'current_page' => 1,
+            'per_page' => 10,
+            'last_page' => 1,
+            'from' => 1,
+            'to' => 0,
+            'path' => '',
+            'link' => [],
+            'first_page_url' => '',
+            'next_page_url' => '',
+            'last_page_url' => '',
+            'prev_page_url' => '',
+            'first_page' => 1,
+            'last_page' => 1,
+
+        ];
+
+        return $tableProps;
+    }
 }
