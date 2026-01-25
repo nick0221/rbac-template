@@ -14,6 +14,7 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
+import roles from '@/routes/roles';
 import users from '@/routes/users';
 
 import AppLogo from './app-logo';
@@ -37,7 +38,7 @@ const mainNavItems: NavItem[] = [
 const footerNavItems: NavItem[] = [
     {
         title: 'Roles & Permissions',
-        href: '#',
+        href: roles.index(),
         icon: Shield,
     },
 ];
