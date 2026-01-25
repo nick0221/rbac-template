@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PermissionController;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return Inertia::render('welcome', [
@@ -19,7 +21,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // Route::get('users', [UserController::class, 'index'])->name('users.index');
     Route::resources([
-        'users' => UserController::class
+        'users' => UserController::class,
+        'roles' => RoleController::class,
+        'permissions' => PermissionController::class,
+
     ]);
 
 
