@@ -29,11 +29,9 @@ export default function RolesPermissionsPage({
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
-            <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <h1>Roles & Permissions</h1>
-
+            <div className="flex h-full flex-1 flex-col gap-10 overflow-x-auto rounded-xl p-4 sm:flex-row">
                 {/* Roles */}
-                <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl md:min-h-min">
+                <div className="relative min-h-[40vh] flex-1 overflow-hidden rounded-xl md:min-h-min">
                     <DataTable
                         data={roles.data}
                         columns={rolesColumns}

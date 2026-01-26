@@ -67,8 +67,8 @@ export default function TableHeader({
 
                 {onCreate && (
                     <Button size="sm" onClick={onCreate}>
-                        {(Icon && <Icon className="mr-1 h-4 w-4" />) || (
-                            <Plus className="mr-1 h-4 w-4" />
+                        {(Icon && <Icon className="h-4 w-4" />) || (
+                            <Plus className="h-4 w-4" />
                         )}
                         {createButtonLabel}
                     </Button>

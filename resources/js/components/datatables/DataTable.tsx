@@ -103,7 +103,8 @@ export function DataTable<TData>({
                     {onCreate && (
                         <Button onClick={onCreate} size={'sm'}>
                             {(Icon && <Icon />) || <Plus />}
-                            {createButtonLabel || 'Create new'}
+                            {createButtonLabel ||
+                                'Create new ' + title.toLowerCase()}
                         </Button>
                     )}
                 </div>
