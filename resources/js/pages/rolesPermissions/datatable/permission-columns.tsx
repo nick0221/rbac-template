@@ -95,7 +95,7 @@ export const permissionColumns: ColumnDef<Permission>[] = [
                                 <Trash2 className="dark:text-red-500" />
                             </Button>
                         </TooltipTrigger>
-                        <TooltipContent side="left">Delete</TooltipContent>
+                        <TooltipContent>Delete</TooltipContent>
                     </Tooltip>
                 </ButtonGroup>
             </div>

@@ -1,4 +1,4 @@
-import { ShieldCheck, SquarePen } from 'lucide-react';
+import { ShieldEllipsis, SquarePen } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
@@ -80,7 +80,7 @@ export const rolesColumns: ColumnDef<Role, unknown>[] = [
                     <Tooltip>
                         <TooltipTrigger asChild>
                             <Button variant="outline" size="sm">
-                                <ShieldCheck />
+                                <ShieldEllipsis />
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent className="wrap-break-word">
