@@ -28,7 +28,7 @@ class RoleController extends Controller
             ->paginate($perPage, ['*'], 'role_page', 1)
             ->withQueryString();
 
-        $permissions = Permission::query()->with(['page'])
+        $permissions = Permission::query()->with(['page', 'roles'])
             ->when($permissionSearch, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%") ;
             })

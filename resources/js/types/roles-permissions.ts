@@ -9,6 +9,10 @@ export interface Permission {
     id: number;
     name: string;
     created_at: string;
+    page: {
+        name: string;
+    };
+    roles: Role[];
 }
 
 export interface PaginationLinks {

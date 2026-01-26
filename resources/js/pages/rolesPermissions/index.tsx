@@ -26,6 +26,8 @@ export default function RolesPermissionsPage({
     roles,
     permissions,
 }: RolesPermissionsPageProps) {
+    console.log(permissions);
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
