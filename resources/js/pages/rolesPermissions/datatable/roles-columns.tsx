@@ -82,21 +82,12 @@ export const rolesColumns: ColumnDef<Role, unknown>[] = [
                         </Tooltip>
 
                         {/* PermissionDrawer Tooltip */}
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <div></div>
-                            </TooltipTrigger>
-                            <PermissionDrawer
-                                roleId={row.original.id}
-                                roleName={row.original.name}
-                                permissions={row.original.permissions}
-                                isButton={true} // renders icon button
-                            />
-
-                            <TooltipContent>
-                                Assign more permissions
-                            </TooltipContent>
-                        </Tooltip>
+                        <PermissionDrawer
+                            roleId={row.original.id}
+                            roleName={row.original.name}
+                            permissions={row.original.permissions}
+                            isButton={true} // renders icon button
+                        />
                     </ButtonGroup>
                 </div>
             );

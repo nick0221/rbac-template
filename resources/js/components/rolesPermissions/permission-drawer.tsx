@@ -42,7 +42,7 @@ export default function PermissionDrawer({
                 )}
             </DrawerTrigger>
 
-            <DrawerContent className="max-w-sm">
+            <DrawerContent className="max-w-sm" autoFocus>
                 <DrawerHeader>
                     <DrawerTitle>Permissions</DrawerTitle>
                     <DrawerDescription>
