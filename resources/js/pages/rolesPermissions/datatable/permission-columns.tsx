@@ -1,4 +1,8 @@
+import { Trash2 } from 'lucide-react';
+
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { ButtonGroup } from '@/components/ui/button-group';
 
 import type { ColumnDef } from '@tanstack/react-table';
 
@@ -79,5 +83,17 @@ export const permissionColumns: ColumnDef<Permission>[] = [
     {
         id: 'roletTableActions',
         header: 'Actions',
+        cell: () => (
+            <div className="flex flex-col items-center gap-4">
+                <ButtonGroup>
+                    <Button variant="outline" size="sm">
+                        <Trash2 className="dark:text-red-500" />
+                    </Button>
+                    <Button variant="outline" size="sm">
+                        <Trash2 className="dark:text-red-500" />
+                    </Button>
+                </ButtonGroup>
+            </div>
+        ),
     },
 ];
