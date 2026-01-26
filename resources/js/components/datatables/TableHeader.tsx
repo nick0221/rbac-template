@@ -53,7 +53,22 @@ export default function TableHeader({
 
     return (
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <h1 className="text-lg font-semibold sm:text-2xl">{title}</h1>
+            <div className="flex justify-between">
+                <h1 className="text-2xl font-semibold sm:text-xl">{title}</h1>
+
+                {onCreate && (
+                    <Button
+                        size="sm"
+                        onClick={onCreate}
+                        className="inline-flex sm:hidden"
+                    >
+                        {(Icon && <Icon className="h-4 w-4" />) || (
+                            <Plus className="h-4 w-4" />
+                        )}
+                        {createButtonLabel}
+                    </Button>
+                )}
+            </div>
 
             <div className="flex w-full flex-col gap-2 py-2 sm:w-auto sm:flex-row sm:items-center">
                 {hideFilter ?? (
@@ -66,7 +81,11 @@ export default function TableHeader({
                 )}
 
                 {onCreate && (
-                    <Button size="sm" onClick={onCreate}>
+                    <Button
+                        size="sm"
+                        onClick={onCreate}
+                        className="hidden sm:inline-flex"
+                    >
                         {(Icon && <Icon className="h-4 w-4" />) || (
                             <Plus className="h-4 w-4" />
                         )}
