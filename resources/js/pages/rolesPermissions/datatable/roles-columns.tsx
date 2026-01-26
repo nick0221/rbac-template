@@ -1,5 +1,6 @@
-import { ShieldEllipsis, SquarePen } from 'lucide-react';
+import { SquarePen } from 'lucide-react';
 
+import PermissionDrawer from '@/components/rolesPermissions/permission-drawer';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
 import {
@@ -19,7 +20,6 @@ export const rolesColumns: ColumnDef<Role, unknown>[] = [
         minSize: 1,
         cell: ({ row, table }) => {
             const meta = table.options.meta;
-
             if (!meta) return null;
 
             return (meta.currentPage - 1) * meta.perPage + row.index + 1 + '.';
@@ -52,10 +52,12 @@ export const rolesColumns: ColumnDef<Role, unknown>[] = [
         id: 'permissions',
         header: 'Permissions',
         cell: ({ row }) => (
-            <Button size={'xs'} variant={'link'}>
-                {row.original.permissions.length} Permission
-                {row.original.permissions.length > 1 && 's'}
-            </Button>
+            <PermissionDrawer
+                roleId={row.original.id}
+                roleName={row.original.name}
+                permissions={row.original.permissions}
+                isButton={false} // renders as link style inside cell
+            />
         ),
     },
 
@@ -65,30 +67,40 @@ export const rolesColumns: ColumnDef<Role, unknown>[] = [
         size: 80,
         enableSorting: false,
         enableHiding: false,
-        cell: () => (
-            <div className="flex flex-col items-center gap-4">
-                <ButtonGroup>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <Button variant="outline" size="sm">
-                                <SquarePen />
-                            </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>Edit</TooltipContent>
-                    </Tooltip>
+        cell: ({ row }) => {
+            console.log(row.original);
+            return (
+                <div className="flex flex-col items-center gap-4">
+                    <ButtonGroup>
+                        {/* Edit Button Tooltip */}
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button variant="outline" size="sm">
+                                    <SquarePen />
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>Edit</TooltipContent>
+                        </Tooltip>
 
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <Button variant="outline" size="sm">
-                                <ShieldEllipsis />
-                            </Button>
-                        </TooltipTrigger>
-                        <TooltipContent className="wrap-break-word">
-                            Assign more permission
-                        </TooltipContent>
-                    </Tooltip>
-                </ButtonGroup>
-            </div>
-        ),
+                        {/* PermissionDrawer Tooltip */}
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <div></div>
+                            </TooltipTrigger>
+                            <PermissionDrawer
+                                roleId={row.original.id}
+                                roleName={row.original.name}
+                                permissions={row.original.permissions}
+                                isButton={true} // renders icon button
+                            />
+
+                            <TooltipContent>
+                                Assign more permissions
+                            </TooltipContent>
+                        </Tooltip>
+                    </ButtonGroup>
+                </div>
+            );
+        },
     },
 ];
