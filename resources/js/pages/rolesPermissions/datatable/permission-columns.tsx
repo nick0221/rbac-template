@@ -1,4 +1,4 @@
-import { Trash2 } from 'lucide-react';
+import { SquarePen, Trash2 } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -56,12 +56,6 @@ export const permissionColumns: ColumnDef<Permission>[] = [
         cell: ({ row }) => (
             <div className="flex flex-wrap gap-1">
                 {row.original.roles.map((role) => (
-                    // <span
-                    //     key={role.id}
-                    //     className="rounded bg-accent px-2 py-0.5 text-xs text-accent-foreground"
-                    // >
-                    //     {role.name}
-                    // </span>
                     <Badge variant={'secondary'} key={role.id}>
                         {role.name}
                     </Badge>
@@ -86,6 +80,9 @@ export const permissionColumns: ColumnDef<Permission>[] = [
         cell: () => (
             <div className="flex flex-col items-center gap-4">
                 <ButtonGroup>
+                    <Button variant="outline" size="sm">
+                        <SquarePen className="dark:text-red-500" />
+                    </Button>
                     <Button variant="outline" size="sm">
                         <Trash2 className="dark:text-red-500" />
                     </Button>
