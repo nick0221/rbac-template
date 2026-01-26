@@ -82,6 +82,7 @@ export default [
             'bootstrap/ssr',
             'tailwind.config.js',
             'vite.config.ts',
+            'resources/js/ziggy.js',
         ],
     },
     prettier, // Turn off all rules that might conflict with Prettier
