@@ -1,6 +1,8 @@
-import { SidebarProvider } from '@/components/ui/sidebar';
-import type { SharedData } from '@/types';
 import { usePage } from '@inertiajs/react';
+
+import { SidebarProvider } from '@/components/ui/sidebar';
+
+import type { SharedData } from '@/types';
 import type { ReactNode } from 'react';
 
 type Props = {
