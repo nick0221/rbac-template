@@ -1,5 +1,7 @@
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, Search } from 'lucide-react';
 import { useState } from 'react';
+
+import { Input } from '../ui/input'; // replace with your Input component
 
 interface Permission {
     id: number;
@@ -16,6 +18,8 @@ interface CollapsiblePermissionsProps {
 export default function CollapsiblePermissions({
     permissions,
 }: CollapsiblePermissionsProps) {
+    const [search, setSearch] = useState('');
+
     // Group permissions by page.name
     const grouped = permissions.reduce<Record<string, Permission[]>>(
         (acc, perm) => {
@@ -27,31 +31,71 @@ export default function CollapsiblePermissions({
         {},
     );
 
+    // Filter pages and permissions based on global search
+    const filteredGrouped = Object.entries(grouped).reduce<
+        Record<string, Permission[]>
+    >((acc, [pageName, perms]) => {
+        // Keep page if pageName matches search
+        if (pageName.toLowerCase().includes(search.toLowerCase())) {
+            acc[pageName] = perms;
+            return acc;
+        }
+
+        // Otherwise, keep only permissions that match search
+        const matchingPerms = perms.filter((p) =>
+            p.name.toLowerCase().includes(search.toLowerCase()),
+        );
+        if (matchingPerms.length > 0) {
+            acc[pageName] = matchingPerms;
+        }
+
+        return acc;
+    }, {});
+
     return (
         <div className="max-h-[70vh] space-y-2 overflow-y-auto px-4">
-            {Object.entries(grouped).map(([pageName, perms]) => (
-                <CollapsibleCard
-                    key={pageName}
-                    pageName={pageName}
-                    permissions={perms}
+            {/* Global Search */}
+            <div className="relative mb-2 py-3">
+                <Search
+                    className="absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground"
+                    size={16}
                 />
-            ))}
+                <Input
+                    placeholder="Search pages or permissions..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="pl-8"
+                />
+            </div>
+
+            {Object.entries(filteredGrouped).length > 0 ? (
+                Object.entries(filteredGrouped).map(([pageName, perms]) => (
+                    <CollapsibleCard
+                        key={pageName}
+                        pageName={pageName}
+                        permissions={perms}
+                    />
+                ))
+            ) : (
+                <p className="text-sm text-muted-foreground">
+                    No pages or permissions match your search.
+                </p>
+            )}
         </div>
     );
 }
 
-// Reusable single collapsible card
-function CollapsibleCard({
-    pageName,
-    permissions,
-}: {
+interface CollapsibleCardProps {
     pageName: string;
     permissions: Permission[];
-}) {
+}
+
+function CollapsibleCard({ pageName, permissions }: CollapsibleCardProps) {
     const [isOpen, setIsOpen] = useState(true);
 
     return (
         <div className="rounded-xl border border-border shadow-sm">
+            {/* Header */}
             <button
                 type="button"
                 onClick={() => setIsOpen(!isOpen)}

@@ -68,7 +68,6 @@ export const rolesColumns: ColumnDef<Role, unknown>[] = [
         enableSorting: false,
         enableHiding: false,
         cell: ({ row }) => {
-            console.log(row.original);
             return (
                 <div className="flex flex-col items-center gap-4">
                     <ButtonGroup>

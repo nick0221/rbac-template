@@ -51,9 +51,7 @@ export default function PermissionDrawer({
                     </DrawerDescription>
                 </DrawerHeader>
 
-                <div className="mt-2 max-h-[70vh] space-y-4 overflow-y-auto px-4">
-                    <CollapsiblePermissions permissions={permissions} />
-                </div>
+                <CollapsiblePermissions permissions={permissions} />
 
                 <DrawerFooter>
                     <DrawerTrigger asChild>

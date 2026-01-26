@@ -1,4 +1,4 @@
-import { Key, SquarePen, Trash2 } from 'lucide-react';
+import { SquarePen, Trash2, UserCog2 } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -83,7 +83,7 @@ export const permissionColumns: ColumnDef<Permission>[] = [
                     <Tooltip>
                         <TooltipTrigger asChild>
                             <Button variant="outline" size="sm">
-                                <Key />
+                                <UserCog2 />
                             </Button>
                         </TooltipTrigger>
                         <TooltipContent>Permit access to roles</TooltipContent>
