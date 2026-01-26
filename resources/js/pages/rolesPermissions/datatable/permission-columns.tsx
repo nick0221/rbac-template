@@ -1,25 +1,16 @@
-import { SquarePen, Trash2 } from 'lucide-react';
+import { Key, SquarePen, Trash2 } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from '@/components/ui/tooltip';
 
+import type { Permission } from '@/types/roles-permissions';
 import type { ColumnDef } from '@tanstack/react-table';
-
-export type Role = {
-    id: number;
-    name: string;
-};
-
-export type Permission = {
-    id: number;
-    name: string;
-    created_at: string;
-    page: {
-        name: string;
-    };
-    roles: Role[];
-};
 
 export const permissionColumns: ColumnDef<Permission>[] = [
     {
@@ -52,7 +43,7 @@ export const permissionColumns: ColumnDef<Permission>[] = [
     },
     {
         id: 'role',
-        header: 'Can access role',
+        header: 'Role type',
         cell: ({ row }) => (
             <div className="flex flex-wrap gap-1">
                 {row.original.roles.map((role) => (
@@ -80,15 +71,32 @@ export const permissionColumns: ColumnDef<Permission>[] = [
         cell: () => (
             <div className="flex flex-col items-center gap-4">
                 <ButtonGroup>
-                    <Button variant="outline" size="sm">
-                        <SquarePen className="dark:text-red-500" />
-                    </Button>
-                    <Button variant="outline" size="sm">
-                        <Trash2 className="dark:text-red-500" />
-                    </Button>
-                    <Button variant="outline" size="sm">
-                        <Trash2 className="dark:text-red-500" />
-                    </Button>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button variant="outline" size="sm">
+                                <SquarePen />
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>Edit</TooltipContent>
+                    </Tooltip>
+
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button variant="outline" size="sm">
+                                <Key />
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent>Permit access to roles</TooltipContent>
+                    </Tooltip>
+
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button variant="outline" size="sm">
+                                <Trash2 className="dark:text-red-500" />
+                            </Button>
+                        </TooltipTrigger>
+                        <TooltipContent side="left">Delete</TooltipContent>
+                    </Tooltip>
                 </ButtonGroup>
             </div>
         ),

@@ -3,6 +3,7 @@ export interface Role {
     name: string;
     guard_name: string;
     created_at: string;
+    permissions: Permission[];
 }
 
 export interface Permission {
@@ -37,6 +38,7 @@ export interface RolesPermissionsPageProps {
         next_page_url: string;
         last_page_url: string;
         prev_page_url: string;
+        permissions: Permission[];
     };
     permissions: {
         data: Permission[];
@@ -52,6 +54,9 @@ export interface RolesPermissionsPageProps {
         next_page_url: string;
         last_page_url: string;
         prev_page_url: string;
+        page: {
+            name: string;
+        };
     };
     filters: {
         search: string;

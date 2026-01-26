@@ -25,9 +25,9 @@ import TableHeader from './TableHeader';
 
 import type { LucideIcon } from 'lucide-react';
 
-interface DataTableProps<TData> {
+interface DataTableProps<TData, TValue = unknown> {
     data: TData[];
-    columns: ColumnDef<TData, unknown>[];
+    columns: ColumnDef<TData, TValue>[];
     title: string;
 
     /** Laravel pagination */
@@ -48,7 +48,7 @@ interface DataTableProps<TData> {
     loading?: boolean;
 }
 
-export function DataTable<TData>({
+export function DataTable<TData, TValue = unknown>({
     data,
     columns,
     title,
@@ -62,7 +62,7 @@ export function DataTable<TData>({
     createButtonLabel = null,
     createButtonIcon,
     filterKey,
-}: DataTableProps<TData>) {
+}: DataTableProps<TData, TValue>) {
     const Icon = createButtonIcon;
 
     useEffect(() => {
