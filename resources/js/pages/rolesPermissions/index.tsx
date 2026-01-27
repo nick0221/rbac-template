@@ -12,6 +12,7 @@ import { rolesColumns } from './datatable/roles-columns';
 import DialogAddRole from './dialog/dialog-add-role';
 import DialogEditPermission from './dialog/dialog-edit-permission';
 import DialogEditRole from './dialog/dialog-edit-role';
+import DialogPermitToRole from './dialog/dialog-permit-to-role';
 
 import type { BreadcrumbItem, SharedData } from '@/types';
 import type {
@@ -34,6 +35,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function RolesPermissionsPage({
     roles,
     permissions,
+    allRoles,
 }: RolesPermissionsPageProps) {
     const [open, setOpen] = useState(false);
     const { flash } = usePage<SharedData>().props;
@@ -43,6 +45,10 @@ export default function RolesPermissionsPage({
 
     const [editPermissionOpen, setEditPermissionOpen] = useState(false);
     const [selectedPermission, setSelectedPermission] =
+        useState<Permission | null>(null);
+
+    const [permitAccessToRoleOpen, setPermitAccessToRoleOpen] = useState(false);
+    const [selectedAccessToRole, setSelectedAccessToRole] =
         useState<Permission | null>(null);
 
     // Show Toast Message
@@ -104,6 +110,10 @@ export default function RolesPermissionsPage({
                                 setSelectedPermission(permission);
                                 setEditPermissionOpen(true);
                             },
+                            onPermit: (permission: Permission) => {
+                                setSelectedAccessToRole(permission);
+                                setPermitAccessToRoleOpen(true);
+                            },
                         }}
                         currentPage={permissions.current_page}
                         lastPage={permissions.last_page}
@@ -117,6 +127,16 @@ export default function RolesPermissionsPage({
                             open={editPermissionOpen}
                             setOpen={setEditPermissionOpen}
                             permission={selectedPermission}
+                        />
+                    )}
+
+                    {/* Permit Access To Role */}
+                    {selectedAccessToRole && (
+                        <DialogPermitToRole
+                            open={permitAccessToRoleOpen}
+                            setOpen={setPermitAccessToRoleOpen}
+                            permission={selectedAccessToRole}
+                            roles={allRoles}
                         />
                     )}
                 </div>

@@ -7,5 +7,7 @@ declare module '@tanstack/react-table' {
         canEdit?: boolean;
         canDelete?: boolean;
         onEdit?: (role: TData) => void;
+        onPermit?: (role: TData) => void;
+        onDelete?: (role: TData) => void;
     }
 }

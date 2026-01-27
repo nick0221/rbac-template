@@ -50,6 +50,8 @@ interface DataTableProps<TData, TValue = unknown> {
         canEdit?: boolean;
         canDelete?: boolean;
         onEdit?: (role: TData) => void;
+        onDelete?: (role: TData) => void;
+        onPermit?: (role: TData) => void;
     };
 }
 

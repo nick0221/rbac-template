@@ -1,4 +1,6 @@
-import { SquarePen, Trash2, UserCog2 } from 'lucide-react';
+import { router } from '@inertiajs/react';
+import { SquarePen, Trash2, UserCog2, X } from 'lucide-react';
+import { route } from 'ziggy-js';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -47,8 +49,38 @@ export const permissionColumns: ColumnDef<Permission>[] = [
         cell: ({ row }) => (
             <div className="flex flex-wrap gap-1">
                 {row.original.roles.map((role) => (
-                    <Badge variant={'secondary'} key={role.id}>
+                    <Badge
+                        key={role.id}
+                        variant="outline"
+                        className="flex items-center gap-1 rounded-full"
+                    >
                         {role.name}
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                    type="button"
+                                    variant="ghost"
+                                    size="xs"
+                                    className="p-0 hover:text-red-600"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        router.put(
+                                            route(
+                                                'permissions.detachRole',
+                                                row.original.id,
+                                            ),
+                                            {
+                                                role_id: role.id,
+                                                preserveScroll: true,
+                                            },
+                                        );
+                                    }}
+                                >
+                                    <X />
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>Click to detach</TooltipContent>
+                        </Tooltip>
                     </Badge>
                 ))}
             </div>
@@ -70,6 +102,7 @@ export const permissionColumns: ColumnDef<Permission>[] = [
         header: 'Actions',
         cell: ({ row, table }) => {
             const metaEditPermission = table.options.meta?.onEdit;
+            const metaPermitToRole = table.options.meta?.onPermit;
 
             return (
                 <div className="flex flex-col items-center gap-4">
@@ -91,7 +124,13 @@ export const permissionColumns: ColumnDef<Permission>[] = [
 
                         <Tooltip>
                             <TooltipTrigger asChild>
-                                <Button variant="outline" size="sm">
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() =>
+                                        metaPermitToRole?.(row.original)
+                                    }
+                                >
                                     <UserCog2 />
                                 </Button>
                             </TooltipTrigger>

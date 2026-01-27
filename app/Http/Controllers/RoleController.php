@@ -43,6 +43,7 @@ class RoleController extends Controller
         return Inertia::render('rolesPermissions/index', [
             'roles' => $roles,
             'permissions' => $permissions,
+            'allRoles' => Role::get(['id', 'name']),
             'filters' => [
                 'roles_search' => $roleSearch,
                 'permissions_search' => $permissionSearch,

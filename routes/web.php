@@ -27,6 +27,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'permissions' => PermissionController::class,
     ]);
 
+    Route::put('permissions/{permission}/assign-roles', [
+        PermissionController::class,
+        'assignRoles',
+    ])->name('permissions.assignRoles');
+
+    Route::put('permissions/{permission}/detach-role', [
+        PermissionController::class,
+        'detachRole',
+    ])->name('permissions.detachRole');
 
 
 });

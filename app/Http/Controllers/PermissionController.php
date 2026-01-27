@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdatePermissionRequest;
 use App\Models\Permission;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -66,6 +67,26 @@ class PermissionController extends Controller
             $permission->name . ' permission has been successfully updated.'
         );
 
+    }
+
+
+    // Assign roles
+    public function assignRoles(Request $request, Permission $permission)
+    {
+        $permission->roles()->syncWithoutDetaching($request->roles);
+        return back()->with('success', 'Selected role successfully assigned.');
+
+    }
+
+    // Detach roles
+    public function detachRole(Request $request, Permission $permission)
+    {
+        $roleId = $request->input('role_id');
+        $permission->roles()->detach($roleId);
+
+        $roleName = Role::find($roleId)->name;
+
+        return back()->with('success', $roleName.' role has been successfully detached from '.$permission->name);
     }
 
     /**

@@ -24,6 +24,7 @@ export interface PaginationLinks {
 }
 
 export interface RolesPermissionsPageProps {
+    allRoles: Role[];
     roles: {
         data: Role[];
         total: number;
