@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRolesRequest;
 use Inertia\Inertia;
 use App\Models\Permission;
 use Illuminate\Http\Request;
@@ -58,12 +59,9 @@ class RoleController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRolesRequest $request)
     {
-
-        $request->validate([
-            'name' => ['required', 'string', 'max:100', 'unique:roles,name'],
-        ]);
+        $request->validated();
 
         Role::create($request->all());
 
