@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdatePermissionRequest;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -13,24 +14,7 @@ class PermissionController extends Controller
      */
     public function index(Request $request)
     {
-        $perPage = $request->input('per_page', 10);
-        $search = $request->input('search');
-
-        $permissions = Permission::query()->with(['roles'])
-            ->when($search, function ($query, $search) {
-                $query->where('name', 'like', "%{$search}%") ;
-            })
-            ->latest()
-            ->paginate($perPage, ['*'], 'permission_page', 1)
-            ->withQueryString();
-
-
-        return Inertia::render('rolesPermissions/index', [
-            'permissions' => $permissions,
-            'filters' => [
-                'search' => $search,
-            ],
-        ]);
+       abort(404);
     }
 
     /**
@@ -38,7 +22,8 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        //
+        abort(404);
+
     }
 
     /**
@@ -54,7 +39,8 @@ class PermissionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        abort(404);
+
     }
 
     /**
@@ -62,15 +48,24 @@ class PermissionController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        abort(404);
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdatePermissionRequest $request, Permission $permission)
     {
-        //
+        $validated = $request->validated();
+        $permission->update($validated);
+
+
+        return back()->with(
+            'success',
+            $permission->name . ' permission has been successfully updated.'
+        );
+
     }
 
     /**

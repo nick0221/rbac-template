@@ -1,5 +1,6 @@
 import { useForm } from '@inertiajs/react';
 import { DialogClose } from '@radix-ui/react-dialog';
+import { InfoIcon } from 'lucide-react';
 import { useEffect } from 'react';
 import { route } from 'ziggy-js';
 
@@ -59,7 +60,12 @@ export default function DialogEditPermission({
                     <DialogHeader>
                         <DialogTitle>Edit permission</DialogTitle>
                         <DialogDescription>
-                            Update permission information
+                            <span className="flex justify-start text-xs text-muted-foreground italic">
+                                <InfoIcon className="mr-1" />
+                                Note: permission name is case sensitive and must
+                                be unique, make sure also that the permission
+                                name matches the route name used in the app.
+                            </span>
                         </DialogDescription>
                     </DialogHeader>
 
