@@ -1,5 +1,4 @@
 import { Link } from '@inertiajs/react';
-import { LayoutGrid, Shield, Users2 } from 'lucide-react';
 
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -13,35 +12,10 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import { footerNavItems, mainNavItems } from '@/data/nav-items';
 import { dashboard } from '@/routes';
-import roles from '@/routes/roles';
-import users from '@/routes/users';
 
 import AppLogo from './app-logo';
-
-import type { NavItem } from '@/types';
-
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-
-    {
-        title: 'Users',
-        href: users.index(),
-        icon: Users2,
-    },
-];
-
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Roles & Permissions',
-        href: roles.index(),
-        icon: Shield,
-    },
-];
 
 export function AppSidebar() {
     return (
