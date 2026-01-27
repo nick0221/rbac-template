@@ -137,7 +137,7 @@ function CollapsibleCard({
     const isOpen = !collapsed;
 
     return (
-        <div className="rounded-xl border border-border shadow-sm">
+        <div className="mb-3 rounded-xl border border-border shadow-sm">
             <button
                 type="button"
                 onClick={() => onToggleCollapse?.(!collapsed)}

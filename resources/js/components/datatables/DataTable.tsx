@@ -120,7 +120,7 @@ export function DataTable<TData, TValue = unknown>({
                                         {group.headers.map((header) => (
                                             <TableHead
                                                 key={header.id}
-                                                className={`px-2 py-1 text-center whitespace-nowrap ${
+                                                className={`bg-accent px-2 py-1 text-center whitespace-nowrap ${
                                                     header.column.id === 'index'
                                                         ? 'w-8'
                                                         : ''
