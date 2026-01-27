@@ -1,6 +1,6 @@
 import { Head, usePage } from '@inertiajs/react';
 import { ShieldPlus } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 import { DataTable } from '@/components/datatables/DataTable';
@@ -31,16 +31,10 @@ export default function RolesPermissionsPage({
 }: RolesPermissionsPageProps) {
     const [open, setOpen] = useState(false);
     const { flash } = usePage<SharedData>().props;
-    const hasShownToast = useRef(false);
 
     // Show Toast Message
     useEffect(() => {
-        if (!hasShownToast.current && flash) {
-            if (flash.success) toast.success(flash.success);
-            if (flash.error) toast.error(flash.error);
-
-            hasShownToast.current = true;
-        }
+        if (flash?.success) toast.success(flash.success);
     }, [flash]);
 
     console.log(flash);
