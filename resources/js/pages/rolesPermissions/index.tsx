@@ -43,6 +43,8 @@ export default function RolesPermissionsPage({
         }
     }, [flash]);
 
+    console.log(flash);
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
