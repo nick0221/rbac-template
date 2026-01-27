@@ -143,7 +143,9 @@ function CollapsibleCard({
                 onClick={() => onToggleCollapse?.(!collapsed)}
                 className="flex w-full items-center justify-between rounded-t-xl bg-gray-100 px-4 py-2 transition hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
             >
-                <span className="font-semibold">{pageName}</span>
+                <span className="font-medium">
+                    {pageName} {'(' + permissions.length + ')' || '0'}
+                </span>
                 {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
             </button>
 
