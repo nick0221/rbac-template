@@ -1,5 +1,8 @@
+import { useForm } from '@inertiajs/react';
 import { DialogClose } from '@radix-ui/react-dialog';
+import { route } from 'ziggy-js';
 
+import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -18,31 +21,62 @@ interface DialogAddRoleProps {
 }
 
 export default function DialogAddRole({ open, setOpen }: DialogAddRoleProps) {
+    const { data, setData, post, processing, errors, reset } = useForm<{
+        name: string;
+    }>({
+        name: '',
+    });
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        post(route('roles.store'), {
+            onSuccess: () => {
+                reset();
+                //toast.success('New role has been successfully created!');
+                setOpen(false);
+            },
+            preserveScroll: true,
+        });
+    };
+
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogContent>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <DialogHeader>
-                        <DialogTitle>New role</DialogTitle>
+                        <DialogTitle>Create</DialogTitle>
                         <DialogDescription>
                             Register a new role
                         </DialogDescription>
                     </DialogHeader>
 
-                    <div className="grid gap-4 py-4">
-                        <div className="grid grid-cols-4 items-center gap-4">
+                    <div className="grid gap-3 py-4">
+                        <div className="flex flex-col items-start gap-2">
                             <Label htmlFor="name">Name</Label>
-                            <Input id="name" className="col-span-3" />
+                            <Input
+                                id="name"
+                                className="col-span-3"
+                                value={data.name}
+                                onChange={(e) =>
+                                    setData('name', e.target.value)
+                                }
+                            />
                         </div>
+                        <InputError message={errors.name} />
                     </div>
-                </form>
 
-                <DialogFooter>
-                    <DialogClose asChild>
-                        <Button variant="outline">Cancel</Button>
-                    </DialogClose>
-                    <Button>Save</Button>
-                </DialogFooter>
+                    <DialogFooter>
+                        <DialogClose asChild>
+                            <Button variant="outline" type="button">
+                                Cancel
+                            </Button>
+                        </DialogClose>
+                        <Button type="submit" disabled={processing}>
+                            {processing ? 'Saving...' : 'Save'}
+                        </Button>
+                    </DialogFooter>
+                </form>
             </DialogContent>
         </Dialog>
     );

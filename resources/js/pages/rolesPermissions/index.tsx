@@ -1,6 +1,7 @@
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import { ShieldPlus } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { toast } from 'sonner';
 
 import { DataTable } from '@/components/datatables/DataTable';
 import AppLayout from '@/layouts/app-layout';
@@ -10,7 +11,7 @@ import { permissionColumns } from './datatable/permission-columns';
 import { rolesColumns } from './datatable/roles-columns';
 import DialogAddRole from './dialog/dialog-add-role';
 
-import type { BreadcrumbItem } from '@/types';
+import type { BreadcrumbItem, SharedData } from '@/types';
 import type { RolesPermissionsPageProps } from '@/types/roles-permissions';
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -29,6 +30,18 @@ export default function RolesPermissionsPage({
     permissions,
 }: RolesPermissionsPageProps) {
     const [open, setOpen] = useState(false);
+    const { flash } = usePage<SharedData>().props;
+    const hasShownToast = useRef(false);
+
+    // Show Toast Message
+    useEffect(() => {
+        if (!hasShownToast.current && flash) {
+            if (flash.success) toast.success(flash.success);
+            if (flash.error) toast.error(flash.error);
+
+            hasShownToast.current = true;
+        }
+    }, [flash]);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
