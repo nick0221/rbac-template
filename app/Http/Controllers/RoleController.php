@@ -55,7 +55,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        //
+        abort(404);
     }
 
     /**
@@ -76,7 +76,7 @@ class RoleController extends Controller
      */
     public function show(string $id)
     {
-        //
+        abort(404);
     }
 
     /**
@@ -84,7 +84,7 @@ class RoleController extends Controller
      */
     public function edit(string $id)
     {
-        //
+       abort(404);
     }
 
     /**
@@ -93,9 +93,6 @@ class RoleController extends Controller
     public function update(UpdateRoleRequest $request, ModelsRole $role)
     {
         $validated = $request->validated();
-
-        // Normalize name (optional, matches our frontend logic)
-        $validated['name'] = ucfirst(strtolower($validated['name']));
 
         $role->update($validated);
 
@@ -110,6 +107,6 @@ class RoleController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        abort(404);
     }
 }

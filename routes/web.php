@@ -25,7 +25,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'users' => UserController::class,
         'roles' => RoleController::class,
         'permissions' => PermissionController::class,
-
     ]);
 
 
