@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRolesRequest;
+use App\Http\Requests\UpdateRoleRequest;
 use Inertia\Inertia;
 use App\Models\Permission;
 use Illuminate\Http\Request;
@@ -88,9 +89,11 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRoleRequest $role, string $id)
     {
-        //
+        $role->validated();
+        $role->update($role->all());
+        return back()->with('success', ucfirst($role->name).' Role has been successfully updated.');
     }
 
     /**
