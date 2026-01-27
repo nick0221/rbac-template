@@ -68,37 +68,49 @@ export const permissionColumns: ColumnDef<Permission>[] = [
     {
         id: 'roletTableActions',
         header: 'Actions',
-        cell: () => (
-            <div className="flex flex-col items-center gap-4">
-                <ButtonGroup>
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <Button variant="outline" size="sm">
-                                <SquarePen />
-                            </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>Edit</TooltipContent>
-                    </Tooltip>
+        cell: ({ row, table }) => {
+            const metaEditPermission = table.options.meta?.onEdit;
 
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <Button variant="outline" size="sm">
-                                <UserCog2 />
-                            </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>Permit access to roles</TooltipContent>
-                    </Tooltip>
+            return (
+                <div className="flex flex-col items-center gap-4">
+                    <ButtonGroup>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() =>
+                                        metaEditPermission?.(row.original)
+                                    }
+                                >
+                                    <SquarePen />
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>Edit</TooltipContent>
+                        </Tooltip>
 
-                    <Tooltip>
-                        <TooltipTrigger asChild>
-                            <Button variant="outline" size="sm">
-                                <Trash2 className="dark:text-red-500" />
-                            </Button>
-                        </TooltipTrigger>
-                        <TooltipContent>Delete</TooltipContent>
-                    </Tooltip>
-                </ButtonGroup>
-            </div>
-        ),
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button variant="outline" size="sm">
+                                    <UserCog2 />
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                Permit access to roles
+                            </TooltipContent>
+                        </Tooltip>
+
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button variant="outline" size="sm">
+                                    <Trash2 className="dark:text-red-500" />
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent>Delete</TooltipContent>
+                        </Tooltip>
+                    </ButtonGroup>
+                </div>
+            );
+        },
     },
 ];

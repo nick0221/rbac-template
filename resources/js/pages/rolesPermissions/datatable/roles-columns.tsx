@@ -68,7 +68,7 @@ export const rolesColumns: ColumnDef<Role, unknown>[] = [
         enableSorting: false,
         enableHiding: false,
         cell: ({ row, table }) => {
-            const metaEditrole = table.options.meta?.onEditRole;
+            const metaEditrole = table.options.meta?.onEdit;
 
             return (
                 <div className="flex flex-col items-center gap-4">

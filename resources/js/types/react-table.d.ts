@@ -6,6 +6,6 @@ declare module '@tanstack/react-table' {
         perPage: number;
         canEdit?: boolean;
         canDelete?: boolean;
-        onEditRole?: (role: TData) => void;
+        onEdit?: (role: TData) => void;
     }
 }

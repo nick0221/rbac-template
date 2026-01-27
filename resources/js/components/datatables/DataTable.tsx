@@ -49,7 +49,7 @@ interface DataTableProps<TData, TValue = unknown> {
     meta?: {
         canEdit?: boolean;
         canDelete?: boolean;
-        onEditRole?: (role: TData) => void;
+        onEdit?: (role: TData) => void;
     };
 }
 
