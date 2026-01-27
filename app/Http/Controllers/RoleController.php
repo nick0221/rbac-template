@@ -6,6 +6,7 @@ use App\Http\Requests\StoreRolesRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use Inertia\Inertia;
 use App\Models\Permission;
+use App\Models\Role as ModelsRole;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 
@@ -89,11 +90,19 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRoleRequest $role, string $id)
+    public function update(UpdateRoleRequest $request, ModelsRole $role)
     {
-        $role->validated();
-        $role->update($role->all());
-        return back()->with('success', ucfirst($role->name).' Role has been successfully updated.');
+        $validated = $request->validated();
+
+        // Normalize name (optional, matches our frontend logic)
+        $validated['name'] = ucfirst(strtolower($validated['name']));
+
+        $role->update($validated);
+
+        return back()->with(
+            'success',
+            $role->name . ' role has been successfully updated.'
+        );
     }
 
     /**

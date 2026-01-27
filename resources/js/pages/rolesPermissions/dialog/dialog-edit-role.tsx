@@ -84,7 +84,7 @@ export default function DialogEditRole({
                             </Button>
                         </DialogClose>
                         <Button type="submit" disabled={processing}>
-                            {processing ? 'Saving...' : 'Save'}
+                            {processing ? 'Saving...' : 'Save changes'}
                         </Button>
                     </DialogFooter>
                 </form>

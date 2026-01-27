@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRoleRequest extends FormRequest
@@ -22,10 +23,25 @@ class UpdateRoleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:100', 'unique:roles,name,' . $this->role->id],
+           'name' => [
+                'required',
+                'string',
+                'max:100',
+                Rule::unique('roles', 'name')->ignore($this->role->id),
+            ],
         ];
     }
 
+
+    // normalize the role name
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'name' => ucfirst($this->name),
+        ]);
+    }
+
+    // custom error messages
     public function messages(): array
     {
         return [
