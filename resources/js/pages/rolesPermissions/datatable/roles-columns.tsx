@@ -67,14 +67,20 @@ export const rolesColumns: ColumnDef<Role, unknown>[] = [
         size: 80,
         enableSorting: false,
         enableHiding: false,
-        cell: ({ row }) => {
+        cell: ({ row, table }) => {
+            const metaEditrole = table.options.meta?.onEditRole;
+
             return (
                 <div className="flex flex-col items-center gap-4">
                     <ButtonGroup>
                         {/* Edit Button Tooltip */}
                         <Tooltip>
                             <TooltipTrigger asChild>
-                                <Button variant="outline" size="sm">
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() => metaEditrole?.(row.original)}
+                                >
                                     <SquarePen />
                                 </Button>
                             </TooltipTrigger>

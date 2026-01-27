@@ -10,9 +10,13 @@ import { dashboard } from '@/routes';
 import { permissionColumns } from './datatable/permission-columns';
 import { rolesColumns } from './datatable/roles-columns';
 import DialogAddRole from './dialog/dialog-add-role';
+import DialogEditRole from './dialog/dialog-edit-role';
 
 import type { BreadcrumbItem, SharedData } from '@/types';
-import type { RolesPermissionsPageProps } from '@/types/roles-permissions';
+import type {
+    Role,
+    RolesPermissionsPageProps,
+} from '@/types/roles-permissions';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -31,6 +35,9 @@ export default function RolesPermissionsPage({
 }: RolesPermissionsPageProps) {
     const [open, setOpen] = useState(false);
     const { flash } = usePage<SharedData>().props;
+
+    const [editOpen, setEditOpen] = useState(false);
+    const [selectedRole, setSelectedRole] = useState<Role | null>(null);
 
     // Show Toast Message
     useEffect(() => {
@@ -51,6 +58,12 @@ export default function RolesPermissionsPage({
                         onCreate={() => {
                             setOpen(true);
                         }}
+                        meta={{
+                            onEditRole: (role: Role) => {
+                                setSelectedRole(role);
+                                setEditOpen(true);
+                            },
+                        }}
                         currentPage={roles.current_page}
                         lastPage={roles.last_page}
                         perPage={roles.per_page}
@@ -59,6 +72,14 @@ export default function RolesPermissionsPage({
                         hideFilter
                     />
                     <DialogAddRole open={open} setOpen={setOpen} />
+
+                    {selectedRole && (
+                        <DialogEditRole
+                            open={editOpen}
+                            setOpen={setEditOpen}
+                            role={selectedRole}
+                        />
+                    )}
                 </div>
 
                 {/* Permissions */}

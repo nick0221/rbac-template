@@ -38,7 +38,7 @@ interface DataTableProps<TData, TValue = unknown> {
     search?: string;
 
     // Table Header actions
-    onSearch?: (value: string) => void;
+    // onSearch?: (value: string) => void;
     onCreate?: () => void;
     hideFilter?: boolean;
     createButtonLabel?: string | null;
@@ -46,6 +46,11 @@ interface DataTableProps<TData, TValue = unknown> {
     filterKey?: string;
 
     loading?: boolean;
+    meta?: {
+        canEdit?: boolean;
+        canDelete?: boolean;
+        onEditRole?: (role: TData) => void;
+    };
 }
 
 export function DataTable<TData, TValue = unknown>({
@@ -56,7 +61,7 @@ export function DataTable<TData, TValue = unknown>({
     lastPage,
     perPage,
     total,
-
+    meta,
     onCreate,
     hideFilter,
     createButtonLabel = null,
@@ -75,6 +80,7 @@ export function DataTable<TData, TValue = unknown>({
         meta: {
             currentPage,
             perPage,
+            ...meta,
         },
         getCoreRowModel: getCoreRowModel(),
     });
