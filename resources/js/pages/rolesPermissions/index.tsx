@@ -1,5 +1,6 @@
 import { Head } from '@inertiajs/react';
 import { ShieldPlus } from 'lucide-react';
+import { useState } from 'react';
 
 import { DataTable } from '@/components/datatables/DataTable';
 import AppLayout from '@/layouts/app-layout';
@@ -7,6 +8,7 @@ import { dashboard } from '@/routes';
 
 import { permissionColumns } from './datatable/permission-columns';
 import { rolesColumns } from './datatable/roles-columns';
+import DialogAddRole from './dialog/dialog-add-role';
 
 import type { BreadcrumbItem } from '@/types';
 import type { RolesPermissionsPageProps } from '@/types/roles-permissions';
@@ -26,6 +28,8 @@ export default function RolesPermissionsPage({
     roles,
     permissions,
 }: RolesPermissionsPageProps) {
+    const [open, setOpen] = useState(false);
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
@@ -37,7 +41,9 @@ export default function RolesPermissionsPage({
                         columns={rolesColumns}
                         title="Roles"
                         total={roles.total}
-                        onCreate={() => {}}
+                        onCreate={() => {
+                            setOpen(true);
+                        }}
                         currentPage={roles.current_page}
                         lastPage={roles.last_page}
                         perPage={roles.per_page}
@@ -45,6 +51,7 @@ export default function RolesPermissionsPage({
                         filterKey="roles_search"
                         hideFilter
                     />
+                    <DialogAddRole open={open} setOpen={setOpen} />
                 </div>
 
                 {/* Permissions */}
