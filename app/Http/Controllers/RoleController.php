@@ -67,7 +67,7 @@ class RoleController extends Controller
 
         Role::create($request->all());
 
-        return back()->with('success', 'Role has been successfully created.');
+        return back()->with('success', ucfirst($request->name).' Role has been successfully created.');
 
     }
 
