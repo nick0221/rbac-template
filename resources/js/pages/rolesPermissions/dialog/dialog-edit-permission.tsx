@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { route } from 'ziggy-js';
 
 import InputError from '@/components/input-error';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -70,16 +71,29 @@ export default function DialogEditPermission({
                     </DialogHeader>
 
                     <div className="grid gap-3 py-4">
-                        <div className="flex flex-col gap-2">
-                            <Label htmlFor="name">Name</Label>
-                            <Input
-                                id="name"
-                                value={data.name}
-                                onChange={(e) =>
-                                    setData('name', e.target.value)
-                                }
-                            />
-                            <InputError message={errors.name} />
+                        <div className="flex flex-col gap-8">
+                            <div className="flex flex-col gap-2">
+                                <Label htmlFor="pageName">Page </Label>
+                                <Badge
+                                    id="pageName"
+                                    variant="secondary"
+                                    className="ml-2 text-lg"
+                                >
+                                    {permission.page.name}
+                                </Badge>
+                            </div>
+
+                            <div className="flex flex-col gap-2">
+                                <Label htmlFor="name">Name</Label>
+                                <Input
+                                    id="name"
+                                    value={data.name}
+                                    onChange={(e) =>
+                                        setData('name', e.target.value)
+                                    }
+                                />
+                                <InputError message={errors.name} />
+                            </div>
                         </div>
                     </div>
 

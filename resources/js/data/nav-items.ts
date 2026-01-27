@@ -17,12 +17,17 @@ export const mainNavItems: NavItem[] = [
         href: users.index(),
         icon: Users2,
     },
-];
-
-export const footerNavItems: NavItem[] = [
     {
         title: 'Roles, Permissions & Pages',
         href: roles.index(),
         icon: Shield,
     },
+];
+
+export const footerNavItems: NavItem[] = [
+    // {
+    //     title: 'Roles, Permissions & Pages',
+    //     href: roles.index(),
+    //     icon: Shield,
+    // },
 ];
