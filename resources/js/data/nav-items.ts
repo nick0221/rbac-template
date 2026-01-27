@@ -21,7 +21,7 @@ export const mainNavItems: NavItem[] = [
 
 export const footerNavItems: NavItem[] = [
     {
-        title: 'Roles & Permissions',
+        title: 'Roles, Permissions & Pages',
         href: roles.index(),
         icon: Shield,
     },
