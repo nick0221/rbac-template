@@ -24,7 +24,7 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: dashboard().url,
     },
     {
-        title: 'Roles & Permissions',
+        title: 'Roles, Permissions & Pages',
         href: '#',
     },
 ];
@@ -46,7 +46,7 @@ export default function RolesPermissionsPage({
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Dashboard" />
+            <Head title="Roles, Permissions & Pages" />
             <div className="flex h-full flex-1 flex-col gap-10 overflow-x-auto rounded-xl p-4">
                 {/* Roles */}
                 <div className="min-h-xs relative flex-1 md:min-h-min">
