@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUserRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,10 @@ class StoreUserRequest extends FormRequest
         return [
             'name' => 'required|string|max:100',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8|confirmed',
             'role_id' => 'required',
         ];
     }
+
 
 
     // custom error messages
@@ -39,12 +39,11 @@ class StoreUserRequest extends FormRequest
             'email.required' => 'The email field is required.',
             'email.email' => 'The email field must be a valid email address.',
             'email.unique' => 'The email field already exists, choose another email.',
-            'password.required' => 'The password field is required.',
-            'password.min' => 'The password field must be at least 8 characters.',
-            'password.confirmed' => 'The password confirmation field does not match the password field.',
+
             'role_id.required' => 'The role field is required.',
         ];
     }
+
 
 
 }
