@@ -15,7 +15,7 @@ return new class extends Migration
               $table->foreignId('page_id')
                   ->nullable()
                   ->constrained('pages')
-                  ->cascadeOnDelete();
+                  ->onDelete('set null');
         });
     }
 

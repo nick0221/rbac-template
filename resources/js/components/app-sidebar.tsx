@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -13,11 +13,21 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { footerNavItems, mainNavItems } from '@/data/nav-items';
-import { dashboard } from '@/routes';
 
 import AppLogo from './app-logo';
 
+import type { SharedData } from '@/types';
+
+import { dashboard } from '@/routes';
+
 export function AppSidebar() {
+    const { props } = usePage<SharedData>(); // you can type this later
+    const currentUser = props?.auth?.user;
+
+    // safely handle if user is not loaded yet
+
+    console.log(currentUser);
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
