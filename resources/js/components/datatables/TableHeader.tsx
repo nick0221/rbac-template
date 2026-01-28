@@ -53,9 +53,9 @@ export default function TableHeader({
 
     return (
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            {/* On mobile, aligned the title and create button */}
             <div className="flex justify-between">
                 <h1 className="text-2xl font-semibold sm:text-2xl">{title}</h1>
-
                 {onCreate && (
                     <Button
                         size="sm"
@@ -70,9 +70,11 @@ export default function TableHeader({
                 )}
             </div>
 
+            {/* On desktop, show the search and create button */}
             <div className="flex w-full flex-col gap-2 py-2 sm:w-auto sm:flex-row sm:items-center">
                 {hideFilter ?? (
                     <Input
+                        id="live-search-textbox"
                         className="h-8 w-full sm:w-[200px]"
                         placeholder="Search…"
                         value={value}
