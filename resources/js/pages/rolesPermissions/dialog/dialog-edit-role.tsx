@@ -38,7 +38,7 @@ export default function DialogEditRole({
         if (open && role) {
             setData('name', role.name);
         }
-    }, [open, role]);
+    }, [open, role, setData]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
