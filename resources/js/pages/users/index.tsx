@@ -5,13 +5,14 @@ import { toast } from 'sonner';
 
 import { DataTable } from '@/components/datatables/DataTable';
 import AppLayout from '@/layouts/app-layout';
-import { dashboard } from '@/routes';
 
 import { userColumns } from './datatable/user-columns';
 import { RegisterUserModal } from './registerUserModal';
 
 import type { BreadcrumbItem, SharedData } from '@/types';
 import type { User, UsersIndexPageProps } from '@/types/users';
+
+import { dashboard } from '@/routes';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -48,6 +49,8 @@ export default function UsersIndexPage({
         if (flash?.success) toast.success(flash.success);
         if (flash?.error) toast.error(flash.error, { richColors: true });
     }, [flash]);
+
+    console.log(users.data);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>

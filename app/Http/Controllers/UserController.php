@@ -24,7 +24,7 @@ class UserController extends Controller
             $perPage = $request->input('per_page', 10);
             $search = $request->input('users_search');
 
-            $users = User::query()
+            $users = User::query()->with('roles:id,name')
                 ->when($search, function ($query, $search) {
                     $query->where('name', 'like', "%{$search}%")
                         ->orWhere('email', 'like', "%{$search}%");
