@@ -40,7 +40,7 @@ export const userColumns: ColumnDef<User>[] = [
 
                 <div className="flex flex-col text-left">
                     <span className="text-sm font-medium">
-                        {row.original.name}
+                        {row.original.name.toUpperCase()}
                     </span>
                     <span className="text-xs text-gray-500">
                         {row.original.email}

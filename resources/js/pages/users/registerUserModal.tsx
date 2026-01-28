@@ -174,7 +174,7 @@ export function RegisterUserModal({
                         )}
                     </div>
 
-                    <DialogFooter className="flex gap-2 pt-2">
+                    <DialogFooter className="flex gap-2 pt-6">
                         <Button
                             type="button"
                             variant="outline"
