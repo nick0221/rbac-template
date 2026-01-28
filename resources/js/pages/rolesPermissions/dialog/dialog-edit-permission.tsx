@@ -77,10 +77,10 @@ export default function DialogEditPermission({
                                 <Badge
                                     id="pageName"
                                     variant={'secondary'}
-                                    className="ml-2 text-sm"
+                                    className="ml-2 text-xs"
                                 >
                                     {permission.page?.name ||
-                                        'Not associated to page'}
+                                        'Not associated to a page'}
                                 </Badge>
                             </div>
 

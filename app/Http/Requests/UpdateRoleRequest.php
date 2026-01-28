@@ -33,11 +33,13 @@ class UpdateRoleRequest extends FormRequest
     }
 
 
+
+
     // normalize the role name
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'name' => ucfirst($this->name),
+            'name' => ucfirst(strtolower(trim($this->name))),
         ]);
     }
 

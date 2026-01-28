@@ -26,6 +26,14 @@ class StoreRolesRequest extends FormRequest
         ];
     }
 
+    // normalize the role name
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'name' => ucfirst(strtolower(trim($this->name))),
+        ]);
+    }
+
     public function messages(): array
     {
         return [

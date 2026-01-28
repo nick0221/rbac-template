@@ -30,7 +30,7 @@ class StorePermissionRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'name' => strtolower($this->name),
+            'name' => ucfirst(strtolower(trim($this->name))),
         ]);
     }
 
