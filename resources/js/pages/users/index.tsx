@@ -27,7 +27,7 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 export default function UsersIndexPage({
     users,
-
+    allRoles,
     flash,
 }: UsersIndexPageProps) {
     const [open, setOpen] = useState(false);
@@ -72,6 +72,7 @@ export default function UsersIndexPage({
                     <RegisterUserModal
                         open={open}
                         onClose={() => setOpen(false)}
+                        roles={allRoles}
                     />
                 </div>
             </div>

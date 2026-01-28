@@ -32,11 +32,10 @@ export interface UsersIndexPageProps {
         last_page_url: string;
         prev_page_url: string;
     };
-
+    allRoles: Role[];
     filters: {
         search?: string;
     };
-
     flash: {
         success?: string;
         error?: string;

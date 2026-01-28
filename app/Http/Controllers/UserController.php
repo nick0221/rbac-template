@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Log\Logger;
 use Illuminate\Http\Request;
@@ -33,8 +35,12 @@ class UserController extends Controller
                 ->paginate($perPage)
                 ->withQueryString();
 
+
+            $allRoles = Role::get(['id', 'name']);
+
             return inertia('users/index', [
                 'users' => $users,
+                'allRoles' => $allRoles,
                 'filters' => [
                     'users_search' => $search,
                 ],
@@ -61,22 +67,15 @@ class UserController extends Controller
     }
 
     // store user
-    public function store(Request $request): RedirectResponse
+    public function store(StoreUserRequest $request): RedirectResponse
     {
         // validate request
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8|confirmed',
-        ]);
+        $validated = $request->validated();
+
 
         try {
             // create user record
-            User::create([
-                'name' => $validated['name'],
-                'email' => $validated['email'],
-                'password' => $validated['password'],
-            ]);
+            User::create($validated);
 
             // redirect to users index page
             return redirect()
