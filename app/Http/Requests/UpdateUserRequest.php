@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateUserRequest extends FormRequest
@@ -21,10 +22,16 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules(): array
     {
+        $userId = $this->route('user')?->id;
+
         return [
-            'name' => 'required|string|max:100',
-            'email' => 'required|email|unique:users,email',
-            'role_id' => 'required',
+            'name' => ['required', 'string', 'max:255'],
+            'email' => [
+                'required',
+                'email',
+                    Rule::unique('users', 'email')->ignore($userId),
+            ],
+            'role_id' => ['required', 'exists:roles,id'],
         ];
     }
 
@@ -37,8 +44,8 @@ class UpdateUserRequest extends FormRequest
             'name.required' => 'The name field is required.',
             'name.max' => 'The name field must not be greater than 100 characters.',
             'email.required' => 'The email field is required.',
-            'email.email' => 'The email field must be a valid email address.',
-            'email.unique' => 'The email field already exists, choose another email.',
+            'email.email' => 'The email must be a valid email address.',
+            'email.unique' => 'This email already exists, choose another email.',
 
             'role_id.required' => 'The role field is required.',
         ];
