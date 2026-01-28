@@ -50,7 +50,7 @@ export default function DialogConfimDeleteUser({
 
     return (
         <AlertDialog open={open} onOpenChange={setOpen}>
-            <AlertDialogContent>
+            <AlertDialogContent size="sm">
                 <AlertDialogHeader>
                     <AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
                         <Trash2Icon />
@@ -63,13 +63,8 @@ export default function DialogConfimDeleteUser({
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel variant={'outline'}>
-                        Cancel
-                    </AlertDialogCancel>
-                    <AlertDialogAction
-                        variant={'destructive'}
-                        onClick={handleSubmit}
-                    >
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleSubmit}>
                         {processing ? 'Deleting...' : 'Confirm Delete'}
                     </AlertDialogAction>
                 </AlertDialogFooter>
