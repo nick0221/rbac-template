@@ -8,7 +8,7 @@ import AppLayout from '@/layouts/app-layout';
 
 import { userColumns } from './datatable/user-columns';
 import DialogEditUser from './dialog/dialog-user-edit';
-import { RegisterUserModal } from './registerUserModal';
+import { RegisterUserModal } from './dialog/registerUserModal';
 
 import type { BreadcrumbItem, SharedData } from '@/types';
 import type { User, UsersIndexPageProps } from '@/types/users';
@@ -91,6 +91,7 @@ export default function UsersIndexPage({
                         open={editUserOpen}
                         setOpen={setEditUserOpen}
                         user={selectedUser || ({} as User)}
+                        roles={allRoles}
                     />
                 </div>
             </div>
