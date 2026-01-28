@@ -13,10 +13,10 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { footerNavItems, mainNavItems } from '@/data/nav-items';
+import { dashboard } from '@/routes';
 
 import AppLogo from './app-logo';
 
-import { dashboard } from '@/routes';
 
 export function AppSidebar() {
     return (
