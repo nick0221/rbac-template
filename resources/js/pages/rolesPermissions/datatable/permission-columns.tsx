@@ -1,5 +1,5 @@
 import { router } from '@inertiajs/react';
-import { SquarePen, Trash2, UserCog2, X } from 'lucide-react';
+import { SquarePen, UserCog2, X } from 'lucide-react';
 import { route } from 'ziggy-js';
 
 import { Badge } from '@/components/ui/badge';
@@ -52,7 +52,7 @@ export const permissionColumns: ColumnDef<Permission>[] = [
                     <Badge
                         key={role.id}
                         variant="outline"
-                        className="flex items-center gap-1 rounded-full"
+                        className="rounded-full"
                     >
                         {role.name}
                         <Tooltip>
@@ -60,7 +60,7 @@ export const permissionColumns: ColumnDef<Permission>[] = [
                                 <Button
                                     type="button"
                                     variant="ghost"
-                                    size="xs"
+                                    size="icon-xs"
                                     className="p-0 hover:text-red-600"
                                     onClick={(e) => {
                                         e.preventDefault();
@@ -139,14 +139,14 @@ export const permissionColumns: ColumnDef<Permission>[] = [
                             </TooltipContent>
                         </Tooltip>
 
-                        <Tooltip>
+                        {/* <Tooltip>
                             <TooltipTrigger asChild>
                                 <Button variant="outline" size="sm">
                                     <Trash2 className="dark:text-red-500" />
                                 </Button>
                             </TooltipTrigger>
                             <TooltipContent>Delete</TooltipContent>
-                        </Tooltip>
+                        </Tooltip> */}
                     </ButtonGroup>
                 </div>
             );
