@@ -1,17 +1,18 @@
 import { useForm } from '@inertiajs/react';
-import { DialogClose } from '@radix-ui/react-dialog';
-import { ShieldAlert } from 'lucide-react';
+import { Trash2Icon } from 'lucide-react';
 import { route } from 'ziggy-js';
 
-import { Button } from '@/components/ui/button';
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-} from '@/components/ui/dialog';
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogMedia,
+    AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 import type { User } from '@/types/users';
 
@@ -21,7 +22,7 @@ interface DialogDeleteUserProps {
     user: User | null;
 }
 
-export default function DialogConfimDelete({
+export default function DialogConfimDeleteUser({
     open,
     setOpen,
     user,
@@ -34,13 +35,6 @@ export default function DialogConfimDelete({
     } = useForm({
         name: '',
     });
-
-    //  sync role → form when dialog opens / role changes
-    // useEffect(() => {
-    //     if (open && user) {
-    //         setData('name', user.name);
-    //     }
-    // }, [open, permission, setData]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -55,41 +49,31 @@ export default function DialogConfimDelete({
     };
 
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
-            <DialogContent
-                showCloseButton={false}
-                onInteractOutside={(e) => {
-                    e.preventDefault();
-                }}
-            >
-                <form onSubmit={handleSubmit}>
-                    <DialogHeader className="mb-10">
-                        <DialogTitle className="flex items-center">
-                            <ShieldAlert className="mr-1" /> Delete
-                        </DialogTitle>
-                        <DialogDescription>
-                            Warning: You are about to delete user (
-                            <span className="font-semibold">{user?.name}</span>
-                            ).
-                        </DialogDescription>
-                    </DialogHeader>
-
-                    <DialogFooter>
-                        <DialogClose asChild>
-                            <Button variant="outline" type="button">
-                                Cancel
-                            </Button>
-                        </DialogClose>
-                        <Button
-                            variant="destructive"
-                            type="submit"
-                            disabled={processing}
-                        >
-                            {processing ? 'Confirming...' : 'Confirm delete'}
-                        </Button>
-                    </DialogFooter>
-                </form>
-            </DialogContent>
-        </Dialog>
+        <AlertDialog open={open} onOpenChange={setOpen}>
+            <AlertDialogContent>
+                <AlertDialogHeader>
+                    <AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
+                        <Trash2Icon />
+                    </AlertDialogMedia>
+                    <AlertDialogTitle>Delete user?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        Warning: You are about to delete user (
+                        <span className="font-semibold">{user?.name}</span>
+                        ).
+                    </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                    <AlertDialogCancel variant={'outline'}>
+                        Cancel
+                    </AlertDialogCancel>
+                    <AlertDialogAction
+                        variant={'destructive'}
+                        onClick={handleSubmit}
+                    >
+                        {processing ? 'Deleting...' : 'Confirm Delete'}
+                    </AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
     );
 }

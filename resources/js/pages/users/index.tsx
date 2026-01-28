@@ -7,6 +7,7 @@ import { DataTable } from '@/components/datatables/DataTable';
 import AppLayout from '@/layouts/app-layout';
 
 import { userColumns } from './datatable/user-columns';
+import DialogConfimDeleteUser from './dialog/dialog-confirm-delete-user';
 import DialogEditUser from './dialog/dialog-user-edit';
 import { RegisterUserModal } from './dialog/registerUserModal';
 
@@ -37,6 +38,11 @@ export default function UsersIndexPage({
 
     const [editUserOpen, setEditUserOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
+
+    const [deleteUserOpen, setDeleteUserOpen] = useState(false);
+    const [selectedUserDelete, setSelectedUserDelete] = useState<User | null>(
+        null,
+    );
 
     useEffect(() => {
         if (!hasShownToast.current && generalError)
@@ -76,6 +82,10 @@ export default function UsersIndexPage({
                                 setSelectedUser(user);
                                 setEditUserOpen(true);
                             },
+                            onDelete: (user: User) => {
+                                setSelectedUserDelete(user);
+                                setDeleteUserOpen(true);
+                            },
                         }}
                     />
 
@@ -92,6 +102,13 @@ export default function UsersIndexPage({
                         setOpen={setEditUserOpen}
                         user={selectedUser || ({} as User)}
                         roles={allRoles}
+                    />
+
+                    {/* Dialog Confirm Delete */}
+                    <DialogConfimDeleteUser
+                        open={deleteUserOpen}
+                        setOpen={setDeleteUserOpen}
+                        user={selectedUserDelete || ({} as User)}
                     />
                 </div>
             </div>
