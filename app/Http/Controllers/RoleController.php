@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreRolesRequest;
+use App\Http\Requests\UpdateRoleRequest;
 use Inertia\Inertia;
 use App\Models\Permission;
 use Illuminate\Http\Request;
 use App\Models\Role as ModelsRole;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\RedirectResponse;
-use App\Http\Requests\StoreRolesRequest;
-use App\Http\Requests\UpdateRoleRequest;
+
 
 
 class RoleController extends Controller
