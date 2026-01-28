@@ -33,7 +33,7 @@ export const userColumns: ColumnDef<User>[] = [
             <div className="flex items-center gap-3">
                 <Avatar className="h-8 w-8 shrink-0">
                     <AvatarImage src="/" alt={row.original.name} />
-                    <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                    <AvatarFallback className="rounded-lg bg-neutral-200 font-extrabold text-accent-foreground dark:bg-neutral-700">
                         {row.original.name.charAt(0).toUpperCase()}
                     </AvatarFallback>
                 </Avatar>
@@ -57,7 +57,7 @@ export const userColumns: ColumnDef<User>[] = [
 
             return (
                 <div className="flex items-start gap-2">
-                    <Badge variant={'secondary'}>{role.display_name}</Badge>
+                    <Badge variant={'secondary'}>{role?.display_name}</Badge>
                 </div>
             );
         },
