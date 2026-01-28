@@ -7,7 +7,7 @@ use App\Http\Requests\UpdatePermissionRequest;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
+
 
 class PermissionController extends Controller
 {
@@ -32,7 +32,7 @@ class PermissionController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StorePermissionRequest $request)
-    {
+{
         $request->validated();
 
         Permission::create($request->all());
