@@ -10,6 +10,7 @@ import { permissionColumns } from './datatable/permission-columns';
 import { rolesColumns } from './datatable/roles-columns';
 import DialogAddPermission from './dialog/dialog-add-permission';
 import DialogAddRole from './dialog/dialog-add-role';
+import DialogConfimDelete from './dialog/dialog-confirm-delete';
 import DialogEditPermission from './dialog/dialog-edit-permission';
 import DialogEditRole from './dialog/dialog-edit-role';
 import DialogPermitToRole from './dialog/dialog-permit-to-role';
@@ -53,6 +54,10 @@ export default function RolesPermissionsPage({
 
     const [permitAccessToRoleOpen, setPermitAccessToRoleOpen] = useState(false);
     const [selectedAccessToRole, setSelectedAccessToRole] =
+        useState<Permission | null>(null);
+
+    const [openConfirmDeleteOpen, setOpenConfirmDeleteOpen] = useState(false);
+    const [selectedpermissionDelete, setSelectedpermissionDelete] =
         useState<Permission | null>(null);
 
     // Show Toast Message
@@ -120,6 +125,10 @@ export default function RolesPermissionsPage({
                                 setSelectedAccessToRole(permission);
                                 setPermitAccessToRoleOpen(true);
                             },
+                            onDelete: (permission: Permission) => {
+                                setSelectedpermissionDelete(permission);
+                                setOpenConfirmDeleteOpen(true);
+                            },
                         }}
                         currentPage={permissions.current_page}
                         lastPage={permissions.last_page}
@@ -151,6 +160,13 @@ export default function RolesPermissionsPage({
                             roles={allRoles}
                         />
                     )}
+
+                    {/* Delete Confirmation  */}
+                    <DialogConfimDelete
+                        open={openConfirmDeleteOpen}
+                        setOpen={setOpenConfirmDeleteOpen}
+                        permission={selectedpermissionDelete}
+                    />
                 </div>
             </div>
         </AppLayout>

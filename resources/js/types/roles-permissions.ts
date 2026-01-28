@@ -10,7 +10,7 @@ export interface Permission {
     id: number;
     name: string;
     created_at: string;
-    page: {
+    page?: {
         name: string;
     };
     roles: Role[];
@@ -55,9 +55,6 @@ export interface RolesPermissionsPageProps {
         next_page_url: string;
         last_page_url: string;
         prev_page_url: string;
-        page: {
-            name: string;
-        };
     };
     filters: {
         search: string;

@@ -1,5 +1,5 @@
 import { router } from '@inertiajs/react';
-import { SquarePen, UserCog2, X } from 'lucide-react';
+import { SquarePen, Trash2, UserCog2, X } from 'lucide-react';
 import { route } from 'ziggy-js';
 
 import { Badge } from '@/components/ui/badge';
@@ -39,7 +39,7 @@ export const permissionColumns: ColumnDef<Permission>[] = [
         id: 'page',
         cell: ({ row }) => (
             <div className="flex items-center justify-start capitalize">
-                {row.original.page.name}
+                {row.original.page?.name || '-'}
             </div>
         ),
     },
@@ -48,6 +48,9 @@ export const permissionColumns: ColumnDef<Permission>[] = [
         header: 'Role type',
         cell: ({ row }) => (
             <div className="flex flex-wrap gap-1">
+                {row.original.roles.length === 0 && (
+                    <Badge variant="secondary">Not assigned</Badge>
+                )}
                 {row.original.roles.map((role) => (
                     <Badge
                         key={role.id}
@@ -103,6 +106,7 @@ export const permissionColumns: ColumnDef<Permission>[] = [
         cell: ({ row, table }) => {
             const metaEditPermission = table.options.meta?.onEdit;
             const metaPermitToRole = table.options.meta?.onPermit;
+            const metaDeletePermission = table.options.meta?.onDelete;
 
             return (
                 <div className="flex flex-col items-center gap-4">
@@ -139,14 +143,20 @@ export const permissionColumns: ColumnDef<Permission>[] = [
                             </TooltipContent>
                         </Tooltip>
 
-                        {/* <Tooltip>
+                        <Tooltip>
                             <TooltipTrigger asChild>
-                                <Button variant="outline" size="sm">
-                                    <Trash2 className="dark:text-red-500" />
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    onClick={() =>
+                                        metaDeletePermission?.(row.original)
+                                    }
+                                >
+                                    <Trash2 className="text-red-600 dark:text-red-500" />
                                 </Button>
                             </TooltipTrigger>
                             <TooltipContent>Delete</TooltipContent>
-                        </Tooltip> */}
+                        </Tooltip>
                     </ButtonGroup>
                 </div>
             );
