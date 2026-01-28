@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePermissionRequest;
 use App\Http\Requests\UpdatePermissionRequest;
 use App\Models\Permission;
 use App\Models\Role;
@@ -30,9 +31,13 @@ class PermissionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePermissionRequest $request)
     {
-        //
+        $request->validated();
+
+        Permission::create($request->all());
+
+        return back()->with('success', ucfirst($request->name).' Permission has been successfully created.');
     }
 
     /**

@@ -9,6 +9,7 @@ import { dashboard } from '@/routes';
 
 import { permissionColumns } from './datatable/permission-columns';
 import { rolesColumns } from './datatable/roles-columns';
+import DialogAddPermission from './dialog/dialog-add-permission';
 import DialogAddRole from './dialog/dialog-add-role';
 import DialogEditPermission from './dialog/dialog-edit-permission';
 import DialogEditRole from './dialog/dialog-edit-role';
@@ -38,6 +39,8 @@ export default function RolesPermissionsPage({
     allRoles,
 }: RolesPermissionsPageProps) {
     const [open, setOpen] = useState(false);
+    const [openCreatePermission, setOpenCreatePermission] = useState(false);
+
     const { flash } = usePage<SharedData>().props;
 
     const [editRoleOpen, setEditRoleOpen] = useState(false);
@@ -104,7 +107,9 @@ export default function RolesPermissionsPage({
                         columns={permissionColumns}
                         title="Permissions"
                         total={permissions.total}
-                        onCreate={() => {}}
+                        onCreate={() => {
+                            setOpenCreatePermission(true);
+                        }}
                         meta={{
                             onEdit: (permission: Permission) => {
                                 setSelectedPermission(permission);
@@ -119,6 +124,12 @@ export default function RolesPermissionsPage({
                         lastPage={permissions.last_page}
                         perPage={permissions.per_page}
                         filterKey="permissions_search"
+                    />
+
+                    {/* Add Permission */}
+                    <DialogAddPermission
+                        open={openCreatePermission}
+                        setOpen={setOpenCreatePermission}
                     />
 
                     {/* Edit Permission */}
