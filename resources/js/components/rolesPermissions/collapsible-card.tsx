@@ -4,13 +4,7 @@ import { useState } from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 
-interface Permission {
-    id: number;
-    name: string;
-    page: {
-        name: string;
-    };
-}
+import type { Permission } from '@/types/roles-permissions';
 
 interface CollapsiblePermissionsProps {
     permissions: Permission[];
@@ -27,7 +21,8 @@ export default function CollapsiblePermissions({
     // Group permissions by page.name
     const grouped = permissions.reduce<Record<string, Permission[]>>(
         (acc, perm) => {
-            const pageName = perm.page.name;
+            const pageName = perm.page?.name || 'Unassigned Page';
+
             if (!acc[pageName]) acc[pageName] = [];
             acc[pageName].push(perm);
             return acc;
@@ -144,7 +139,8 @@ function CollapsibleCard({
                 className="flex w-full items-center justify-between rounded-t-xl bg-gray-100 px-4 py-2 transition hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"
             >
                 <span className="font-medium">
-                    {pageName} {'(' + permissions.length + ')' || '0'}
+                    {pageName || 'Unknown Page'}{' '}
+                    {'(' + permissions.length + ')' || '0'}
                 </span>
                 {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
             </button>
