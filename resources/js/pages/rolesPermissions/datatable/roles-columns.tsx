@@ -39,7 +39,7 @@ export const rolesColumns: ColumnDef<Role, unknown>[] = [
         header: 'Name',
         accessorKey: 'name',
         cell: ({ row }) => (
-            <div className="flex items-center justify-start capitalize">
+            <div className="flex items-center justify-start">
                 {row.original.name}
             </div>
         ),

@@ -49,7 +49,7 @@ class RoleSeeder extends Seeder
          // -----------------------------
         // Create Roles
         // -----------------------------
-        $admin = Role::firstOrCreate(['name' => 'Admin']);
+        $superAdmin = Role::firstOrCreate(['name' => 'Super admin']);
         $manager = Role::firstOrCreate(['name' => 'Manager']);
         $user = Role::firstOrCreate(['name' => 'User']);
 
@@ -57,7 +57,7 @@ class RoleSeeder extends Seeder
         // -----------------------------
         // Sync Permissions
         // -----------------------------
-        $admin->syncPermissions(Permission::all());
+        $superAdmin->syncPermissions(Permission::all());
         $manager->syncPermissions(Permission::whereIn('name', [
             'users.view', 'users.create', 'users.edit',
         ])->get());
