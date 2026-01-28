@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StorePermissionRequest extends FormRequest
@@ -21,8 +22,14 @@ class StorePermissionRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
-            'name' => ['required', 'string', 'max:255', 'unique:permissions,name'],
+           'name' => [
+                'required',
+                'string',
+                'max:100',
+                Rule::unique('permissions', 'name')->ignore($this->permission?->id),
+            ],
         ];
     }
 
@@ -30,7 +37,7 @@ class StorePermissionRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'name' => ucfirst(strtolower(trim($this->name))),
+            'name' => (strtolower(trim($this->name))),
         ]);
     }
 

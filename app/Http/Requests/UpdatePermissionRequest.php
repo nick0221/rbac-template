@@ -36,7 +36,7 @@ class UpdatePermissionRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'name' => ucfirst(strtolower(trim($this->name))),
+            'name' => (strtolower(trim($this->name))),
         ]);
     }
 
