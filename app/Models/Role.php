@@ -26,8 +26,8 @@ class Role extends SpatieRole
     // upon saving, normalize the role name
     protected static function booted(): void
     {
-        static::saving(function ($model) {
-            $model->name = ucfirst(strtolower(trim($model->name)));
+        static::saving(function ($role) {
+            $role->name = Str::slug($role->name);
         });
     }
 

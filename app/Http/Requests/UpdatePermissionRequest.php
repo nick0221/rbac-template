@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -32,13 +33,15 @@ class UpdatePermissionRequest extends FormRequest
         ];
     }
 
-    // normalize the permission name
-    protected function prepareForValidation()
+
+    // normalize the permission name before validation
+    protected function prepareForValidation(): void
     {
         $this->merge([
-            'name' => (strtolower(trim($this->name))),
+            'name' => Str::slug(trim($this->name)),
         ]);
     }
+
 
     // custom error messages
     public function messages(): array

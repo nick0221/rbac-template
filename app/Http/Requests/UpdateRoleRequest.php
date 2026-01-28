@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -33,15 +34,16 @@ class UpdateRoleRequest extends FormRequest
     }
 
 
-
-
-    // normalize the role name
+    // normalize the role name before validation
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'name' => ucfirst(strtolower(trim($this->name))),
+            'name' => Str::slug(trim($this->name)),
         ]);
     }
+
+
+
 
     // custom error messages
     public function messages(): array
