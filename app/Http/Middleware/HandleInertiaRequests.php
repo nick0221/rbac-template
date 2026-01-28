@@ -35,15 +35,19 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        $formattedRole = $request->user()?->role()->displayName ?? null;
-        // $formattedRole = $request->user()?->role()->name ?? null;
+        $roleName = $request->user()?->role()->displayName ?? null;
+        $roleId = $request->user()?->role()->id ?? 0;
+
 
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
                 'user' => $request->user(),
-                'role' => $formattedRole,
+                'role' => [
+                    'name' => $roleName,
+                    'id' => $roleId
+                ],
                 'permissions' => $request->user()?->getAllPermissions()->pluck('name'),
                 'flash' => [
                     'success' => $request->session()->get('success'),

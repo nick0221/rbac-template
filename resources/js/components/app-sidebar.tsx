@@ -1,4 +1,4 @@
-import { Link, usePage } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -16,15 +16,9 @@ import { footerNavItems, mainNavItems } from '@/data/nav-items';
 
 import AppLogo from './app-logo';
 
-import type { SharedData } from '@/types';
-
 import { dashboard } from '@/routes';
 
 export function AppSidebar() {
-    const { props } = usePage<SharedData>(); // you can type this later
-    const currentUser = props?.auth;
-    console.log(currentUser);
-
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
