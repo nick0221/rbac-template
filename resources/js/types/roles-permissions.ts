@@ -4,6 +4,7 @@ export interface Role {
     guard_name: string;
     created_at: string;
     permissions: Permission[];
+    display_name: string;
 }
 
 export interface Permission {

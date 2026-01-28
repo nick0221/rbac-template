@@ -1,8 +1,11 @@
+import type { Role } from './roles-permissions';
+
 export interface User {
     id: number;
     name: string;
     email: string;
     created_at: string;
+    roles: Role[];
 }
 
 export interface PaginationLinks {

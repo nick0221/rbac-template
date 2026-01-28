@@ -2,7 +2,9 @@ import { Link } from '@inertiajs/react';
 import { Trash2, UserRoundPen } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 
+import type { Role } from '@/types/roles-permissions';
 import type { ColumnDef } from '@tanstack/react-table';
 
 export type User = {
@@ -10,6 +12,7 @@ export type User = {
     name: string;
     email: string;
     created_at: string;
+    roles: Role[];
 };
 
 export const userColumns: ColumnDef<User>[] = [
@@ -45,6 +48,19 @@ export const userColumns: ColumnDef<User>[] = [
                 </div>
             </div>
         ),
+    },
+    {
+        id: 'roleName',
+        header: 'Role',
+        cell: ({ row }) => {
+            const role = row.original.roles[0];
+
+            return (
+                <div className="flex items-start gap-2">
+                    <Badge variant={'secondary'}>{role.display_name}</Badge>
+                </div>
+            );
+        },
     },
     {
         accessorKey: 'created_at',

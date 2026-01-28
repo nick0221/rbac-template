@@ -50,8 +50,6 @@ export default function UsersIndexPage({
         if (flash?.error) toast.error(flash.error, { richColors: true });
     }, [flash]);
 
-    console.log(users.data);
-
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Users" />
