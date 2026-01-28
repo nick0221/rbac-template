@@ -1,4 +1,4 @@
-import type { Permission } from './roles-permissions';
+import type { Permission, Role } from './roles-permissions';
 
 export type User = {
     id: number;
@@ -7,11 +7,12 @@ export type User = {
     avatar?: string;
     email_verified_at: string | null;
     two_factor_confirmed_at: string | null;
-    two_factor_recovery_codes: string[];
     status: string;
     two_factor_enabled?: boolean;
     created_at: string;
     updated_at: string;
+    roles: Role[];
+    permissions: Permission[];
     [key: string]: unknown;
 };
 

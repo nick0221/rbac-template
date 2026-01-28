@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -22,20 +23,28 @@ class DatabaseSeeder extends Seeder
         ]);
 
         //  Create Default User
-        User::factory()->create([
+        $defaultUser = User::factory()->create([
             'name' => 'Default User',
             'email' => 'default@admin.com',
         ]);
 
+        $defaultUser->assignRole('super-admin');
+
 
         // Create 30 Users
         for ($i=1; $i < 30; $i++) {
-            User::factory()->create([
-               'name' => 'User '.$i,
+            $user = User::factory()->create([
+                'name' => 'User '.$i,
                 'email' => 'user'.$i.'@admin.com',
+
             ]);
+
+            $user->assignRole('user');
         }
 
+
+        // clear cache
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
     }
 }

@@ -22,7 +22,7 @@ import { dashboard } from '@/routes';
 
 export function AppSidebar() {
     const { props } = usePage<SharedData>(); // you can type this later
-    const currentUser = props?.auth?.user;
+    const currentUser = props?.auth;
 
     // safely handle if user is not loaded yet
 

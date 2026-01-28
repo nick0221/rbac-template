@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -103,4 +104,17 @@ class User extends Authenticatable
 
         return $tableProps;
     }
+
+
+
+    // user role
+    public function role()
+    {
+        return $this->roles()->first(); // returns Role model
+    }
+
+
+
+
+
 }

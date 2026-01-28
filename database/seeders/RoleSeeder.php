@@ -49,9 +49,9 @@ class RoleSeeder extends Seeder
          // -----------------------------
         // Create Roles
         // -----------------------------
-        $superAdmin = Role::firstOrCreate(['name' => 'Super admin']);
-        $manager = Role::firstOrCreate(['name' => 'Manager']);
-        $user = Role::firstOrCreate(['name' => 'User']);
+        $superAdmin = Role::firstOrCreate(['name' => 'super-admin']);
+        $manager = Role::firstOrCreate(['name' => 'manager']);
+        $user = Role::firstOrCreate(['name' => 'user']);
 
 
         // -----------------------------
