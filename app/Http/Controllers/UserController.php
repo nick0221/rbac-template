@@ -104,4 +104,31 @@ class UserController extends Controller
 
     }
 
+
+    // show
+    public function show(string $id)
+    {
+        abort(404);
+    }
+
+    // edit
+    public function edit(string $id)
+    {
+        abort(404);
+    }
+
+    // update
+    public function update(Request $request, string $id)
+    {
+        abort(404);
+    }
+
+
+    // destroy
+    public function destroy(string $id)
+    {
+        abort(404);
+    }
+
+
 }
