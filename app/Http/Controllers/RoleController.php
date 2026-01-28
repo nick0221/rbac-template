@@ -31,6 +31,7 @@ class RoleController extends Controller
             })
             ->latest()
             ->paginate($perPage, ['*'], 'role_page', 1)
+
             ->withQueryString();
 
         $permissions = Permission::query()->with(['page', 'roles'])

@@ -5,7 +5,6 @@ import { toast } from 'sonner';
 
 import { DataTable } from '@/components/datatables/DataTable';
 import AppLayout from '@/layouts/app-layout';
-import { dashboard } from '@/routes';
 
 import { permissionColumns } from './datatable/permission-columns';
 import { rolesColumns } from './datatable/roles-columns';
@@ -23,6 +22,7 @@ import type {
     RolesPermissionsPageProps,
 } from '@/types/roles-permissions';
 
+import { dashboard } from '@/routes';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {

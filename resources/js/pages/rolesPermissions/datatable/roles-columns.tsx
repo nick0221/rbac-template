@@ -38,11 +38,13 @@ export const rolesColumns: ColumnDef<Role, unknown>[] = [
     {
         header: 'Name',
         accessorKey: 'name',
-        cell: ({ row }) => (
-            <div className="flex items-center justify-start">
-                {row.original.name}
-            </div>
-        ),
+        cell: ({ row }) => {
+            return (
+                <div className="flex items-center justify-start">
+                    {row.original.name || '-'}
+                </div>
+            );
+        },
     },
     {
         accessorKey: 'guard_name',

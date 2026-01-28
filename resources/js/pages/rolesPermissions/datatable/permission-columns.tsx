@@ -26,7 +26,7 @@ export const permissionColumns: ColumnDef<Permission>[] = [
         },
     },
     {
-        header: () => <div className="flex justify-start">Permission name</div>,
+        header: () => <div className="flex justify-start">Name</div>,
         id: 'permissionName',
         cell: ({ row }) => (
             <div className="flex items-center justify-start">
@@ -57,7 +57,7 @@ export const permissionColumns: ColumnDef<Permission>[] = [
                         variant="outline"
                         className="rounded-full"
                     >
-                        {role.name}
+                        {role.display_name}
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 <Button
