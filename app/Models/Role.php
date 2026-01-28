@@ -2,23 +2,25 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Collection;
+use Spatie\Permission\Models\Role as SpatieRole;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Spatie\Permission\Models\Role as SpatieRole;
 
 class Role extends SpatieRole
 {
 
-    // protected $appends = ['pages'];
+    protected $appends = ['display_name'];
 
-    // public function getPagesAttribute(): Collection
-    // {
-    //     return $this->permissions
-    //         ->flatMap->pages
-    //         ->unique('id')
-    //         ->values();
-    // }
+    protected $hidden = [
+        'pivot'
+    ];
+
+    public function getDisplayNameAttribute(): string
+    {
+        return Str::title(str_replace('-', ' ', $this->name));
+    }
 
 
     // upon saving, normalize the role name

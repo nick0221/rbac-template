@@ -110,7 +110,7 @@ class User extends Authenticatable
     // user role
     public function role()
     {
-        return $this->roles()->first(); // returns Role model
+        return $this->roles()->first(['name', 'id']); // returns Role model
     }
 
 

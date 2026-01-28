@@ -18,6 +18,10 @@ export type User = {
 
 export type Auth = {
     user: User;
+    role: {
+        name: string;
+        id: number;
+    };
     permissions: Permission[];
 };
 

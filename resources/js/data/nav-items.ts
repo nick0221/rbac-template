@@ -1,10 +1,11 @@
 import { LayoutGrid, Shield, Users2 } from 'lucide-react';
 
-import { dashboard } from '@/routes';
 import roles from '@/routes/roles';
 import users from '@/routes/users';
 
 import type { NavItem } from '@/types';
+
+import { dashboard } from '@/routes';
 
 export const mainNavItems: NavItem[] = [
     {
