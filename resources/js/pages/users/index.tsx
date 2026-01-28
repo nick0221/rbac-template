@@ -7,6 +7,7 @@ import { DataTable } from '@/components/datatables/DataTable';
 import AppLayout from '@/layouts/app-layout';
 
 import { userColumns } from './datatable/user-columns';
+import DialogEditUser from './dialog/dialog-user-edit';
 import { RegisterUserModal } from './registerUserModal';
 
 import type { BreadcrumbItem, SharedData } from '@/types';
@@ -33,6 +34,9 @@ export default function UsersIndexPage({
     const [open, setOpen] = useState(false);
     const { generalError = '' } = usePage<SharedData>().props;
     const hasShownToast = useRef(false);
+
+    const [editUserOpen, setEditUserOpen] = useState(false);
+    const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
     useEffect(() => {
         if (!hasShownToast.current && generalError)
@@ -67,12 +71,26 @@ export default function UsersIndexPage({
                         perPage={users.per_page}
                         createButtonIcon={UserPlus2}
                         filterKey="users_search"
+                        meta={{
+                            onEdit: (user: User) => {
+                                setSelectedUser(user);
+                                setEditUserOpen(true);
+                            },
+                        }}
                     />
 
+                    {/* Register User Modal */}
                     <RegisterUserModal
                         open={open}
                         onClose={() => setOpen(false)}
                         roles={allRoles}
+                    />
+
+                    {/* Edit User Dialog */}
+                    <DialogEditUser
+                        open={editUserOpen}
+                        setOpen={setEditUserOpen}
+                        user={selectedUser || ({} as User)}
                     />
                 </div>
             </div>

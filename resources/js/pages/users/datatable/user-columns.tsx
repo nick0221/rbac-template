@@ -1,19 +1,12 @@
-import { Link } from '@inertiajs/react';
 import { Trash2, UserRoundPen } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { ButtonGroup } from '@/components/ui/button-group';
 
-import type { Role } from '@/types/roles-permissions';
+import type { User } from '@/types/users';
 import type { ColumnDef } from '@tanstack/react-table';
-
-export type User = {
-    id: number;
-    name: string;
-    email: string;
-    created_at: string;
-    roles: Role[];
-};
 
 export const userColumns: ColumnDef<User>[] = [
     {
@@ -75,15 +68,34 @@ export const userColumns: ColumnDef<User>[] = [
     {
         id: 'userTableActions',
         header: 'Actions',
-        cell: ({ row }) => (
-            <div className="flex items-center-safe justify-center gap-3">
-                <Link aria-label={`Edit action ${row.original.name}`}>
-                    <UserRoundPen className="h-4 w-4" />
-                </Link>
-                <Link aria-label={`Delete action ${row.original.name}`}>
-                    <Trash2 className="h-4 w-4 text-red-500 dark:text-red-800" />
-                </Link>
-            </div>
-        ),
+        cell: ({ row, table }) => {
+            const metaEditUser = table.options.meta?.onEdit;
+            const metaDeleteUser = table.options.meta?.onDelete;
+
+            return (
+                <div className="flex items-center-safe justify-center gap-3">
+                    <ButtonGroup>
+                        <Button
+                            size="icon-sm"
+                            variant="outline"
+                            onClick={() => {
+                                metaEditUser?.(row.original);
+                            }}
+                        >
+                            <UserRoundPen />
+                        </Button>
+                        <Button
+                            size="icon-sm"
+                            variant="outline"
+                            onClick={() => {
+                                metaDeleteUser?.(row.original);
+                            }}
+                        >
+                            <Trash2 className="h-4 w-4 text-red-500 dark:text-red-800" />
+                        </Button>
+                    </ButtonGroup>
+                </div>
+            );
+        },
     },
 ];
