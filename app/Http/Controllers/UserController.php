@@ -158,7 +158,7 @@ class UserController extends Controller
     // destroy
     public function destroy(string $id)
     {
-        abort(404);
+
     }
 
 

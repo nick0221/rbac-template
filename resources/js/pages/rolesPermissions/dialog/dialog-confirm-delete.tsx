@@ -1,18 +1,19 @@
 import { useForm } from '@inertiajs/react';
-import { DialogClose } from '@radix-ui/react-dialog';
-import { ShieldAlert } from 'lucide-react';
+import { Trash2Icon } from 'lucide-react';
 import { useEffect } from 'react';
 import { route } from 'ziggy-js';
 
-import { Button } from '@/components/ui/button';
 import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-} from '@/components/ui/dialog';
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogMedia,
+    AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 import type { Permission } from '@/types/roles-permissions';
 
@@ -57,43 +58,31 @@ export default function DialogConfimDelete({
     };
 
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
-            <DialogContent
-                showCloseButton={false}
-                onInteractOutside={(e) => {
-                    e.preventDefault();
-                }}
-            >
-                <form onSubmit={handleSubmit}>
-                    <DialogHeader className="mb-10">
-                        <DialogTitle className="flex items-center">
-                            <ShieldAlert className="mr-1" /> Delete
-                        </DialogTitle>
-                        <DialogDescription>
-                            Warning: You are about to delete a permission (
-                            <span className="font-semibold">
-                                {permission?.name}
-                            </span>
-                            ), this action is irreversible.
-                        </DialogDescription>
-                    </DialogHeader>
-
-                    <DialogFooter>
-                        <DialogClose asChild>
-                            <Button variant="outline" type="button">
-                                Cancel
-                            </Button>
-                        </DialogClose>
-                        <Button
-                            variant="destructive"
-                            type="submit"
-                            disabled={processing}
-                        >
-                            {processing ? 'Confirming...' : 'Confirm delete'}
-                        </Button>
-                    </DialogFooter>
-                </form>
-            </DialogContent>
-        </Dialog>
+        <AlertDialog open={open} onOpenChange={setOpen}>
+            <AlertDialogContent size="sm">
+                <AlertDialogHeader>
+                    <AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
+                        <Trash2Icon />
+                    </AlertDialogMedia>
+                    <AlertDialogTitle>Delete permission?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        You are about to delete user (
+                        <span className="font-semibold">
+                            {permission?.name}
+                        </span>
+                        ).
+                    </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                        onClick={handleSubmit}
+                        disabled={processing}
+                    >
+                        {processing ? 'Deleting...' : 'Confirm Delete'}
+                    </AlertDialogAction>
+                </AlertDialogFooter>
+            </AlertDialogContent>
+        </AlertDialog>
     );
 }

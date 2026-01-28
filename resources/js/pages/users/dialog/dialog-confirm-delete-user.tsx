@@ -57,14 +57,17 @@ export default function DialogConfimDeleteUser({
                     </AlertDialogMedia>
                     <AlertDialogTitle>Delete user?</AlertDialogTitle>
                     <AlertDialogDescription>
-                        Warning: You are about to delete user (
+                        You are about to delete user (
                         <span className="font-semibold">{user?.name}</span>
                         ).
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={handleSubmit}>
+                    <AlertDialogAction
+                        onClick={handleSubmit}
+                        disabled={processing}
+                    >
                         {processing ? 'Deleting...' : 'Confirm Delete'}
                     </AlertDialogAction>
                 </AlertDialogFooter>
