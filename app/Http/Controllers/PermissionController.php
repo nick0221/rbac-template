@@ -99,6 +99,9 @@ class PermissionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $permission = Permission::findOrFail($id); // Throws 404 if not found
+        $permission->delete();
+
+        return back()->with('success', $permission->name . ' permission has been successfully deleted.');
     }
 }

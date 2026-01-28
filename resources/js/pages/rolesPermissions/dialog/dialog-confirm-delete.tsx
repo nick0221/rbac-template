@@ -42,7 +42,7 @@ export default function DialogConfimDelete({
         if (open && permission) {
             setData('name', permission.name);
         }
-    }, [open, permission]);
+    }, [open, permission, setData]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();

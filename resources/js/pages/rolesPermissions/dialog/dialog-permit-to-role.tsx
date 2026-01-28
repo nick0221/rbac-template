@@ -70,7 +70,7 @@ export default function DialogPermitToRole({
 
     useEffect(() => {
         if (open) reset();
-    }, [open]);
+    }, [open, reset]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -110,7 +110,8 @@ export default function DialogPermitToRole({
                         <div className="flex flex-col gap-2">
                             <Label>Page</Label>
                             <Badge variant="secondary" className="w-fit">
-                                {permission.page.name}
+                                {permission.page?.name ||
+                                    'Not associated to a page'}
                             </Badge>
                         </div>
 
@@ -209,7 +210,7 @@ export default function DialogPermitToRole({
                                     <ComboboxEmpty>
                                         No roles available
                                     </ComboboxEmpty>
-                                    <ComboboxList className="z-[100]">
+                                    <ComboboxList>
                                         {(roleId) => {
                                             const role = availableRoles.find(
                                                 (r) =>

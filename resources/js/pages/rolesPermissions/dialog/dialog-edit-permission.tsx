@@ -40,7 +40,7 @@ export default function DialogEditPermission({
         if (open && permission) {
             setData('name', permission.name);
         }
-    }, [open, permission]);
+    }, [open, setData, permission]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
