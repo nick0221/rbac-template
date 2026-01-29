@@ -17,7 +17,6 @@ import { dashboard } from '@/routes';
 
 import AppLogo from './app-logo';
 
-
 export function AppSidebar() {
     return (
         <Sidebar collapsible="icon" variant="inset">

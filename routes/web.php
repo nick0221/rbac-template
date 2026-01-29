@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DbResetController;
 use App\Http\Controllers\PermissionController;
 
 Route::get('/', function () {
@@ -17,11 +18,17 @@ Route::get('/', function () {
 
 })->name('home');
 
+
+
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
+
+     // only logged-in admins can access
+    Route::get('/reset/db', [DbResetController::class, 'reset'])->name('admin.reset.db');
+
 
 
     // Route::get('users', [UserController::class, 'index'])->name('users.index');
