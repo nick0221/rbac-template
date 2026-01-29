@@ -28,6 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
      // only logged-in admins can access
     Route::get('/reset/db', [DbResetController::class, 'reset'])->name('admin.reset.db');
+    Route::get('/admin-tools', [DbResetController::class, 'index'])->name('admin.tools.index');
 
 
 

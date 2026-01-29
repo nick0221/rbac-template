@@ -1,11 +1,11 @@
-import { LayoutGrid, Shield, Users2 } from 'lucide-react';
+import { LayoutGrid, Settings, Shield, Users2 } from 'lucide-react';
 
 import { dashboard } from '@/routes';
+import admin from '@/routes/admin';
 import roles from '@/routes/roles';
 import users from '@/routes/users';
 
 import type { NavItem } from '@/types';
-
 
 export const mainNavItems: NavItem[] = [
     {
@@ -26,9 +26,9 @@ export const mainNavItems: NavItem[] = [
 ];
 
 export const footerNavItems: NavItem[] = [
-    // {
-    //     title: 'Roles, Permissions & Pages',
-    //     href: roles.index(),
-    //     icon: Shield,
-    // },
+    {
+        title: 'Super Admin Tools',
+        href: admin.tools.index(),
+        icon: Settings,
+    },
 ];
