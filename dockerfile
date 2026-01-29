@@ -94,8 +94,22 @@ EXPOSE 8000
 # Ensure SQLite exists & permissions are fixed on container start
 # Optionally run migrations so app works immediately
 # ---------------------------
-CMD mkdir -p database storage bootstrap/cache && \
+# CMD mkdir -p database storage bootstrap/cache && \
+#     touch database/database.sqlite && \
+#     chmod -R 777 database storage bootstrap/cache && \
+#     php artisan migrate --force --seed && \
+#     php artisan serve --host=0.0.0.0 --port=8000
+
+
+CMD sh -c "\
+    if [ ! -f .env ]; then \
+        echo '.env not found. Creating from .env.example'; \
+        cp .env.example .env; \
+    fi && \
+    php artisan key:generate --force && \
+    mkdir -p database storage bootstrap/cache && \
     touch database/database.sqlite && \
     chmod -R 777 database storage bootstrap/cache && \
-    php artisan migrate --force --seed && \
-    php artisan serve --host=0.0.0.0 --port=8000
+    php artisan migrate --seed --force && \
+    php artisan serve --host=0.0.0.0 --port=8000 \
+"
