@@ -1,16 +1,21 @@
 <?php
 
-use App\Http\Controllers\PermissionController;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PermissionController;
 
 Route::get('/', function () {
-    return Inertia::render('welcome', [
-        'canRegister' => Features::enabled(Features::registration()),
-    ]);
+    // return Inertia::render('welcome', [
+    //     'canRegister' => Features::enabled(Features::registration()),
+    // ]);
+
+     return redirect()->route(Auth::check() ? 'dashboard' : 'login');
+
+
 })->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
