@@ -1,66 +1,48 @@
-# ---------------------------
-# Base image: PHP 8.4 + FPM
-# ---------------------------
 FROM php:8.4-fpm
 
-# ---------------------------
-# Install system dependencies
-# ---------------------------
+# System dependencies
 RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    zip \
+    unzip \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
-    zip \
-    unzip \
-    git \
-    curl \
+    libsqlite3-dev \
+    sqlite3 \
+    g++ \
+    make \
     npm \
     nodejs \
-    sqlite3 \
-    libsqlite3-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# ---------------------------
-# Install PHP extensions
-# ---------------------------
+# PHP extensions
 RUN docker-php-ext-install pdo pdo_mysql pdo_sqlite mbstring exif pcntl bcmath gd
 
-# ---------------------------
-# Set working directory
-# ---------------------------
+# Working directory
 WORKDIR /var/www/html
 
-# ---------------------------
-# Copy composer files and install dependencies
-# ---------------------------
+# Composer
 COPY composer.json composer.lock ./
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN composer self-update
 RUN composer install --no-dev --optimize-autoloader
 
-# ---------------------------
-# Copy the rest of the project
-# ---------------------------
+# Copy project
 COPY . .
 
-# ---------------------------
-# Install Node dependencies and build React/Inertia assets
-# ---------------------------
+# Node dependencies + build
 RUN npm install
 RUN npm run build
 
-# ---------------------------
-# Make sure SQLite database file exists
-# ---------------------------
+# SQLite file permissions
 RUN touch database/database.sqlite
 RUN chmod -R 777 database
 
-# ---------------------------
 # Expose port
-# ---------------------------
 EXPOSE 8000
 
-# ---------------------------
-# Start Laravel server
-# ---------------------------
+# Start server
 CMD php artisan serve --host=0.0.0.0 --port=8000
