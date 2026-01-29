@@ -26,14 +26,14 @@ export default defineConfig({
         jsx: 'automatic',
     },
 
-    build: {
-        manifest: true,
-        outDir: 'public/build',
-        rollupOptions: {
-            output: {
-                // optional, ensures relative paths in manifest
-                assetFileNames: 'assets/[name].[hash].[ext]',
-            },
-        },
-    },
+    // build: {
+    //     manifest: true,
+    //     outDir: 'public/build',
+    //     rollupOptions: {
+    //         output: {
+    //             // optional, ensures relative paths in manifest
+    //             assetFileNames: 'assets/[name].[hash].[ext]',
+    //         },
+    //     },
+    // },
 });
