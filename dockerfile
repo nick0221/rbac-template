@@ -47,9 +47,9 @@ RUN docker-php-ext-install \
 WORKDIR /var/www/html
 
 # ---------------------------
-# Copy full project first (fix for artisan error)
+# Copy composer files first for caching
 # ---------------------------
-COPY . .
+COPY composer.json composer.lock ./
 
 # ---------------------------
 # Install Composer
@@ -59,16 +59,26 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # ---------------------------
 # Install Composer dependencies
 # ---------------------------
-RUN php -d memory_limit=-1 /usr/local/bin/composer install --no-dev --optimize-autoloader
+RUN php -d memory_limit=-1 /usr/local/bin/composer install --no-dev --optimize-autoloader --no-scripts
 
 # ---------------------------
-# Install Node dependencies & build React/Inertia assets
+# Copy the rest of the project
+# ---------------------------
+COPY . .
+
+# ---------------------------
+# Run package discovery manually
+# ---------------------------
+RUN php artisan package:discover --ansi
+
+# ---------------------------
+# Cache Node dependencies & build React/Inertia assets
 # ---------------------------
 RUN npm ci
 RUN npm run build
 
 # ---------------------------
-# Ensure SQLite file and permissions (Render free plan safe)
+# Ensure SQLite file exists and storage permissions (Free plan safe)
 # ---------------------------
 RUN mkdir -p database storage bootstrap/cache
 RUN touch database/database.sqlite || true
@@ -88,7 +98,7 @@ RUN php artisan event:cache || echo "No events to cache"
 EXPOSE 8000
 
 # ---------------------------
-# Start Laravel server (with SQLite safe check)
+# Start Laravel server + ensure SQLite exists on container start
 # ---------------------------
 CMD touch database/database.sqlite && \
     chmod -R 777 database storage bootstrap/cache && \
