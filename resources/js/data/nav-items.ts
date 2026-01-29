@@ -1,4 +1,4 @@
-import { LayoutGrid, Settings, Shield, Users2 } from 'lucide-react';
+import { LayoutGrid, Settings2Icon, Shield, Users2 } from 'lucide-react';
 
 import { dashboard } from '@/routes';
 import admin from '@/routes/admin';
@@ -29,6 +29,6 @@ export const footerNavItems: NavItem[] = [
     {
         title: 'Super Admin Tools',
         href: admin.tools.index(),
-        icon: Settings,
+        icon: Settings2Icon,
     },
 ];

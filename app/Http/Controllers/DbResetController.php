@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Artisan;
-use Inertia\Inertia;
 
 class DbResetController extends Controller
 {
@@ -20,27 +21,37 @@ class DbResetController extends Controller
 
     public function reset()
     {
-        $checkAdmin = Auth::user()->role()->name;
 
-        if ($checkAdmin !== 'super-admin') {
-            abort(403, 'Unauthorized');
+        if (! Auth::user()->hasRole('super-admin')) {
+            sleep(2);
+            return back()->withErrors([
+                'reset' => 'You are not authorized to reset the database.',
+            ]);
+
         }
 
-        // Optional: extra check with a secret key
-        // if (request()->get('key') !== env('DB_RESET_KEY')) {
-        //     abort(403, 'Unauthorized');
-        // }
 
-        // Artisan::call('migrate:fresh', [
-        //     '--seed' => true,
-        //     '--force' => true,
-        // ]);
+        if (app()->isProduction()) {
+            sleep(2);
+            return back()->withErrors([
+                'reset' => 'Database reset is prohibited in production',
+            ]);
 
-        // return response()->json([
-        //     'status' => 'success',
-        //     'message' => 'Database has been reset and seeded!'
-        // ]);
+        }
+
+
+        Artisan::call('migrate:fresh', [
+            '--seed' => true,
+            '--force' => true,
+        ]);
+        Log::info(Artisan::output());
+
+        sleep(2);
+
         return back()->with('success', 'Database has been reset and seeded!');
+
+
+
     }
 
 
