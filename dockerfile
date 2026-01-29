@@ -108,7 +108,6 @@ CMD sh -c "\
     mkdir -p database storage bootstrap/cache && \
     touch database/database.sqlite && \
     chmod -R 777 database storage bootstrap/cache && \
-    php artisan key:generate --force && \
     php artisan migrate --seed --force && \
     php artisan config:clear && \
     php artisan route:clear && \
