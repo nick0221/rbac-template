@@ -112,5 +112,8 @@ CMD sh -c "\
     php artisan config:clear && \
     php artisan route:clear && \
     php artisan view:clear && \
+    # Run scheduler in background
+    (while true; do php artisan schedule:run; sleep 60; done) & \
+    # Run Laravel web server
     php artisan serve --host=0.0.0.0 --port=8000 \
 "

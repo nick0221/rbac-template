@@ -15,7 +15,6 @@ Route::get('/', function () {
 
      return redirect()->route(Auth::check() ? 'dashboard' : 'login');
 
-
 })->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
