@@ -1,7 +1,7 @@
 # ---------------------------
-# Base image: PHP + Composer
+# Base image: PHP 8.4 + FPM
 # ---------------------------
-FROM php:8.2-fpm
+FROM php:8.4-fpm
 
 # ---------------------------
 # Install system dependencies
