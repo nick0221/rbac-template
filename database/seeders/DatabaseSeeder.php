@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
         $defaultUser = User::factory()->create([
             'name' => 'Default User',
             'email' => 'default@admin.com',
-            'role_id' => Role::where('name', 'super-admin')->first()->id
+            'role_id' => Role::where('name', 'super-admin')->first()->id,
+            'password' => Hash::make('password')
         ]);
 
         $defaultUser->assignRole('super-admin');
@@ -37,7 +38,8 @@ class DatabaseSeeder extends Seeder
             $user = User::factory()->create([
                 'name' => 'User '.$i,
                 'email' => 'user'.$i.'@admin.com',
-                'role_id' => Role::where('name', 'user')->first()->id
+                'role_id' => Role::where('name', 'user')->first()->id,
+                'password' => Hash::make('password')
 
             ]);
 
