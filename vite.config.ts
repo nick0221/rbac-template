@@ -1,8 +1,9 @@
+import laravel from 'laravel-vite-plugin';
+import { defineConfig } from 'vite';
+
 import { wayfinder } from '@laravel/vite-plugin-wayfinder';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
-import laravel from 'laravel-vite-plugin';
-import { defineConfig } from 'vite';
 
 export default defineConfig({
     plugins: [
@@ -23,5 +24,16 @@ export default defineConfig({
     ],
     esbuild: {
         jsx: 'automatic',
+    },
+
+    build: {
+        manifest: true,
+        outDir: 'public/build',
+        rollupOptions: {
+            output: {
+                // optional, ensures relative paths in manifest
+                assetFileNames: 'assets/[name].[hash].[ext]',
+            },
+        },
     },
 });
