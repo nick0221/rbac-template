@@ -47,16 +47,19 @@ RUN docker-php-ext-install \
 WORKDIR /var/www/html
 
 # ---------------------------
-# Cache Composer dependencies
-# ---------------------------
-COPY composer.json composer.lock ./
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN php -d memory_limit=-1 /usr/local/bin/composer install --no-dev --optimize-autoloader
-
-# ---------------------------
-# Copy the rest of the project
+# Copy full project first (fix for artisan error)
 # ---------------------------
 COPY . .
+
+# ---------------------------
+# Install Composer
+# ---------------------------
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# ---------------------------
+# Install Composer dependencies
+# ---------------------------
+RUN php -d memory_limit=-1 /usr/local/bin/composer install --no-dev --optimize-autoloader
 
 # ---------------------------
 # Cache Node dependencies & build React/Inertia assets
