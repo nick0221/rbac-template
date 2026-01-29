@@ -100,16 +100,18 @@ EXPOSE 8000
 #     php artisan migrate --force --seed && \
 #     php artisan serve --host=0.0.0.0 --port=8000
 
-
 CMD sh -c "\
     if [ ! -f .env ]; then \
         echo '.env not found. Creating from .env.example'; \
         cp .env.example .env; \
     fi && \
-    php artisan key:generate --force && \
     mkdir -p database storage bootstrap/cache && \
     touch database/database.sqlite && \
     chmod -R 777 database storage bootstrap/cache && \
+    php artisan key:generate --force && \
     php artisan migrate --seed --force && \
+    php artisan config:clear && \
+    php artisan route:clear && \
+    php artisan view:clear && \
     php artisan serve --host=0.0.0.0 --port=8000 \
 "
