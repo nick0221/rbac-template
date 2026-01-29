@@ -47,18 +47,10 @@ RUN docker-php-ext-install \
 WORKDIR /var/www/html
 
 # ---------------------------
-# Copy composer files first for caching
+# Cache Composer dependencies
 # ---------------------------
 COPY composer.json composer.lock ./
-
-# ---------------------------
-# Install Composer
-# ---------------------------
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-# ---------------------------
-# Install Composer dependencies
-# ---------------------------
 RUN php -d memory_limit=-1 /usr/local/bin/composer install --no-dev --optimize-autoloader --no-scripts
 
 # ---------------------------
@@ -78,7 +70,7 @@ RUN npm ci
 RUN npm run build
 
 # ---------------------------
-# Ensure SQLite file exists and storage permissions (Free plan safe)
+# Ensure SQLite file exists and fix permissions
 # ---------------------------
 RUN mkdir -p database storage bootstrap/cache
 RUN touch database/database.sqlite || true
@@ -98,8 +90,12 @@ RUN php artisan event:cache || echo "No events to cache"
 EXPOSE 8000
 
 # ---------------------------
-# Start Laravel server + ensure SQLite exists on container start
+# Start Laravel server
+# Ensure SQLite exists & permissions are fixed on container start
+# Optionally run migrations so app works immediately
 # ---------------------------
-CMD touch database/database.sqlite && \
+CMD mkdir -p database storage bootstrap/cache && \
+    touch database/database.sqlite && \
     chmod -R 777 database storage bootstrap/cache && \
+    php artisan migrate --force --seed && \
     php artisan serve --host=0.0.0.0 --port=8000
