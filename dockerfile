@@ -1,6 +1,11 @@
+# ---------------------------
+# Base image: PHP 8.4 + FPM
+# ---------------------------
 FROM php:8.4-fpm
 
-# System dependencies
+# ---------------------------
+# Install system dependencies
+# ---------------------------
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -21,7 +26,9 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# PHP extensions
+# ---------------------------
+# Install PHP extensions
+# ---------------------------
 RUN docker-php-ext-install \
     pdo \
     pdo_mysql \
@@ -34,27 +41,49 @@ RUN docker-php-ext-install \
     intl \
     zip
 
-# Working directory
+# ---------------------------
+# Set working directory
+# ---------------------------
 WORKDIR /var/www/html
 
-# Copy composer files and install composer
+# ---------------------------
+# Cache Composer dependencies
+# ---------------------------
 COPY composer.json composer.lock ./
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN php -d memory_limit=-1 /usr/local/bin/composer install --no-dev --optimize-autoloader
 
-# Copy project
+# ---------------------------
+# Copy the rest of the project
+# ---------------------------
 COPY . .
 
-# Node dependencies + build
-RUN npm install
+# ---------------------------
+# Cache Node dependencies & build React/Inertia assets
+# ---------------------------
+RUN npm ci
 RUN npm run build
 
-# SQLite file permissions
+# ---------------------------
+# Ensure SQLite file exists and is writable
+# ---------------------------
 RUN touch database/database.sqlite
 RUN chmod -R 777 database
 
-# Expose port
+# ---------------------------
+# Laravel cache & optimization (production)
+# ---------------------------
+RUN php artisan config:cache
+RUN php artisan route:cache
+RUN php artisan view:cache
+RUN php artisan event:cache || echo "No events to cache"  # avoids error if no events
+
+# ---------------------------
+# Expose Laravel port
+# ---------------------------
 EXPOSE 8000
 
+# ---------------------------
 # Start Laravel server
+# ---------------------------
 CMD php artisan serve --host=0.0.0.0 --port=8000
