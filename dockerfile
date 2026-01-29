@@ -62,16 +62,17 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN php -d memory_limit=-1 /usr/local/bin/composer install --no-dev --optimize-autoloader
 
 # ---------------------------
-# Cache Node dependencies & build React/Inertia assets
+# Install Node dependencies & build React/Inertia assets
 # ---------------------------
 RUN npm ci
 RUN npm run build
 
 # ---------------------------
-# Ensure SQLite file exists and is writable
+# Ensure SQLite file and permissions (Render free plan safe)
 # ---------------------------
-RUN touch database/database.sqlite
-RUN chmod -R 777 database
+RUN mkdir -p database storage bootstrap/cache
+RUN touch database/database.sqlite || true
+RUN chmod -R 777 database storage bootstrap/cache
 
 # ---------------------------
 # Laravel cache & optimization (production)
@@ -79,7 +80,7 @@ RUN chmod -R 777 database
 RUN php artisan config:cache
 RUN php artisan route:cache
 RUN php artisan view:cache
-RUN php artisan event:cache || echo "No events to cache"  # avoids error if no events
+RUN php artisan event:cache || echo "No events to cache"
 
 # ---------------------------
 # Expose Laravel port
@@ -87,6 +88,8 @@ RUN php artisan event:cache || echo "No events to cache"  # avoids error if no e
 EXPOSE 8000
 
 # ---------------------------
-# Start Laravel server
+# Start Laravel server (with SQLite safe check)
 # ---------------------------
-CMD php artisan serve --host=0.0.0.0 --port=8000
+CMD touch database/database.sqlite && \
+    chmod -R 777 database storage bootstrap/cache && \
+    php artisan serve --host=0.0.0.0 --port=8000
