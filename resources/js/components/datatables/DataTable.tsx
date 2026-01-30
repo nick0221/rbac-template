@@ -52,6 +52,7 @@ interface DataTableProps<TData, TValue = unknown> {
         onEdit?: (role: TData) => void;
         onDelete?: (role: TData) => void;
         onPermit?: (role: TData) => void;
+        onOpenDrawer?: (role: TData) => void;
     };
 }
 

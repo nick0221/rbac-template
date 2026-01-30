@@ -4,7 +4,9 @@ import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 
 import { DataTable } from '@/components/datatables/DataTable';
+import PermissionDrawer from '@/components/rolesPermissions/permission-drawer';
 import AppLayout from '@/layouts/app-layout';
+import { dashboard } from '@/routes';
 
 import { permissionColumns } from './datatable/permission-columns';
 import { rolesColumns } from './datatable/roles-columns';
@@ -21,8 +23,6 @@ import type {
     Role,
     RolesPermissionsPageProps,
 } from '@/types/roles-permissions';
-
-import { dashboard } from '@/routes';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -42,6 +42,10 @@ export default function RolesPermissionsPage({
 }: RolesPermissionsPageProps) {
     const [open, setOpen] = useState(false);
     const [openCreatePermission, setOpenCreatePermission] = useState(false);
+
+    const [openPermissionDrawer, setOpenPermissionDrawer] = useState(false);
+    const [selectedRoleWithPermission, setSelectedRoleWithPermission] =
+        useState<Role | null>(null);
 
     const { flash } = usePage<SharedData>().props;
 
@@ -65,6 +69,8 @@ export default function RolesPermissionsPage({
         if (flash?.success) toast.success(flash.success);
     }, [flash]);
 
+    console.log(roles.data);
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Roles, Permissions & Pages" />
@@ -83,6 +89,10 @@ export default function RolesPermissionsPage({
                             onEdit: (role: Role) => {
                                 setSelectedRole(role);
                                 setEditRoleOpen(true);
+                            },
+                            onOpenDrawer: (role: Role) => {
+                                setSelectedRoleWithPermission(role);
+                                setOpenPermissionDrawer(true);
                             },
                         }}
                         currentPage={roles.current_page}
@@ -104,6 +114,17 @@ export default function RolesPermissionsPage({
                             role={selectedRole}
                         />
                     )}
+
+                    {/* PermissionDrawer Tooltip */}
+                    <PermissionDrawer
+                        open={openPermissionDrawer}
+                        setOpen={setOpenPermissionDrawer}
+                        roleWithPermissions={selectedRoleWithPermission}
+                        // roleId={row.original.id}
+                        // roleName={row.original.name}
+                        // permissions={row.original.permissions}
+                        // isButton={true}
+                    />
                 </div>
 
                 {/* Permissions */}

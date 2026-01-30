@@ -1,5 +1,3 @@
-import { ShieldEllipsis } from 'lucide-react';
-
 import { Button } from '../ui/button';
 import {
     Drawer,
@@ -13,23 +11,22 @@ import {
 
 import CollapsiblePermissions from './collapsible-card';
 
-import type { Permission } from '@/types/roles-permissions';
+import type { Role } from '@/types/roles-permissions';
 
 interface PermissionsDrawerProps {
-    roleName: string;
-    permissions: Permission[];
-    roleId: number;
-    isButton?: boolean;
+    open: boolean;
+    setOpen: (open: boolean) => void;
+    roleWithPermissions: Role | null;
 }
 
 export default function PermissionDrawer({
-    roleName,
-    permissions,
-    isButton = true,
+    open,
+    setOpen,
+    roleWithPermissions,
 }: PermissionsDrawerProps) {
     return (
-        <Drawer direction="right">
-            <DrawerTrigger asChild>
+        <Drawer direction="right" open={open} onOpenChange={setOpen}>
+            {/* <DrawerTrigger asChild>
                 {isButton ? (
                     <Button variant="outline" size="sm">
                         <ShieldEllipsis />
@@ -48,18 +45,22 @@ export default function PermissionDrawer({
                         {permissions.length > 1 && 's'}
                     </Button>
                 )}
-            </DrawerTrigger>
+            </DrawerTrigger> */}
 
             <DrawerContent className="max-w-sm" autoFocus>
                 <DrawerHeader>
                     <DrawerTitle>Permissions</DrawerTitle>
                     <DrawerDescription>
                         List of permissions assigned to{' '}
-                        <span className="font-semibold">{roleName}</span>
+                        <span className="font-semibold">
+                            {roleWithPermissions?.name}
+                        </span>
                     </DrawerDescription>
                 </DrawerHeader>
 
-                <CollapsiblePermissions permissions={permissions} />
+                <CollapsiblePermissions
+                    permissions={roleWithPermissions?.permissions}
+                />
 
                 <DrawerFooter>
                     <DrawerTrigger asChild>

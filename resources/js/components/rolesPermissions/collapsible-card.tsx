@@ -7,7 +7,7 @@ import { Input } from '../ui/input';
 import type { Permission } from '@/types/roles-permissions';
 
 interface CollapsiblePermissionsProps {
-    permissions: Permission[];
+    permissions?: Permission[];
 }
 
 export default function CollapsiblePermissions({
@@ -19,7 +19,7 @@ export default function CollapsiblePermissions({
     >({});
 
     // Group permissions by page.name
-    const grouped = permissions.reduce<Record<string, Permission[]>>(
+    const grouped = permissions?.reduce<Record<string, Permission[]>>(
         (acc, perm) => {
             const pageName = perm.page?.name || 'Unassigned Page';
 
@@ -31,7 +31,7 @@ export default function CollapsiblePermissions({
     );
 
     // Filter pages and permissions based on global search
-    const filteredGrouped = Object.entries(grouped).reduce<
+    const filteredGrouped = Object.entries(grouped!).reduce<
         Record<string, Permission[]>
     >((acc, [pageName, perms]) => {
         if (pageName.toLowerCase().includes(search.toLowerCase())) {

@@ -1,14 +1,25 @@
-import { SquarePen } from 'lucide-react';
-
-import PermissionDrawer from '@/components/rolesPermissions/permission-drawer';
-import { Button } from '@/components/ui/button';
-import { ButtonGroup } from '@/components/ui/button-group';
 import {
-    Tooltip,
-    TooltipContent,
-    TooltipTrigger,
-} from '@/components/ui/tooltip';
+    MoreHorizontalIcon,
+    ShieldEllipsis,
+    SquarePen,
+    Trash,
+} from 'lucide-react';
 
+import { Button } from '@/components/ui/button';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+
+// import {
+//     Tooltip,
+//     TooltipContent,
+//     TooltipTrigger,
+// } from '@/components/ui/tooltip';
 import type { Role } from '@/types/roles-permissions';
 import type { ColumnDef } from '@tanstack/react-table';
 
@@ -53,14 +64,20 @@ export const rolesColumns: ColumnDef<Role, unknown>[] = [
     {
         id: 'permissions',
         header: 'Permissions',
-        cell: ({ row }) => (
-            <PermissionDrawer
-                roleId={row.original.id}
-                roleName={row.original.name}
-                permissions={row.original.permissions}
-                isButton={false} // renders as link style inside cell
-            />
-        ),
+        cell: ({ row, table }) => {
+            const metaShowPermissions = table.options.meta?.onOpenDrawer;
+
+            return (
+                <Button
+                    variant="link"
+                    size="xs"
+                    onClick={() => metaShowPermissions?.(row.original)}
+                >
+                    {row.original.permissions.length} Permission
+                    {row.original.permissions.length > 1 && 's'}
+                </Button>
+            );
+        },
     },
 
     {
@@ -71,32 +88,46 @@ export const rolesColumns: ColumnDef<Role, unknown>[] = [
         enableHiding: false,
         cell: ({ row, table }) => {
             const metaEditrole = table.options.meta?.onEdit;
+            const metaShowPermissions = table.options.meta?.onOpenDrawer;
 
             return (
                 <div className="flex flex-col items-center gap-4">
-                    <ButtonGroup>
-                        {/* Edit Button Tooltip */}
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Button
-                                    variant="outline"
-                                    size="sm"
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button
+                                variant="outline"
+                                size="icon-sm"
+                                aria-label="More Options"
+                            >
+                                <MoreHorizontalIcon />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end" className="w-40">
+                            <DropdownMenuGroup>
+                                <DropdownMenuItem
                                     onClick={() => metaEditrole?.(row.original)}
                                 >
                                     <SquarePen />
-                                </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>Edit</TooltipContent>
-                        </Tooltip>
-
-                        {/* PermissionDrawer Tooltip */}
-                        <PermissionDrawer
-                            roleId={row.original.id}
-                            roleName={row.original.name}
-                            permissions={row.original.permissions}
-                            isButton={true} // renders icon button
-                        />
-                    </ButtonGroup>
+                                    Edit
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    onClick={() =>
+                                        metaShowPermissions?.(row.original)
+                                    }
+                                >
+                                    <ShieldEllipsis />
+                                    Permissions
+                                </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuGroup>
+                                <DropdownMenuItem variant="destructive">
+                                    <Trash />
+                                    Trash
+                                </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </div>
             );
         },

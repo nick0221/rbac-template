@@ -9,5 +9,6 @@ declare module '@tanstack/react-table' {
         onEdit?: (role: TData) => void;
         onPermit?: (role: TData) => void;
         onDelete?: (role: TData) => void;
+        onOpenDrawer?: (role: TData) => void;
     }
 }
