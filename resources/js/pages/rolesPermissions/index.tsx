@@ -189,7 +189,7 @@ export default function RolesPermissionsPage({
                 </div>
 
                 {/* Pages */}
-                <div className="min-h-xs relative flex-1 md:min-h-min">
+                <div className="min-h-xs relative w-1/2 flex-1 md:min-h-min">
                     <DataTable
                         data={pages.data}
                         columns={pagesColumns}

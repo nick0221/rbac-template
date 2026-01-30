@@ -5,10 +5,16 @@ import {
     useReactTable,
     type ColumnDef,
 } from '@tanstack/react-table';
-import { Plus, TriangleAlert } from 'lucide-react';
+import { Plus, SlidersHorizontal, TriangleAlert } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
+import {
+    DropdownMenu,
+    DropdownMenuCheckboxItem,
+    DropdownMenuContent,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import {
     TableHeader as ShadTableHeader,
     Table,
@@ -23,6 +29,7 @@ import { Skeleton } from '../ui/skeleton';
 import { DataTablePagination } from './Pagination';
 import TableHeader from './TableHeader';
 
+import type { VisibilityState } from '@tanstack/react-table';
 import type { LucideIcon } from 'lucide-react';
 
 interface DataTableProps<TData, TValue = unknown> {
@@ -72,6 +79,9 @@ export function DataTable<TData, TValue = unknown>({
     filterKey,
 }: DataTableProps<TData, TValue>) {
     const Icon = createButtonIcon;
+    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
+        {},
+    );
 
     useEffect(() => {
         setLoading(false);
@@ -84,6 +94,10 @@ export function DataTable<TData, TValue = unknown>({
             currentPage,
             perPage,
             ...meta,
+        },
+        onColumnVisibilityChange: setColumnVisibility,
+        state: {
+            columnVisibility,
         },
         getCoreRowModel: getCoreRowModel(),
     });
@@ -102,6 +116,34 @@ export function DataTable<TData, TValue = unknown>({
                 filterKey={filterKey}
                 onCreate={onCreate}
             />
+
+            {/* Column visibility */}
+            <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="sm">
+                        <SlidersHorizontal className="mr-2 h-4 w-4" />
+                        Columns
+                    </Button>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent align="end" className="w-48">
+                    {table
+                        .getAllLeafColumns()
+                        .filter((column) => column.getCanHide())
+                        .map((column) => (
+                            <DropdownMenuCheckboxItem
+                                key={column.id}
+                                className="capitalize"
+                                checked={column.getIsVisible()}
+                                onCheckedChange={(value) =>
+                                    column.toggleVisibility(!!value)
+                                }
+                            >
+                                {column.id}
+                            </DropdownMenuCheckboxItem>
+                        ))}
+                </DropdownMenuContent>
+            </DropdownMenu>
 
             {/* Empty state */}
             {!hasRows ? (
