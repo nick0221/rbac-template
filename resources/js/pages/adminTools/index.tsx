@@ -4,6 +4,11 @@ import { toast } from 'sonner';
 import { route } from 'ziggy-js';
 
 import { Button } from '@/components/ui/button';
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipTrigger,
+} from '@/components/ui/tooltip';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
 
@@ -29,56 +34,81 @@ export default function SuperAdminToolsPage() {
 
                 <div className="relative min-h-screen flex-1 overflow-hidden rounded-xl border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
                     <div className="p-4">
-                        <Button
-                            className="flex items-center"
-                            variant="outline"
-                            onClick={() => {
-                                toast.promise(
-                                    new Promise<void>((resolve, reject) => {
-                                        router.get(
-                                            route('admin.reset.db'),
-                                            {},
-                                            {
-                                                preserveScroll: true,
-                                                onSuccess: () => resolve(),
-                                                onError: (errors) => {
-                                                    reject(errors);
-                                                },
-                                            },
-                                        );
-                                    }),
-                                    {
-                                        loading:
-                                            'Resetting database, you will need to login again afterwards.',
-                                        success: 'Database has been reset',
-                                        error: (errors: unknown) => {
-                                            if (
-                                                errors &&
-                                                typeof errors === 'object' &&
-                                                'reset' in errors
-                                            ) {
-                                                const val = (
-                                                    errors as Record<
-                                                        string,
-                                                        unknown
-                                                    >
-                                                )['reset'];
-                                                return typeof val === 'string'
-                                                    ? val
-                                                    : 'Reset failed';
-                                            }
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <span className="inline-block w-fit">
+                                    <Button
+                                        type="button"
+                                        disabled
+                                        className="flex items-center"
+                                        variant="outline"
+                                        onClick={() => {
+                                            toast.promise(
+                                                new Promise<void>(
+                                                    (resolve, reject) => {
+                                                        router.get(
+                                                            route(
+                                                                'admin.reset.db',
+                                                            ),
+                                                            {},
+                                                            {
+                                                                preserveScroll: true,
+                                                                onSuccess: () =>
+                                                                    resolve(),
+                                                                onError: (
+                                                                    errors,
+                                                                ) => {
+                                                                    reject(
+                                                                        errors,
+                                                                    );
+                                                                },
+                                                            },
+                                                        );
+                                                    },
+                                                ),
+                                                {
+                                                    loading:
+                                                        'Resetting database, you will need to login again afterwards.',
+                                                    success:
+                                                        'Database has been reset',
+                                                    error: (
+                                                        errors: unknown,
+                                                    ) => {
+                                                        if (
+                                                            errors &&
+                                                            typeof errors ===
+                                                                'object' &&
+                                                            'reset' in errors
+                                                        ) {
+                                                            const val = (
+                                                                errors as Record<
+                                                                    string,
+                                                                    unknown
+                                                                >
+                                                            )['reset'];
+                                                            return typeof val ===
+                                                                'string'
+                                                                ? val
+                                                                : 'Reset failed';
+                                                        }
 
-                                            return 'Reset failed';
-                                        },
-                                    },
-                                );
-                            }}
-                        >
-                            <span className="flex items-center">
-                                <Database className="mr-1" />
-                                Reset database
-                            </span>
-                        </Button>
+                                                        return 'Reset failed';
+                                                    },
+                                                },
+                                            );
+                                        }}
+                                    >
+                                        <span className="flex items-center">
+                                            <Database className="mr-1" />
+                                            Reset database
+                                        </span>
+                                    </Button>
+                                </span>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                This feature is temporarily disabled
+                            </TooltipContent>
+                        </Tooltip>
                     </div>
                 </div>
             </div>
