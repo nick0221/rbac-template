@@ -14,7 +14,8 @@ class Role extends SpatieRole
     protected $appends = ['display_name'];
 
     protected $hidden = [
-        'pivot'
+        'pivot',
+        'updated_at',
     ];
 
     public function getDisplayNameAttribute(): string

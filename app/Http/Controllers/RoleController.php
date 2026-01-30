@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRolesRequest;
 use App\Http\Requests\UpdateRoleRequest;
+use App\Models\Page;
 use Inertia\Inertia;
 use App\Models\Permission;
 use Illuminate\Http\Request;
@@ -20,33 +21,56 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-
+        // rows per page
         $perPage = $request->input('per_page', 10);
+
+
+        // search
         $roleSearch = $request->string('roles_search');
+        $pagesSearch = $request->string('pages_search');
         $permissionSearch = $request->string('permissions_search');
 
+        // columns
+        $rolesColumns = ['id', 'name', 'display_name', 'guard_name', 'created_at'];
+        $permissionsColumns = ['id', 'name', 'created_at','page_id'];
+        $pagesColumns = ['id', 'name', 'slug', 'created_at'];
+
+
+        //  roles query
         $roles = Role::query()->with(['permissions.page'])
             ->when($roleSearch, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%") ;
             })
             ->latest()
-            ->paginate($perPage, ['*'], 'role_page', 1)
-
+            ->paginate($perPage, $rolesColumns, 'role_page', 1)
             ->withQueryString();
 
+
+        // permissions query
         $permissions = Permission::query()->with(['page', 'roles'])
             ->when($permissionSearch, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%") ;
             })
             ->latest()
-            ->paginate($perPage, ['*'], 'permission_page', 1)
+            ->paginate($perPage, $permissionsColumns, 'permission_page', 1)
             ->withQueryString();
+
+
+        // pages query
+        $pages = Page::query()->with('permissions:id,name,page_id')
+                ->when($pagesSearch, function ($query, $search) {
+                    $query->where('name', 'like', "%{$search}%");
+                })
+                ->latest()
+                ->paginate($perPage, $pagesColumns, 'pages_page', 1)
+                ->withQueryString();
 
 
         return Inertia::render('rolesPermissions/index', [
             'roles' => $roles,
             'permissions' => $permissions,
-            'allRoles' => Role::get(['id', 'name']),
+            'allRoles' => Role::get(['id', 'name', 'display_name']),
+            'pages' => $pages,
             'filters' => [
                 'roles_search' => $roleSearch,
                 'permissions_search' => $permissionSearch,

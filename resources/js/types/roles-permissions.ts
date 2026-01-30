@@ -24,6 +24,13 @@ export interface PaginationLinks {
     page: number;
 }
 
+export interface Page {
+    name: string;
+    slug: string;
+    id: number;
+    permissions: Permission[];
+}
+
 export interface RolesPermissionsPageProps {
     allRoles: Role[];
     roles: {
@@ -57,6 +64,22 @@ export interface RolesPermissionsPageProps {
         last_page_url: string;
         prev_page_url: string;
     };
+    pages: {
+        data: Page[];
+        total: number;
+        current_page: number;
+        last_page: number;
+        per_page: number;
+        from: number;
+        to: number;
+        path: string;
+        link: PaginationLinks[];
+        first_page_url: string;
+        next_page_url: string;
+        last_page_url: string;
+        prev_page_url: string;
+    };
+
     filters: {
         search: string;
         permissions_search?: string;

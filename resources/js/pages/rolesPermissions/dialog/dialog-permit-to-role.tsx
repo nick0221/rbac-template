@@ -216,6 +216,7 @@ export default function DialogPermitToRole({
                                                 (r) =>
                                                     r.id.toString() === roleId,
                                             );
+
                                             if (!role) return null;
                                             return (
                                                 <ComboboxItem

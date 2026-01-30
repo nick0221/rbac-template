@@ -39,6 +39,7 @@ export default function RolesPermissionsPage({
     roles,
     permissions,
     allRoles,
+    pages,
 }: RolesPermissionsPageProps) {
     const [open, setOpen] = useState(false);
     const [openCreatePermission, setOpenCreatePermission] = useState(false);
@@ -69,7 +70,7 @@ export default function RolesPermissionsPage({
         if (flash?.success) toast.success(flash.success);
     }, [flash]);
 
-    console.log(roles.data);
+    console.log(pages);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -185,6 +186,9 @@ export default function RolesPermissionsPage({
                         permission={selectedpermissionDelete}
                     />
                 </div>
+
+                {/* Pages */}
+                <div className="min-h-xs relative flex-1 md:min-h-min"></div>
             </div>
         </AppLayout>
     );

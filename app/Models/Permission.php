@@ -10,7 +10,7 @@ use Spatie\Permission\Models\Permission as SpatePermission;
 class Permission extends SpatePermission
 {
 
-    //
+
     public function page(): BelongsTo
     {
         return $this->belongsTo(Page::class);
