@@ -120,10 +120,6 @@ export default function RolesPermissionsPage({
                         open={openPermissionDrawer}
                         setOpen={setOpenPermissionDrawer}
                         roleWithPermissions={selectedRoleWithPermission}
-                        // roleId={row.original.id}
-                        // roleName={row.original.name}
-                        // permissions={row.original.permissions}
-                        // isButton={true}
                     />
                 </div>
 

@@ -105,6 +105,7 @@ export const rolesColumns: ColumnDef<Role, unknown>[] = [
                         <DropdownMenuGroup>
                             <DropdownMenuItem
                                 onClick={() => metaEditrole?.(row.original)}
+                                className="cursor-pointer"
                             >
                                 <SquarePen />
                                 Edit
@@ -113,6 +114,7 @@ export const rolesColumns: ColumnDef<Role, unknown>[] = [
                                 onClick={() =>
                                     metaShowPermissions?.(row.original)
                                 }
+                                className="cursor-pointer"
                             >
                                 <ShieldEllipsis />
                                 Show Permissions
@@ -120,7 +122,10 @@ export const rolesColumns: ColumnDef<Role, unknown>[] = [
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
-                            <DropdownMenuItem variant="destructive">
+                            <DropdownMenuItem
+                                variant="destructive"
+                                className="cursor-pointer"
+                            >
                                 <Trash />
                                 Trash
                             </DropdownMenuItem>

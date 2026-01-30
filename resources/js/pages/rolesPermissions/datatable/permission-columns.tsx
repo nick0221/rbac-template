@@ -1,10 +1,23 @@
 import { router } from '@inertiajs/react';
-import { SquarePen, Trash2, UserCog2, X } from 'lucide-react';
+import {
+    MoreHorizontalIcon,
+    SquarePen,
+    Trash,
+    UserCog2,
+    X,
+} from 'lucide-react';
 import { route } from 'ziggy-js';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ButtonGroup } from '@/components/ui/button-group';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import {
     Tooltip,
     TooltipContent,
@@ -109,56 +122,51 @@ export const permissionColumns: ColumnDef<Permission>[] = [
             const metaDeletePermission = table.options.meta?.onDelete;
 
             return (
-                <div className="flex flex-col items-center gap-4">
-                    <ButtonGroup>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() =>
-                                        metaEditPermission?.(row.original)
-                                    }
-                                >
-                                    <SquarePen />
-                                </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>Edit</TooltipContent>
-                        </Tooltip>
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button
+                            variant="outline"
+                            size="icon-sm"
+                            aria-label="More Options"
+                        >
+                            <MoreHorizontalIcon />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-50">
+                        <DropdownMenuGroup>
+                            <DropdownMenuItem
+                                onClick={() =>
+                                    metaEditPermission?.(row.original)
+                                }
+                                className="cursor-pointer"
+                            >
+                                <SquarePen />
+                                Edit
+                            </DropdownMenuItem>
 
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() =>
-                                        metaPermitToRole?.(row.original)
-                                    }
-                                >
-                                    <UserCog2 />
-                                </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>
-                                Permit access to roles
-                            </TooltipContent>
-                        </Tooltip>
-
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() =>
-                                        metaDeletePermission?.(row.original)
-                                    }
-                                >
-                                    <Trash2 className="text-red-600 dark:text-red-500" />
-                                </Button>
-                            </TooltipTrigger>
-                            <TooltipContent>Delete</TooltipContent>
-                        </Tooltip>
-                    </ButtonGroup>
-                </div>
+                            <DropdownMenuItem
+                                onClick={() => metaPermitToRole?.(row.original)}
+                                className="cursor-pointer"
+                            >
+                                <UserCog2 />
+                                Roles
+                            </DropdownMenuItem>
+                        </DropdownMenuGroup>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuGroup>
+                            <DropdownMenuItem
+                                variant="destructive"
+                                onClick={() =>
+                                    metaDeletePermission?.(row.original)
+                                }
+                                className="cursor-pointer"
+                            >
+                                <Trash />
+                                Delete
+                            </DropdownMenuItem>
+                        </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                </DropdownMenu>
             );
         },
     },
