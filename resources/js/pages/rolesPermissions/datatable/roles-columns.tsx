@@ -91,44 +91,42 @@ export const rolesColumns: ColumnDef<Role, unknown>[] = [
             const metaShowPermissions = table.options.meta?.onOpenDrawer;
 
             return (
-                <div className="flex flex-col items-center gap-4">
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button
-                                variant="outline"
-                                size="icon-sm"
-                                aria-label="More Options"
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button
+                            variant="outline"
+                            size="icon-sm"
+                            aria-label="More Options"
+                        >
+                            <MoreHorizontalIcon />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-50">
+                        <DropdownMenuGroup>
+                            <DropdownMenuItem
+                                onClick={() => metaEditrole?.(row.original)}
                             >
-                                <MoreHorizontalIcon />
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-40">
-                            <DropdownMenuGroup>
-                                <DropdownMenuItem
-                                    onClick={() => metaEditrole?.(row.original)}
-                                >
-                                    <SquarePen />
-                                    Edit
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                    onClick={() =>
-                                        metaShowPermissions?.(row.original)
-                                    }
-                                >
-                                    <ShieldEllipsis />
-                                    Permissions
-                                </DropdownMenuItem>
-                            </DropdownMenuGroup>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuGroup>
-                                <DropdownMenuItem variant="destructive">
-                                    <Trash />
-                                    Trash
-                                </DropdownMenuItem>
-                            </DropdownMenuGroup>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
-                </div>
+                                <SquarePen />
+                                Edit
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={() =>
+                                    metaShowPermissions?.(row.original)
+                                }
+                            >
+                                <ShieldEllipsis />
+                                Show Permissions
+                            </DropdownMenuItem>
+                        </DropdownMenuGroup>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuGroup>
+                            <DropdownMenuItem variant="destructive">
+                                <Trash />
+                                Trash
+                            </DropdownMenuItem>
+                        </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                </DropdownMenu>
             );
         },
     },
