@@ -8,6 +8,7 @@ import PermissionDrawer from '@/components/rolesPermissions/permission-drawer';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
 
+import { pagesColumns } from './datatable/pages-column';
 import { permissionColumns } from './datatable/permission-columns';
 import { rolesColumns } from './datatable/roles-columns';
 import DialogAddPermission from './dialog/dialog-add-permission';
@@ -188,7 +189,18 @@ export default function RolesPermissionsPage({
                 </div>
 
                 {/* Pages */}
-                <div className="min-h-xs relative flex-1 md:min-h-min"></div>
+                <div className="min-h-xs relative flex-1 md:min-h-min">
+                    <DataTable
+                        data={pages.data}
+                        columns={pagesColumns}
+                        title="Pages"
+                        total={pages.total}
+                        currentPage={pages.current_page}
+                        lastPage={pages.last_page}
+                        perPage={pages.per_page}
+                        filterKey="pages_search"
+                    />
+                </div>
             </div>
         </AppLayout>
     );
