@@ -148,6 +148,7 @@ allowedPages: ['dashboard', 'users', 'roles']
 > The frontend only renders links the user is authorized to see.
 
 No role checks in React.
+
 No duplicated permission logic.
 
 ---
