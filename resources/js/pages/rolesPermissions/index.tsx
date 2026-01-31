@@ -144,6 +144,8 @@ export default function RolesPermissionsPage({
                             defaultHiddenColumns={['created_at']}
                         />
                     </div>
+
+                    {/* Edit Page */}
                 </div>
 
                 {/* Permissions */}

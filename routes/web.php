@@ -4,6 +4,7 @@ use Inertia\Inertia;
 use Laravel\Fortify\Features;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DbResetController;
@@ -37,6 +38,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'users' => UserController::class,
         'roles' => RoleController::class,
         'permissions' => PermissionController::class,
+        'pages' => PageController::class
     ]);
 
     Route::put('permissions/{permission}/assign-roles', [PermissionController::class,'assignRoles',])->name('permissions.assignRoles');
