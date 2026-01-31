@@ -15,11 +15,6 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
-// import {
-//     Tooltip,
-//     TooltipContent,
-//     TooltipTrigger,
-// } from '@/components/ui/tooltip';
 import type { Role } from '@/types/roles-permissions';
 import type { ColumnDef, CustomColumnMeta } from '@tanstack/react-table';
 

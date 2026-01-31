@@ -26,27 +26,6 @@ export default function PermissionDrawer({
 }: PermissionsDrawerProps) {
     return (
         <Drawer direction="right" open={open} onOpenChange={setOpen}>
-            {/* <DrawerTrigger asChild>
-                {isButton ? (
-                    <Button variant="outline" size="sm">
-                        <ShieldEllipsis />
-                    </Button>
-                ) : permissions.length === 0 ? (
-                    <Button
-                        variant="link"
-                        size="xs"
-                        className="text-red-700 dark:text-red-400"
-                    >
-                        No Permissions
-                    </Button>
-                ) : (
-                    <Button variant="link" size="xs">
-                        {permissions.length} Permission
-                        {permissions.length > 1 && 's'}
-                    </Button>
-                )}
-            </DrawerTrigger> */}
-
             <DrawerContent className="max-w-sm" autoFocus>
                 <DrawerHeader>
                     <DrawerTitle>Permissions</DrawerTitle>

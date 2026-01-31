@@ -40,7 +40,7 @@ export default function RolesPermissionsPage({
                 {/* Tabs */}
 
                 <Tabs defaultValue="roles" className="w-full">
-                    <TabsList>
+                    <TabsList className="mx-auto flex w-full max-w-sm items-center justify-center">
                         {tabListMenu.map((menu) => (
                             <TabsTrigger key={menu.value} value={menu.value}>
                                 {menu.label}

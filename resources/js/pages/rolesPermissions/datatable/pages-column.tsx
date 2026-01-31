@@ -1,9 +1,4 @@
-import {
-    MoreHorizontalIcon,
-    ShieldEllipsis,
-    SquarePen,
-    Trash,
-} from 'lucide-react';
+import { MoreHorizontalIcon, SquarePen, Trash } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -111,14 +106,6 @@ export const pagesColumns: ColumnDef<Page, unknown>[] = [
                             >
                                 <SquarePen />
                                 Edit
-                            </DropdownMenuItem>
-
-                            <DropdownMenuItem
-                                onClick={() => metaEditPages?.(row.original)}
-                                className="cursor-pointer"
-                            >
-                                <ShieldEllipsis />
-                                Permissions
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
