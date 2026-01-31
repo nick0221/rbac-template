@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { DataTable } from '@/components/datatables/DataTable';
 
 import { pagesColumns } from '../datatable/pages-column';
+import DialogAddPage from '../dialog/dialog-add-page';
 import DialogEditPage from '../dialog/dialog-edit-page';
 
 import type {
@@ -18,6 +19,8 @@ export default function TabContentPage({ pages }: TabContentPageProps) {
     const [editPageOpen, setEditPageOpen] = useState(false);
     const [selectedPage, setSelectedPage] = useState<Page | null>(null);
 
+    const [openCreatePage, setOpenCreatePage] = useState(false);
+
     return (
         <>
             {/* Pages */}
@@ -26,7 +29,9 @@ export default function TabContentPage({ pages }: TabContentPageProps) {
                 columns={pagesColumns}
                 title="Pages"
                 total={pages.total}
-                onCreate={() => {}}
+                onCreate={() => {
+                    setOpenCreatePage(true);
+                }}
                 meta={{
                     onEdit: (page: Page) => {
                         setSelectedPage(page);
@@ -39,6 +44,9 @@ export default function TabContentPage({ pages }: TabContentPageProps) {
                 filterKey="pages_search"
                 defaultHiddenColumns={['created_at']}
             />
+
+            {/* Create Page */}
+            <DialogAddPage open={openCreatePage} setOpen={setOpenCreatePage} />
 
             {/* Edit Page */}
             {selectedPage && (

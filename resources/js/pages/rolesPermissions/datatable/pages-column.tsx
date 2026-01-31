@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 
 import type { Page } from '@/types/roles-permissions';
-import type { ColumnDef } from '@tanstack/react-table';
+import type { ColumnDef, CustomColumnMeta } from '@tanstack/react-table';
 
 export const pagesColumns: ColumnDef<Page, unknown>[] = [
     {
@@ -32,6 +32,7 @@ export const pagesColumns: ColumnDef<Page, unknown>[] = [
         id: 'created_at',
         accessorKey: 'created_at',
         header: 'Created At',
+        meta: { label: 'Created Date' } as CustomColumnMeta,
         cell: ({ getValue }) =>
             new Date(getValue() as string).toLocaleDateString('en-US', {
                 month: 'short',
@@ -42,6 +43,7 @@ export const pagesColumns: ColumnDef<Page, unknown>[] = [
     {
         header: 'Name',
         id: 'name',
+        meta: { label: 'Page name' } as CustomColumnMeta,
         accessorKey: 'name',
         cell: ({ row }) => {
             return (
@@ -54,6 +56,7 @@ export const pagesColumns: ColumnDef<Page, unknown>[] = [
     {
         header: 'Slug',
         id: 'slug',
+        meta: { label: 'Slug' } as CustomColumnMeta,
         accessorKey: 'slug',
         cell: ({ row }) => {
             return (
@@ -66,11 +69,12 @@ export const pagesColumns: ColumnDef<Page, unknown>[] = [
     {
         id: 'pagesPermission',
         accessorKey: 'permissions',
+        meta: { label: 'Permissions' } as CustomColumnMeta,
         header: 'Permissions',
         cell: ({ row }) => {
             return (
                 <div className="flex items-center justify-center">
-                    {row.original.permissions.length}
+                    {row.original.permissions.length || '-'}
                 </div>
             );
         },

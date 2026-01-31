@@ -29,7 +29,15 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
-        abort(404);
+        $validated = $request->validate([
+            'name' => 'required|string|max:100',
+        ]);
+
+        $validated['slug'] = Str::slug($validated['name']); // generate slug
+
+        Page::create($validated);
+
+        return back()->with('success', 'Page has been successfully created.');
     }
 
     /**
