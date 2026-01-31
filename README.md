@@ -51,5 +51,8 @@ Make sure you have the following installed:
 
 ```bash
 git clone https://github.com/nick0221/rbac-template.git
+```
+
+```bash
 cd rbac-template
 ```
