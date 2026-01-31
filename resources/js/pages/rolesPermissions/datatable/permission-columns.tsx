@@ -25,7 +25,7 @@ import {
 } from '@/components/ui/tooltip';
 
 import type { Permission } from '@/types/roles-permissions';
-import type { ColumnDef } from '@tanstack/react-table';
+import type { ColumnDef, CustomColumnMeta } from '@tanstack/react-table';
 
 export const permissionColumns: ColumnDef<Permission>[] = [
     {
@@ -42,6 +42,7 @@ export const permissionColumns: ColumnDef<Permission>[] = [
     },
     {
         header: () => <div className="flex justify-start">Name</div>,
+        meta: { label: 'Name' } as CustomColumnMeta,
         id: 'permissionName',
         cell: ({ row }) => (
             <div className="flex items-center justify-start">
@@ -51,6 +52,7 @@ export const permissionColumns: ColumnDef<Permission>[] = [
     },
     {
         header: () => <div className="flex justify-start">Page</div>,
+        meta: { label: 'Page' } as CustomColumnMeta,
         id: 'page',
         cell: ({ row }) => (
             <div className="flex items-center justify-start capitalize">
@@ -60,6 +62,7 @@ export const permissionColumns: ColumnDef<Permission>[] = [
     },
     {
         id: 'role',
+        meta: { label: 'Role' } as CustomColumnMeta,
         header: 'Role type',
         cell: ({ row }) => (
             <div className="flex flex-wrap gap-1">
@@ -107,6 +110,7 @@ export const permissionColumns: ColumnDef<Permission>[] = [
 
     {
         accessorKey: 'created_at',
+        meta: { label: 'Created Date' } as CustomColumnMeta,
         header: 'Created At',
         cell: ({ getValue }) =>
             new Date(getValue() as string).toLocaleDateString('en-US', {
@@ -116,7 +120,9 @@ export const permissionColumns: ColumnDef<Permission>[] = [
             }),
     },
     {
-        id: 'roletTableActions',
+        id: 'roleTableActions',
+        enableSorting: false,
+        enableHiding: false,
         header: 'Actions',
         cell: ({ row, table }) => {
             const metaEditPermission = table.options.meta?.onEdit;

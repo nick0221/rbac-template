@@ -105,7 +105,6 @@ export default function RolesPermissionsPage({
                             filterKey="roles_search"
                             hideFilter
                             defaultHiddenColumns={['created_at', 'guard_name']}
-                            paginationAlignment="centered"
                         />
                     </div>
 
@@ -155,6 +154,7 @@ export default function RolesPermissionsPage({
                         lastPage={permissions.last_page}
                         perPage={permissions.per_page}
                         filterKey="permissions_search"
+                        defaultHiddenColumns={['created_at']}
                     />
 
                     {/* Add Permission */}
