@@ -54,40 +54,43 @@ export default function TableHeader({
     }, [value, filterKey]);
 
     return (
-        <div className="flex flex-col gap-3 sm:justify-between">
+        <div className="flex flex-col gap-2 sm:justify-between">
             {/* On mobile, aligned the title and create button */}
-            <h1 className="flex w-full flex-row text-2xl font-semibold sm:text-2xl">
+            <h1 className="flex w-full flex-row text-2xl font-semibold sm:text-3xl">
                 {title}
             </h1>
-            <div className="flex justify-between">
-                {onCreate && (
-                    <Button
-                        size="icon-sm"
-                        onClick={onCreate}
-                        className="inline-flex sm:hidden"
-                    >
-                        {(Icon && <Icon className="h-4 w-4" />) || (
-                            <Plus className="h-4 w-4" />
-                        )}
-                        {createButtonLabel}
-                    </Button>
-                )}
-            </div>
 
             {/* On desktop, show the search and create button */}
             <div className="flex items-start justify-between gap-2">
                 <div className="flex flex-row items-center gap-2">
                     {onCreate && (
-                        <Button
-                            size="icon-sm"
-                            onClick={onCreate}
-                            className="hidden sm:inline-flex"
-                        >
-                            {(Icon && <Icon className="h-4 w-4" />) || (
-                                <Plus className="h-4 w-4" />
-                            )}
-                            {createButtonLabel}
-                        </Button>
+                        <>
+                            {/* Show on desktop mode */}
+                            <Button
+                                size="icon-sm"
+                                onClick={onCreate}
+                                className="hidden sm:inline-flex"
+                            >
+                                {(Icon && <Icon className="h-4 w-4" />) || (
+                                    <Plus className="h-4 w-4" />
+                                )}
+                                {createButtonLabel}
+                            </Button>
+                            {/* ------------------- */}
+
+                            {/* Hide on mobile mode */}
+                            <Button
+                                size="icon-sm"
+                                onClick={onCreate}
+                                className="inline-flex sm:hidden"
+                            >
+                                {(Icon && <Icon className="h-4 w-4" />) || (
+                                    <Plus className="h-4 w-4" />
+                                )}
+                                {createButtonLabel}
+                            </Button>
+                            {/* ------------------- */}
+                        </>
                     )}
 
                     {/* Column visibility */}

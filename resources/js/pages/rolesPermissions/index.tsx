@@ -8,20 +8,17 @@ import PermissionDrawer from '@/components/rolesPermissions/permission-drawer';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
 
-import { pagesColumns } from './datatable/pages-column';
 import { permissionColumns } from './datatable/permission-columns';
 import { rolesColumns } from './datatable/roles-columns';
 import DialogAddPermission from './dialog/dialog-add-permission';
 import DialogAddRole from './dialog/dialog-add-role';
 import DialogConfimDelete from './dialog/dialog-confirm-delete';
-import DialogEditPage from './dialog/dialog-edit-page';
 import DialogEditPermission from './dialog/dialog-edit-permission';
 import DialogEditRole from './dialog/dialog-edit-role';
 import DialogPermitToRole from './dialog/dialog-permit-to-role';
 
 import type { BreadcrumbItem, SharedData } from '@/types';
 import type {
-    Page,
     Permission,
     Role,
     RolesPermissionsPageProps,
@@ -42,7 +39,6 @@ export default function RolesPermissionsPage({
     roles,
     permissions,
     allRoles,
-    pages,
 }: RolesPermissionsPageProps) {
     // Roles
     const [open, setOpen] = useState(false);
@@ -70,11 +66,6 @@ export default function RolesPermissionsPage({
         useState<Permission | null>(null);
     // -----------------
 
-    // Pages
-    const [editPageOpen, setEditPageOpen] = useState(false);
-    const [selectedPage, setSelectedPage] = useState<Page | null>(null);
-    // ------------
-
     const { flash } = usePage<SharedData>().props;
 
     // Show Toast Message
@@ -82,13 +73,11 @@ export default function RolesPermissionsPage({
         if (flash?.success) toast.success(flash.success);
     }, [flash]);
 
-    console.log(flash);
-
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Roles, Permissions & Pages" />
             <div className="flex h-full flex-1 flex-col gap-10 overflow-x-auto rounded-xl p-4">
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <div className="grid grid-cols-1 gap-4">
                     {/* Roles */}
                     <div className="w-full">
                         <DataTable
@@ -139,39 +128,7 @@ export default function RolesPermissionsPage({
                         roleWithPermissions={selectedRoleWithPermission}
                     />
 
-                    {/* Pages */}
-                    <div className="w-full">
-                        <DataTable
-                            data={pages.data}
-                            columns={pagesColumns}
-                            title="Pages"
-                            total={pages.total}
-                            currentPage={pages.current_page}
-                            lastPage={pages.last_page}
-                            perPage={pages.per_page}
-                            filterKey="pages_search"
-                            onCreate={() => {}}
-                            paginationAlignment="centered"
-                            defaultHiddenColumns={['created_at']}
-                            meta={{
-                                onEdit: (page: Page) => {
-                                    setSelectedPage(page);
-                                    setEditPageOpen(true);
-                                },
-                            }}
-                        />
-                    </div>
-
-                    {/* Edit Page */}
-                    <DialogEditPage
-                        open={editPageOpen}
-                        setOpen={setEditPageOpen}
-                        page={selectedPage}
-                    />
-                </div>
-
-                {/* Permissions */}
-                <div className="min-h-xs relative md:min-h-min">
+                    {/* Permissions */}
                     <DataTable
                         data={permissions.data}
                         columns={permissionColumns}
