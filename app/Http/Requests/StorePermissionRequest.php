@@ -38,7 +38,7 @@ class StorePermissionRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'name' => Str::slug(trim($this->name)),
+            'name' => str_replace(' ', '.', trim($this->name)),
         ]);
     }
 
