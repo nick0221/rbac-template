@@ -67,3 +67,17 @@ npm install
 # or
 pnpm install
 ```
+
+### 4️⃣ Environment setup
+
+Copy the example environment file:
+
+```bash
+cp .env.example .env
+```
+
+Generate the application key:
+
+```bash
+php artisan key:generate
+```
