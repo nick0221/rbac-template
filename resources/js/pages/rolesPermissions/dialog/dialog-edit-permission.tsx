@@ -1,7 +1,7 @@
 import { useForm } from '@inertiajs/react';
 import { DialogClose } from '@radix-ui/react-dialog';
 import { InfoIcon } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { route } from 'ziggy-js';
 
 import InputError from '@/components/input-error';
@@ -17,8 +17,15 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 
-import type { Permission } from '@/types/roles-permissions';
+import type { Page, Permission } from '@/types/roles-permissions';
 
 interface DialogEditRoleProps {
     open: boolean;
@@ -33,12 +40,23 @@ export default function DialogEditPermission({
 }: DialogEditRoleProps) {
     const { data, setData, put, processing, errors, reset } = useForm({
         name: '',
+        page_id: '0',
     });
 
+    const [allPages, setAllPages] = useState<Page[]>([]);
+
     //  sync role → form when dialog opens / role changes
+
     useEffect(() => {
         if (open && permission) {
             setData('name', permission.name);
+            setData('page_id', String(permission.page_id));
+
+            fetch(route('pages.index'))
+                .then((response) => response.json())
+                .then((data) => {
+                    setAllPages(data);
+                });
         }
     }, [open, setData, permission]);
 
@@ -73,7 +91,9 @@ export default function DialogEditPermission({
                     <div className="grid gap-3 py-4">
                         <div className="flex flex-col gap-8">
                             <div className="flex flex-col gap-2">
-                                <Label htmlFor="pageName">Page </Label>
+                                <Label htmlFor="pageName">
+                                    Currently associated to
+                                </Label>
                                 <Badge
                                     id="pageName"
                                     variant={'secondary'}
@@ -82,6 +102,34 @@ export default function DialogEditPermission({
                                     {permission.page?.name ||
                                         'Not associated to a page'}
                                 </Badge>
+                            </div>
+
+                            <div className="flex flex-col gap-2">
+                                <Label htmlFor="pageId">
+                                    Associate to page
+                                </Label>
+                                <Select
+                                    value={data.page_id}
+                                    onValueChange={(value) =>
+                                        setData('page_id', value)
+                                    }
+                                >
+                                    <SelectTrigger id="pageId" name="page_id">
+                                        <SelectValue placeholder="Select a page" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {allPages.map((page) => (
+                                            <SelectItem
+                                                key={page.id}
+                                                value={String(page.id)}
+                                            >
+                                                {page.name}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+
+                                <InputError message={errors.page_id} />
                             </div>
 
                             <div className="flex flex-col gap-2">

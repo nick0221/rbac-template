@@ -30,6 +30,7 @@ class UpdatePermissionRequest extends FormRequest
                 'max:100',
                 Rule::unique('permissions', 'name')->ignore($this->permission->id),
             ],
+            'page_id' => 'required',
         ];
     }
 
@@ -50,6 +51,7 @@ class UpdatePermissionRequest extends FormRequest
             'name.required' => 'The permission name is required.',
             'name.max' => 'The permission name must not be greater than 100 characters.',
             'name.unique' => 'The permission name already exists, choose another name.',
+            'page_id.required' => 'The associated page field is required.',
         ];
     }
 

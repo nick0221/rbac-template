@@ -15,6 +15,7 @@ export interface Permission {
         name: string;
     };
     roles: Role[];
+    page_id: number;
 }
 
 export interface PaginationLinks {

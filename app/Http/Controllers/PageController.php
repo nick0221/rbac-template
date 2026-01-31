@@ -13,7 +13,7 @@ class PageController extends Controller
      */
     public function index()
     {
-        abort(404);
+        return Page::get(['id', 'name', 'slug'])->tojson();
     }
 
     /**
