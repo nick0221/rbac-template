@@ -13,4 +13,5 @@ export type NavItem = {
     isActive?: boolean;
     roles?: string[];
     slug: string;
+    alwaysVisible?: boolean;
 };

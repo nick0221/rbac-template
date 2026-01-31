@@ -13,6 +13,7 @@ export const mainNavItems: NavItem[] = [
         href: dashboard(),
         icon: LayoutGrid,
         slug: 'dashboard',
+        alwaysVisible: true,
     },
     {
         title: 'Users',

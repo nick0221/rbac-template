@@ -17,13 +17,15 @@ import { dashboard } from '@/routes';
 
 import AppLogo from './app-logo';
 
-import type { SharedData } from '@/types';
+import type { NavItem, SharedData } from '@/types';
 
 export function AppSidebar() {
     const { allowedPages } = usePage<SharedData>().props.auth;
 
-    const filterByPermission = (items: typeof mainNavItems) =>
-        items.filter((item) => allowedPages.includes(item.slug));
+    const filterByPermission = (items: NavItem[]) =>
+        items.filter(
+            (item) => item.alwaysVisible || allowedPages.includes(item.slug),
+        );
 
     return (
         <Sidebar collapsible="icon" variant="inset">
