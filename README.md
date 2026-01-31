@@ -292,9 +292,8 @@ This project is open-sourced under the MIT license.
 
 Built with ❤️ using:
 
-- <a href="https://laravel.com/">Laravel</a>
-
-- <a hre="https://inertiajs.com/">Inertia.js</a>
-- <a hre="https://react.dev/">React</a>
-- <a hre="https://spatie.be/docs/laravel-permission/v6/installation-laravel">Spatie Laravel-Permission</a>
-- <a hre="https://ui.shadcn.com/">Shadcn/ui</a>
+- [Laravel](https://laravel.com/)
+- [Inertia.js](https://inertiajs.com/)
+- [React](https://react.dev/)
+- [Spatie Laravel-Permission](https://spatie.be/docs/laravel-permission/v6/installation-laravel)
+- [Shadcn/ui](https://ui.shadcn.com/)
