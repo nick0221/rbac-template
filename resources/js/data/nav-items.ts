@@ -12,16 +12,19 @@ export const mainNavItems: NavItem[] = [
         title: 'Dashboard',
         href: dashboard(),
         icon: LayoutGrid,
+        slug: 'dashboard',
     },
     {
         title: 'Users',
         href: users.index(),
         icon: Users2,
+        slug: 'users',
     },
     {
         title: 'Roles, Permissions & Pages',
         href: roles.index(),
         icon: Shield,
+        slug: 'roles',
     },
 ];
 
@@ -35,5 +38,6 @@ export const footerNavItems: NavItem[] = [
         title: 'Super Admin Tools',
         href: admin.tools.index(),
         icon: Settings2Icon,
+        slug: 'admin-tools',
     },
 ];

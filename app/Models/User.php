@@ -115,7 +115,11 @@ class User extends Authenticatable
     }
 
 
-
+    public function allowedPages(): array
+    {
+        $userPermissions = $this->getAllPermissions()->pluck('page_id')->toArray();
+        return Page::whereIn('id', $userPermissions)->pluck('slug')->toArray();
+    }
 
 
 }

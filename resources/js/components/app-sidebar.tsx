@@ -1,4 +1,4 @@
-import { Link } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -17,7 +17,14 @@ import { dashboard } from '@/routes';
 
 import AppLogo from './app-logo';
 
+import type { SharedData } from '@/types';
+
 export function AppSidebar() {
+    const { allowedPages } = usePage<SharedData>().props.auth;
+
+    const filterByPermission = (items: typeof mainNavItems) =>
+        items.filter((item) => allowedPages.includes(item.slug));
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
@@ -33,11 +40,14 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain items={mainNavItems} />
+                <NavMain items={filterByPermission(mainNavItems)} />
             </SidebarContent>
 
             <SidebarFooter>
-                <NavFooter items={footerNavItems} className="mt-auto" />
+                <NavFooter
+                    items={filterByPermission(footerNavItems)}
+                    className="mt-auto"
+                />
                 <NavUser />
             </SidebarFooter>
         </Sidebar>

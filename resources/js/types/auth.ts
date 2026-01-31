@@ -23,6 +23,7 @@ export type Auth = {
         id: number;
     };
     permissions: Permission[];
+    allowedPages: string[];
 };
 
 export type TwoFactorSetupData = {

@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Http\Request;
+use App\Models\Page;
 use Inertia\Middleware;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -35,18 +37,17 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        $roleName = $request->user()?->role()->displayName ?? null;
-        $roleId = $request->user()?->role()->id ?? 0;
-
+        $getrole = $request->user()?->roles()->first();
 
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'auth' => [
                 'user' => $request->user(),
+                'allowedPages' => fn() => $request->user()?->allowedPages() ?? [],
                 'role' => [
-                    'name' => $roleName,
-                    'id' => $roleId
+                    'name' => $getrole->display_name ?? '',
+                    'id' => $getrole->id ?? '',
                 ],
                 'permissions' => $request->user()?->getAllPermissions()->pluck('name'),
                 'flash' => [
