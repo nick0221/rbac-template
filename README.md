@@ -81,3 +81,20 @@ Generate the application key:
 ```bash
 php artisan key:generate
 ```
+
+Configure your database in .env:
+
+```bash
+DB_DATABASE=rbac_template
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+### 5️⃣ Run migrations & seeders
+
+```bash
+php artisan migrate --seed
+
+```
+
+> Seeders will create default roles, permissions, and pages.
