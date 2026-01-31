@@ -5,7 +5,6 @@ import { toast } from 'sonner';
 
 import { DataTable } from '@/components/datatables/DataTable';
 import AppLayout from '@/layouts/app-layout';
-import { dashboard } from '@/routes';
 
 import { userColumns } from './datatable/user-columns';
 import DialogConfimDeleteUser from './dialog/dialog-confirm-delete-user';
@@ -16,10 +15,6 @@ import type { BreadcrumbItem, SharedData } from '@/types';
 import type { User, UsersIndexPageProps } from '@/types/users';
 
 const breadcrumbs: BreadcrumbItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard().url,
-    },
     {
         title: 'Users',
         href: '#',

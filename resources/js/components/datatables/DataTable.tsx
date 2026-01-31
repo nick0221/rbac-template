@@ -117,12 +117,12 @@ export function DataTable<TData, TValue = unknown>({
     const ColumnToggle = (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="icon-sm">
+                <Button size="icon-sm" variant="outline">
                     <SlidersHorizontalIcon />
                 </Button>
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent align="start" className="w-48">
+            <DropdownMenuContent align="end" className="w-48">
                 <DropdownMenuLabel className="text-muted-foreground">
                     Column Visibility
                 </DropdownMenuLabel>

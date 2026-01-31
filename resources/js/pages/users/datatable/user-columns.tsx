@@ -6,11 +6,12 @@ import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
 
 import type { User } from '@/types/users';
-import type { ColumnDef } from '@tanstack/react-table';
+import type { ColumnDef, CustomColumnMeta } from '@tanstack/react-table';
 
 export const userColumns: ColumnDef<User>[] = [
     {
         id: 'index',
+        enableHiding: false,
         header: '#',
         size: 1,
         minSize: 1,
@@ -21,6 +22,7 @@ export const userColumns: ColumnDef<User>[] = [
     },
     {
         id: 'userDetails',
+        meta: { label: 'Name & Email' } as CustomColumnMeta,
         header: 'Name',
         cell: ({ row }) => (
             <div className="flex items-center gap-3">
@@ -44,6 +46,7 @@ export const userColumns: ColumnDef<User>[] = [
     },
     {
         id: 'roleName',
+        meta: { label: 'Role' } as CustomColumnMeta,
         header: 'Role',
         cell: ({ row }) => {
             const role = row.original.roles[0];
@@ -55,19 +58,11 @@ export const userColumns: ColumnDef<User>[] = [
             );
         },
     },
-    {
-        accessorKey: 'created_at',
-        header: 'Created At',
-        cell: ({ getValue }) =>
-            new Date(getValue() as string).toLocaleDateString('en-US', {
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric',
-            }),
-    },
+
     {
         id: 'userTableActions',
         header: 'Actions',
+        enableHiding: false,
         cell: ({ row, table }) => {
             const metaEditUser = table.options.meta?.onEdit;
             const metaDeleteUser = table.options.meta?.onDelete;

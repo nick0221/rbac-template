@@ -61,12 +61,24 @@ export default function TableHeader({
             </h1>
 
             {/* On desktop, show the search and create button */}
-            <div className="flex items-start justify-between gap-2">
-                <div className="flex flex-row items-center gap-2">
+            <div className="flex items-start justify-end gap-3">
+                <div className="flex items-center">
+                    {hideFilter ?? (
+                        <Input
+                            id="live-search-textbox"
+                            className="h-8 w-full sm:w-50"
+                            placeholder="Search…"
+                            value={value}
+                            onChange={(e) => setValue(e.target.value)}
+                        />
+                    )}
+                </div>
+                <div className="flex flex-row items-center gap-1">
                     {onCreate && (
                         <>
                             {/* Show on desktop mode */}
                             <Button
+                                variant="outline"
                                 size="icon-sm"
                                 onClick={onCreate}
                                 className="hidden sm:inline-flex"
@@ -80,6 +92,7 @@ export default function TableHeader({
 
                             {/* Hide on mobile mode */}
                             <Button
+                                variant="outline"
                                 size="icon-sm"
                                 onClick={onCreate}
                                 className="inline-flex sm:hidden"
@@ -95,18 +108,6 @@ export default function TableHeader({
 
                     {/* Column visibility */}
                     {actions}
-                </div>
-
-                <div className="flex items-center">
-                    {hideFilter ?? (
-                        <Input
-                            id="live-search-textbox"
-                            className="h-8 w-full sm:w-50"
-                            placeholder="Search…"
-                            value={value}
-                            onChange={(e) => setValue(e.target.value)}
-                        />
-                    )}
                 </div>
             </div>
         </div>
