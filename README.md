@@ -51,8 +51,19 @@ Make sure you have the following installed:
 
 ```bash
 git clone https://github.com/nick0221/rbac-template.git
+cd rbac-template
 ```
+
+### 2️⃣ Install backend dependencies
 
 ```bash
 cd rbac-template
+```
+
+### 3️⃣ Install frontend dependencies
+
+```bash
+npm install
+# or
+pnpm install
 ```
