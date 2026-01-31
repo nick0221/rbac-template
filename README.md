@@ -82,7 +82,7 @@ Generate the application key:
 php artisan key:generate
 ```
 
-Configure your database in .env:
+Configure your database in `.env`
 
 ```bash
 DB_DATABASE=rbac_template
@@ -98,3 +98,42 @@ php artisan migrate --seed
 ```
 
 > Seeders will create default roles, permissions, and pages.
+
+### 6️⃣ Build frontend assets
+
+```bash
+npm run dev
+
+```
+
+### 7️⃣ Start the Laravel server
+
+```bash
+php artisan serve
+
+```
+
+Visit the app at:
+
+```bash
+php artisan serve
+
+```
+
+### 🔑 Default Roles & Permissions
+
+Example roles:
+
+- uper-admin
+- manager
+- user
+
+Permissions are mapped to pages and automatically control:
+
+- Route access
+- Sidebar visibility
+- Footer navigation visibility
+
+### 🧭 Navigation & Permissions
+
+Navigation items are filtered server-side and shared via Inertia:
