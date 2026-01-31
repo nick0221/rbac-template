@@ -57,7 +57,7 @@ cd rbac-template
 ### 2️⃣ Install backend dependencies
 
 ```bash
-cd rbac-template
+composer install
 ```
 
 ### 3️⃣ Install frontend dependencies
