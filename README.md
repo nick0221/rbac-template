@@ -204,3 +204,44 @@ Built with ❤️ using:
 - React
 - Spatie Laravel-Permission
 - shadcn/ui
+
+---
+
+### 🔐 Demo Credentials
+
+> After running the seeders, you can log in using the following demo accounts:
+
+```bash
+Super Admin
+Email: default@admin.com
+Password: password
+
+User
+Email: user1@admin.com
+Password: password
+```
+
+> ⚠️ Change these credentials immediately in production.
+
+---
+
+### 🧩 Pages & Permissions
+
+This template uses a **Page-based permission model**.
+
+#### How it works
+
+- Each Page represents a navigable feature (e.g. users, roles, dashboard)
+- Each Permission is associated with a Page
+- Roles are assigned permissions via Spatie
+- The frontend UI renders only pages the user has permission for
+
+#### Example
+
+```bash
+Permission: users.view
+Page slug: users
+
+```
+
+If a user has the <pre>users.view</pre> permission:
