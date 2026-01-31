@@ -141,6 +141,65 @@ Permissions are mapped to pages and automatically control:
 Navigation items are filtered server-side and shared via Inertia:
 
 ```bash
-`allowedPages: ['dashboard', 'users', 'roles']`
+allowedPages: ['dashboard', 'users', 'roles']
 
 ```
+
+> The frontend only renders links the user is authorized to see.
+
+No role checks in React.
+No duplicated permission logic.
+
+---
+
+### 🧠 RBAC Flow
+
+```bash
+User
+ ↓
+Roles (Spatie)
+ ↓
+Permissions
+ ↓
+Pages
+ ↓
+Inertia shared props (allowedPages)
+ ↓
+Sidebar / Footer UI
+
+```
+
+---
+
+### 🧪 Development Notes
+
+- Permissions are single source of truth
+- Frontend UI is fully permission-driven
+- Safe for strict TypeScript mode
+- Easy to extend with:
+    - Submenus
+    - Feature flags
+    - Multi-role users
+
+### 📌 Future Improvements
+
+- Permission caching
+- Audit logs
+- Route auto-guarding
+- Organization / tenant support
+
+---
+
+## 📄 License
+
+This project is open-sourced under the MIT license.
+
+### 🙌 Credits
+
+Built with ❤️ using:
+
+- Laravel
+- Inertia.js
+- React
+- Spatie Laravel-Permission
+- shadcn/ui
