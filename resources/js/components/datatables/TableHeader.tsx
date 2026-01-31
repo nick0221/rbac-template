@@ -56,7 +56,7 @@ export default function TableHeader({
     return (
         <div className="flex flex-col gap-2 sm:justify-between">
             {/* On mobile, aligned the title and create button */}
-            <h1 className="flex w-full flex-row text-2xl font-semibold sm:text-3xl">
+            <h1 className="sm:text-1xl flex w-full flex-row text-2xl font-semibold">
                 {title}
             </h1>
 
