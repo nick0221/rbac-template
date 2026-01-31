@@ -120,11 +120,13 @@ php artisan serve
 
 ```
 
+---
+
 ### 🔑 Default Roles & Permissions
 
 Example roles:
 
-- uper-admin
+- super-admin
 - manager
 - user
 
@@ -137,3 +139,8 @@ Permissions are mapped to pages and automatically control:
 ### 🧭 Navigation & Permissions
 
 Navigation items are filtered server-side and shared via Inertia:
+
+```bash
+`allowedPages: ['dashboard', 'users', 'roles']`
+
+```
