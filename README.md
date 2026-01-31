@@ -293,6 +293,7 @@ This project is open-sourced under the MIT license.
 Built with ❤️ using:
 
 - <a href="https://laravel.com/">Laravel</a>
+
 - <a hre="https://inertiajs.com/">Inertia.js</a>
 - <a hre="https://react.dev/">React</a>
 - <a hre="https://spatie.be/docs/laravel-permission/v6/installation-laravel">Spatie Laravel-Permission</a>
