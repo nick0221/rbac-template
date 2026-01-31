@@ -54,7 +54,7 @@ git clone https://github.com/nick0221/rbac-template.git
 cd rbac-template
 ```
 
-### 2️⃣ Install backend dependencie
+### 2️⃣ Install backend dependencies
 
 ```bash
 composer install
