@@ -24,6 +24,8 @@ export const pagesColumns: ColumnDef<Page, unknown>[] = [
         header: '#',
         size: 1,
         minSize: 1,
+        enableHiding: false,
+        enableSorting: false,
         cell: ({ row, table }) => {
             const meta = table.options.meta;
             if (!meta) return null;
@@ -32,6 +34,7 @@ export const pagesColumns: ColumnDef<Page, unknown>[] = [
         },
     },
     {
+        id: 'created_at',
         accessorKey: 'created_at',
         header: 'Created At',
         cell: ({ getValue }) =>
@@ -43,6 +46,7 @@ export const pagesColumns: ColumnDef<Page, unknown>[] = [
     },
     {
         header: 'Name',
+        id: 'name',
         accessorKey: 'name',
         cell: ({ row }) => {
             return (
@@ -54,6 +58,7 @@ export const pagesColumns: ColumnDef<Page, unknown>[] = [
     },
     {
         header: 'Slug',
+        id: 'slug',
         accessorKey: 'slug',
         cell: ({ row }) => {
             return (
@@ -65,6 +70,7 @@ export const pagesColumns: ColumnDef<Page, unknown>[] = [
     },
     {
         id: 'pagesPermission',
+        accessorKey: 'permissions',
         header: 'Permissions',
         cell: ({ row }) => {
             return (
@@ -81,6 +87,7 @@ export const pagesColumns: ColumnDef<Page, unknown>[] = [
         minSize: 1,
         enableSorting: false,
         enableHiding: false,
+
         cell: ({ row, table }) => {
             const metaEditPages = table.options.meta?.onEdit;
             const metaDeletePages = table.options.meta?.onDelete;

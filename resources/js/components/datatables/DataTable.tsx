@@ -5,7 +5,7 @@ import {
     useReactTable,
     type ColumnDef,
 } from '@tanstack/react-table';
-import { Plus, SlidersHorizontal, TriangleAlert } from 'lucide-react';
+import { Plus, SlidersHorizontalIcon, TriangleAlert } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -13,6 +13,7 @@ import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
+    DropdownMenuLabel,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
@@ -29,7 +30,7 @@ import { Skeleton } from '../ui/skeleton';
 import { DataTablePagination } from './Pagination';
 import TableHeader from './TableHeader';
 
-import type { VisibilityState } from '@tanstack/react-table';
+import type { CustomColumnMeta, VisibilityState } from '@tanstack/react-table';
 import type { LucideIcon } from 'lucide-react';
 
 interface DataTableProps<TData, TValue = unknown> {
@@ -61,6 +62,10 @@ interface DataTableProps<TData, TValue = unknown> {
         onPermit?: (role: TData) => void;
         onOpenDrawer?: (role: TData) => void;
     };
+
+    defaultHiddenColumns?: string[];
+
+    paginationAlignment?: 'centered' | 'default';
 }
 
 export function DataTable<TData, TValue = unknown>({
@@ -77,10 +82,15 @@ export function DataTable<TData, TValue = unknown>({
     createButtonLabel = null,
     createButtonIcon,
     filterKey,
+    defaultHiddenColumns,
+    paginationAlignment = 'default',
 }: DataTableProps<TData, TValue>) {
     const Icon = createButtonIcon;
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
-        {},
+        () =>
+            Object.fromEntries(
+                (defaultHiddenColumns ?? []).map((key) => [key, false]),
+            ),
     );
 
     useEffect(() => {
@@ -95,15 +105,46 @@ export function DataTable<TData, TValue = unknown>({
             perPage,
             ...meta,
         },
+
+        state: { columnVisibility },
         onColumnVisibilityChange: setColumnVisibility,
-        state: {
-            columnVisibility,
-        },
         getCoreRowModel: getCoreRowModel(),
     });
-    const [loading, setLoading] = useState(true);
 
+    const [loading, setLoading] = useState(true);
     const hasRows = data.length > 0;
+
+    const ColumnToggle = (
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button variant="outline" size="icon-sm">
+                    <SlidersHorizontalIcon />
+                </Button>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent align="start" className="w-48">
+                <DropdownMenuLabel className="text-muted-foreground">
+                    Column Visibility
+                </DropdownMenuLabel>
+                {table
+                    .getAllLeafColumns()
+                    .filter((column) => column.getCanHide())
+                    .map((column) => (
+                        <DropdownMenuCheckboxItem
+                            key={column.id}
+                            checked={column.getIsVisible()}
+                            onSelect={(e) => e.preventDefault()}
+                            onCheckedChange={(value) =>
+                                column.toggleVisibility(!!value)
+                            }
+                        >
+                            {(column.columnDef.meta as CustomColumnMeta)
+                                ?.label ?? column.id}
+                        </DropdownMenuCheckboxItem>
+                    ))}
+            </DropdownMenuContent>
+        </DropdownMenu>
+    );
 
     return (
         <div className="flex flex-col gap-2">
@@ -115,35 +156,8 @@ export function DataTable<TData, TValue = unknown>({
                 hideFilter={hideFilter}
                 filterKey={filterKey}
                 onCreate={onCreate}
+                actions={ColumnToggle}
             />
-
-            {/* Column visibility */}
-            <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm">
-                        <SlidersHorizontal className="mr-2 h-4 w-4" />
-                        Columns
-                    </Button>
-                </DropdownMenuTrigger>
-
-                <DropdownMenuContent align="end" className="w-48">
-                    {table
-                        .getAllLeafColumns()
-                        .filter((column) => column.getCanHide())
-                        .map((column) => (
-                            <DropdownMenuCheckboxItem
-                                key={column.id}
-                                className="capitalize"
-                                checked={column.getIsVisible()}
-                                onCheckedChange={(value) =>
-                                    column.toggleVisibility(!!value)
-                                }
-                            >
-                                {column.id}
-                            </DropdownMenuCheckboxItem>
-                        ))}
-                </DropdownMenuContent>
-            </DropdownMenu>
 
             {/* Empty state */}
             {!hasRows ? (
@@ -238,26 +252,6 @@ export function DataTable<TData, TValue = unknown>({
                                           </TableRow>
                                       ))}
                             </TableBody>
-                            {/* <TableBody>
-                                {table.getRowModel().rows.map((row) => (
-                                    <TableRow
-                                        key={row.id}
-                                        className="even:bg-muted/50"
-                                    >
-                                        {row.getVisibleCells().map((cell) => (
-                                            <TableCell
-                                                key={cell.id}
-                                                className="px-2 py-1"
-                                            >
-                                                {flexRender(
-                                                    cell.column.columnDef.cell,
-                                                    cell.getContext(),
-                                                )}
-                                            </TableCell>
-                                        ))}
-                                    </TableRow>
-                                ))}
-                            </TableBody> */}
                         </Table>
                     </div>
 
@@ -267,6 +261,7 @@ export function DataTable<TData, TValue = unknown>({
                         last_page={lastPage}
                         per_page={perPage}
                         total={total}
+                        paginationAlignment={paginationAlignment}
                     />
                 </>
             )}

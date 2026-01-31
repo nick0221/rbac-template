@@ -12,6 +12,7 @@ interface TableHeaderProps {
     createButtonLabel?: string | null;
     createButtonIcon?: LucideIcon | null;
     filterKey?: string;
+    actions?: React.ReactNode;
 }
 
 export default function TableHeader({
@@ -21,6 +22,7 @@ export default function TableHeader({
     createButtonIcon,
     createButtonLabel = 'Create',
     filterKey = 'search',
+    actions,
 }: TableHeaderProps) {
     //  initialize from URL
     const [value, setValue] = useState(
@@ -52,13 +54,15 @@ export default function TableHeader({
     }, [value, filterKey]);
 
     return (
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 sm:justify-between">
             {/* On mobile, aligned the title and create button */}
+            <h1 className="flex w-full flex-row text-2xl font-semibold sm:text-2xl">
+                {title}
+            </h1>
             <div className="flex justify-between">
-                <h1 className="text-2xl font-semibold sm:text-2xl">{title}</h1>
                 {onCreate && (
                     <Button
-                        size="sm"
+                        size="icon-sm"
                         onClick={onCreate}
                         className="inline-flex sm:hidden"
                     >
@@ -71,29 +75,36 @@ export default function TableHeader({
             </div>
 
             {/* On desktop, show the search and create button */}
-            <div className="flex w-full flex-col gap-2 py-2 sm:w-auto sm:flex-row sm:items-center">
-                {hideFilter ?? (
-                    <Input
-                        id="live-search-textbox"
-                        className="h-8 w-full sm:w-[200px]"
-                        placeholder="Search…"
-                        value={value}
-                        onChange={(e) => setValue(e.target.value)}
-                    />
-                )}
+            <div className="flex items-start justify-between gap-2">
+                <div className="flex flex-row items-center gap-2">
+                    {onCreate && (
+                        <Button
+                            size="icon-sm"
+                            onClick={onCreate}
+                            className="hidden sm:inline-flex"
+                        >
+                            {(Icon && <Icon className="h-4 w-4" />) || (
+                                <Plus className="h-4 w-4" />
+                            )}
+                            {createButtonLabel}
+                        </Button>
+                    )}
 
-                {onCreate && (
-                    <Button
-                        size="sm"
-                        onClick={onCreate}
-                        className="hidden sm:inline-flex"
-                    >
-                        {(Icon && <Icon className="h-4 w-4" />) || (
-                            <Plus className="h-4 w-4" />
-                        )}
-                        {createButtonLabel}
-                    </Button>
-                )}
+                    {/* Column visibility */}
+                    {actions}
+                </div>
+
+                <div className="flex items-center">
+                    {hideFilter ?? (
+                        <Input
+                            id="live-search-textbox"
+                            className="h-8 w-full sm:w-50"
+                            placeholder="Search…"
+                            value={value}
+                            onChange={(e) => setValue(e.target.value)}
+                        />
+                    )}
+                </div>
             </div>
         </div>
     );

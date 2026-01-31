@@ -71,39 +71,43 @@ export default function RolesPermissionsPage({
         if (flash?.success) toast.success(flash.success);
     }, [flash]);
 
-    console.log(pages);
+    // console.log(pages);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Roles, Permissions & Pages" />
             <div className="flex h-full flex-1 flex-col gap-10 overflow-x-auto rounded-xl p-4">
-                {/* Roles */}
-                <div className="min-h-xs relative flex-1 md:min-h-min">
-                    <DataTable
-                        data={roles.data}
-                        columns={rolesColumns}
-                        title="Roles"
-                        total={roles.total}
-                        onCreate={() => {
-                            setOpen(true);
-                        }}
-                        meta={{
-                            onEdit: (role: Role) => {
-                                setSelectedRole(role);
-                                setEditRoleOpen(true);
-                            },
-                            onOpenDrawer: (role: Role) => {
-                                setSelectedRoleWithPermission(role);
-                                setOpenPermissionDrawer(true);
-                            },
-                        }}
-                        currentPage={roles.current_page}
-                        lastPage={roles.last_page}
-                        perPage={roles.per_page}
-                        createButtonIcon={ShieldPlus}
-                        filterKey="roles_search"
-                        hideFilter
-                    />
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    {/* Roles */}
+                    <div className="w-full">
+                        <DataTable
+                            data={roles.data}
+                            columns={rolesColumns}
+                            title="Roles"
+                            total={roles.total}
+                            onCreate={() => {
+                                setOpen(true);
+                            }}
+                            meta={{
+                                onEdit: (role: Role) => {
+                                    setSelectedRole(role);
+                                    setEditRoleOpen(true);
+                                },
+                                onOpenDrawer: (role: Role) => {
+                                    setSelectedRoleWithPermission(role);
+                                    setOpenPermissionDrawer(true);
+                                },
+                            }}
+                            currentPage={roles.current_page}
+                            lastPage={roles.last_page}
+                            perPage={roles.per_page}
+                            createButtonIcon={ShieldPlus}
+                            filterKey="roles_search"
+                            hideFilter
+                            defaultHiddenColumns={['created_at', 'guard_name']}
+                            paginationAlignment="centered"
+                        />
+                    </div>
 
                     {/* Add Role */}
                     <DialogAddRole open={open} setOpen={setOpen} />
@@ -123,10 +127,27 @@ export default function RolesPermissionsPage({
                         setOpen={setOpenPermissionDrawer}
                         roleWithPermissions={selectedRoleWithPermission}
                     />
+
+                    {/* Pages */}
+                    <div className="w-full">
+                        <DataTable
+                            data={pages.data}
+                            columns={pagesColumns}
+                            title="Pages"
+                            total={pages.total}
+                            currentPage={pages.current_page}
+                            lastPage={pages.last_page}
+                            perPage={pages.per_page}
+                            filterKey="pages_search"
+                            onCreate={() => {}}
+                            paginationAlignment="centered"
+                            defaultHiddenColumns={['created_at']}
+                        />
+                    </div>
                 </div>
 
                 {/* Permissions */}
-                <div className="min-h-xs relative flex-1 md:min-h-min">
+                <div className="min-h-xs relative md:min-h-min">
                     <DataTable
                         data={permissions.data}
                         columns={permissionColumns}
@@ -185,20 +206,6 @@ export default function RolesPermissionsPage({
                         open={openConfirmDeleteOpen}
                         setOpen={setOpenConfirmDeleteOpen}
                         permission={selectedpermissionDelete}
-                    />
-                </div>
-
-                {/* Pages */}
-                <div className="min-h-xs relative w-1/2 flex-1 md:min-h-min">
-                    <DataTable
-                        data={pages.data}
-                        columns={pagesColumns}
-                        title="Pages"
-                        total={pages.total}
-                        currentPage={pages.current_page}
-                        lastPage={pages.last_page}
-                        perPage={pages.per_page}
-                        filterKey="pages_search"
                     />
                 </div>
             </div>

@@ -21,6 +21,7 @@ interface PaginationProps {
     per_page: number;
     total: number;
     baseUrl?: string;
+    paginationAlignment?: 'default' | 'centered';
 }
 
 export function DataTablePagination({
@@ -29,10 +30,13 @@ export function DataTablePagination({
     per_page,
     total,
     baseUrl = window.location.pathname,
+    paginationAlignment = 'default',
 }: PaginationProps) {
     const from = (current_page - 1) * per_page + 1;
     const to = Math.min(current_page * per_page, total);
 
+    const paginationAlignmentClass =
+        paginationAlignment === 'centered' ? '' : 'sm:flex-row';
     const goToPage = (page: number) => {
         router.get(
             baseUrl,
@@ -50,7 +54,9 @@ export function DataTablePagination({
     };
 
     return (
-        <div className="flex flex-col gap-3 px-2 py-3 sm:flex-row sm:items-center sm:justify-between">
+        <div
+            className={`flex flex-col justify-center gap-3 px-2 py-3 sm:items-center sm:justify-between ${paginationAlignmentClass}`}
+        >
             {/* Info */}
             <div className="text-center text-xs text-muted-foreground sm:text-left">
                 Showing <strong>{from}</strong> to <strong>{to}</strong> of{' '}
@@ -58,7 +64,7 @@ export function DataTablePagination({
             </div>
 
             {/* Controls */}
-            <div className="flex w-full items-center justify-between gap-2 sm:w-auto sm:flex-row sm:items-center sm:gap-2">
+            <div className="flex w-full items-center justify-center gap-2 sm:w-auto sm:flex-row sm:items-center sm:gap-2">
                 {/* Per page */}
                 <Select
                     value={String(per_page)}
@@ -80,7 +86,7 @@ export function DataTablePagination({
                 <div className="flex items-center justify-center gap-2">
                     {/* First */}
                     <Button
-                        size="icon"
+                        size="icon-sm"
                         variant="outline"
                         className="h-8 w-8"
                         onClick={() => goToPage(1)}
@@ -91,7 +97,7 @@ export function DataTablePagination({
 
                     {/* Prev */}
                     <Button
-                        size="icon"
+                        size="icon-sm"
                         variant="outline"
                         className="h-8 w-8"
                         onClick={() => goToPage(current_page - 1)}
@@ -107,7 +113,7 @@ export function DataTablePagination({
 
                     {/* Next */}
                     <Button
-                        size="icon"
+                        size="icon-sm"
                         variant="outline"
                         className="h-8 w-8"
                         onClick={() => goToPage(current_page + 1)}
@@ -118,7 +124,7 @@ export function DataTablePagination({
 
                     {/* Last */}
                     <Button
-                        size="icon"
+                        size="icon-sm"
                         variant="outline"
                         className="h-8 w-8"
                         onClick={() => goToPage(last_page)}

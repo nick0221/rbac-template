@@ -21,7 +21,7 @@ import {
 //     TooltipTrigger,
 // } from '@/components/ui/tooltip';
 import type { Role } from '@/types/roles-permissions';
-import type { ColumnDef } from '@tanstack/react-table';
+import type { ColumnDef, CustomColumnMeta } from '@tanstack/react-table';
 
 export const rolesColumns: ColumnDef<Role, unknown>[] = [
     {
@@ -29,6 +29,8 @@ export const rolesColumns: ColumnDef<Role, unknown>[] = [
         header: '#',
         size: 1,
         minSize: 1,
+        enableSorting: false,
+        enableHiding: false,
         cell: ({ row, table }) => {
             const meta = table.options.meta;
             if (!meta) return null;
@@ -39,6 +41,7 @@ export const rolesColumns: ColumnDef<Role, unknown>[] = [
     {
         accessorKey: 'created_at',
         header: 'Created At',
+        meta: { label: 'Created Date' } as CustomColumnMeta,
         cell: ({ getValue }) =>
             new Date(getValue() as string).toLocaleDateString('en-US', {
                 month: 'short',
@@ -49,6 +52,7 @@ export const rolesColumns: ColumnDef<Role, unknown>[] = [
     {
         header: 'Name',
         accessorKey: 'name',
+        meta: { label: 'Name' } as CustomColumnMeta,
         cell: ({ row }) => {
             return (
                 <div className="flex items-center justify-start">
@@ -59,11 +63,13 @@ export const rolesColumns: ColumnDef<Role, unknown>[] = [
     },
     {
         accessorKey: 'guard_name',
+        meta: { label: 'Guard Name' } as CustomColumnMeta,
         header: 'Guard Name',
     },
     {
         id: 'permissions',
         header: 'Permissions',
+        meta: { label: 'Permissions' } as CustomColumnMeta,
         cell: ({ row, table }) => {
             const metaShowPermissions = table.options.meta?.onOpenDrawer;
 

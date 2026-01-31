@@ -33,6 +33,8 @@ export const permissionColumns: ColumnDef<Permission>[] = [
         header: '#',
         size: 1,
         minSize: 1,
+        enableSorting: false,
+        enableHiding: false,
         cell: ({ row, table }) => {
             const { currentPage, perPage } = table.options.meta!;
             return (currentPage - 1) * perPage + row.index + 1 + '.';
