@@ -38,7 +38,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         'users' => UserController::class,
         'roles' => RoleController::class,
         'permissions' => PermissionController::class,
-        // 'pages' => PageController::class
+        'pages' => PageController::class
     ]);
 
     Route::put('permissions/{permission}/assign-roles', [PermissionController::class,'assignRoles',])->name('permissions.assignRoles');

@@ -27,13 +27,13 @@ class RoleController extends Controller
 
         // search
         $roleSearch = $request->string('roles_search');
-        // $pagesSearch = $request->string('pages_search');
+        $pagesSearch = $request->string('pages_search');
         $permissionSearch = $request->string('permissions_search');
 
         // columns
         $rolesColumns = ['id', 'name', 'display_name', 'guard_name', 'created_at'];
         $permissionsColumns = ['id', 'name', 'created_at','page_id'];
-        // $pagesColumns = ['id', 'name', 'slug', 'created_at'];
+        $pagesColumns = ['id', 'name', 'slug', 'created_at'];
 
 
         //  roles query
@@ -57,20 +57,20 @@ class RoleController extends Controller
 
 
         // pages query
-        // $pages = Page::query()->with('permissions:id,name,page_id')
-        //         ->when($pagesSearch, function ($query, $search) {
-        //             $query->where('name', 'like', "%{$search}%");
-        //         })
-        //         ->latest()
-        //         ->paginate($perPage, $pagesColumns, 'pages_page', 1)
-        //         ->withQueryString();
+        $pages = Page::query()->with('permissions:id,name,page_id')
+                ->when($pagesSearch, function ($query, $search) {
+                    $query->where('name', 'like', "%{$search}%");
+                })
+                ->latest()
+                ->paginate($perPage, $pagesColumns, 'pages_page', 1)
+                ->withQueryString();
 
 
         return Inertia::render('rolesPermissions/index', [
             'roles' => $roles,
             'permissions' => $permissions,
             'allRoles' => Role::get(['id', 'name', 'display_name']),
-
+            'pages' => $pages,
             'filters' => [
                 'roles_search' => $roleSearch,
                 'permissions_search' => $permissionSearch,

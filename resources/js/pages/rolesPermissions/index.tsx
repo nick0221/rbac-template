@@ -7,17 +7,20 @@ import { DataTable } from '@/components/datatables/DataTable';
 import PermissionDrawer from '@/components/rolesPermissions/permission-drawer';
 import AppLayout from '@/layouts/app-layout';
 
+import { pagesColumns } from './datatable/pages-column';
 import { permissionColumns } from './datatable/permission-columns';
 import { rolesColumns } from './datatable/roles-columns';
 import DialogAddPermission from './dialog/dialog-add-permission';
 import DialogAddRole from './dialog/dialog-add-role';
 import DialogConfimDelete from './dialog/dialog-confirm-delete';
+import DialogEditPage from './dialog/dialog-edit-page';
 import DialogEditPermission from './dialog/dialog-edit-permission';
 import DialogEditRole from './dialog/dialog-edit-role';
 import DialogPermitToRole from './dialog/dialog-permit-to-role';
 
 import type { BreadcrumbItem, SharedData } from '@/types';
 import type {
+    Page,
     Permission,
     Role,
     RolesPermissionsPageProps,
@@ -34,6 +37,7 @@ export default function RolesPermissionsPage({
     roles,
     permissions,
     allRoles,
+    pages,
 }: RolesPermissionsPageProps) {
     // Roles
     const [open, setOpen] = useState(false);
@@ -60,6 +64,11 @@ export default function RolesPermissionsPage({
     const [selectedpermissionDelete, setSelectedpermissionDelete] =
         useState<Permission | null>(null);
     // -----------------
+
+    // Pages
+    const [editPageOpen, setEditPageOpen] = useState(false);
+    const [selectedPage, setSelectedPage] = useState<Page | null>(null);
+    // ---------------
 
     const { flash } = usePage<SharedData>().props;
 
@@ -122,6 +131,8 @@ export default function RolesPermissionsPage({
                         roleWithPermissions={selectedRoleWithPermission}
                     />
 
+                    {/* -------------------------------------------- */}
+
                     {/* Permissions */}
                     <DataTable
                         data={permissions.data}
@@ -183,6 +194,37 @@ export default function RolesPermissionsPage({
                         setOpen={setOpenConfirmDeleteOpen}
                         permission={selectedpermissionDelete}
                     />
+
+                    {/* -------------------------------------------- */}
+
+                    {/* Pages */}
+                    <DataTable
+                        data={pages.data}
+                        columns={pagesColumns}
+                        title="Pages"
+                        total={pages.total}
+                        onCreate={() => {}}
+                        meta={{
+                            onEdit: (page: Page) => {
+                                setSelectedPage(page);
+                                setEditPageOpen(true);
+                            },
+                        }}
+                        currentPage={pages.current_page}
+                        lastPage={pages.last_page}
+                        perPage={pages.per_page}
+                        filterKey="pages_search"
+                        defaultHiddenColumns={['created_at']}
+                    />
+
+                    {/* Edit Page */}
+                    {selectedPage && (
+                        <DialogEditPage
+                            open={editPageOpen}
+                            setOpen={setEditPageOpen}
+                            page={selectedPage}
+                        />
+                    )}
                 </div>
             </div>
         </AppLayout>
