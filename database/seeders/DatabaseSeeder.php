@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
 
 
         // Create 30 Users
-        for ($i=1; $i < 30; $i++) {
+        for ($i=1; $i < 10; $i++) {
             $user = User::factory()->create([
                 'name' => 'User '.$i,
                 'email' => 'user'.$i.'@admin.com',
