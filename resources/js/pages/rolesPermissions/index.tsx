@@ -14,12 +14,14 @@ import { rolesColumns } from './datatable/roles-columns';
 import DialogAddPermission from './dialog/dialog-add-permission';
 import DialogAddRole from './dialog/dialog-add-role';
 import DialogConfimDelete from './dialog/dialog-confirm-delete';
+import DialogEditPage from './dialog/dialog-edit-page';
 import DialogEditPermission from './dialog/dialog-edit-permission';
 import DialogEditRole from './dialog/dialog-edit-role';
 import DialogPermitToRole from './dialog/dialog-permit-to-role';
 
 import type { BreadcrumbItem, SharedData } from '@/types';
 import type {
+    Page,
     Permission,
     Role,
     RolesPermissionsPageProps,
@@ -42,6 +44,7 @@ export default function RolesPermissionsPage({
     allRoles,
     pages,
 }: RolesPermissionsPageProps) {
+    // Roles
     const [open, setOpen] = useState(false);
     const [openCreatePermission, setOpenCreatePermission] = useState(false);
 
@@ -49,11 +52,11 @@ export default function RolesPermissionsPage({
     const [selectedRoleWithPermission, setSelectedRoleWithPermission] =
         useState<Role | null>(null);
 
-    const { flash } = usePage<SharedData>().props;
-
     const [editRoleOpen, setEditRoleOpen] = useState(false);
     const [selectedRole, setSelectedRole] = useState<Role | null>(null);
+    // ---------------
 
+    // Permissions
     const [editPermissionOpen, setEditPermissionOpen] = useState(false);
     const [selectedPermission, setSelectedPermission] =
         useState<Permission | null>(null);
@@ -65,13 +68,21 @@ export default function RolesPermissionsPage({
     const [openConfirmDeleteOpen, setOpenConfirmDeleteOpen] = useState(false);
     const [selectedpermissionDelete, setSelectedpermissionDelete] =
         useState<Permission | null>(null);
+    // -----------------
+
+    // Pages
+    const [editPageOpen, setEditPageOpen] = useState(false);
+    const [selectedPage, setSelectedPage] = useState<Page | null>(null);
+    // ------------
+
+    const { flash } = usePage<SharedData>().props;
 
     // Show Toast Message
     useEffect(() => {
         if (flash?.success) toast.success(flash.success);
     }, [flash]);
 
-    // console.log(pages);
+    console.log(flash);
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
@@ -142,10 +153,21 @@ export default function RolesPermissionsPage({
                             onCreate={() => {}}
                             paginationAlignment="centered"
                             defaultHiddenColumns={['created_at']}
+                            meta={{
+                                onEdit: (page: Page) => {
+                                    setSelectedPage(page);
+                                    setEditPageOpen(true);
+                                },
+                            }}
                         />
                     </div>
 
                     {/* Edit Page */}
+                    <DialogEditPage
+                        open={editPageOpen}
+                        setOpen={setEditPageOpen}
+                        page={selectedPage}
+                    />
                 </div>
 
                 {/* Permissions */}

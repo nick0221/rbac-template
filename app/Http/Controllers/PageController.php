@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Page;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -27,7 +29,7 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
-        return back()->with('success', 'Page has been successfully created.');
+        abort(404);
     }
 
     /**
@@ -51,7 +53,17 @@ class PageController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $page = Page::findOrFail($id); // find the page or fail
+
+        $validated = $request->validate([
+            'name' => 'required',
+        ]);
+
+        $validated['slug'] = Str::slug($validated['name']); // generate slug
+
+        $page->update($validated); // update the page
+
+        return back()->with('success', 'Page has been successfully updated.');
     }
 
     /**

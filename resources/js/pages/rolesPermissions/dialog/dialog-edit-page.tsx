@@ -16,34 +16,35 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-import type { Role } from '@/types/roles-permissions';
+import type { Page } from '@/types/roles-permissions';
 
 interface DialogEditRoleProps {
     open: boolean;
     setOpen: (open: boolean) => void;
-    role: Role;
+    page: Page | null;
 }
 
 export default function DialogEditPage({
     open,
     setOpen,
-    role,
+    page,
 }: DialogEditRoleProps) {
     const { data, setData, put, processing, errors, reset } = useForm({
         name: '',
+        slug: '',
     });
 
     //  sync role → form when dialog opens / role changes
     useEffect(() => {
-        if (open && role) {
-            setData('name', role.name);
+        if (open && page) {
+            setData('name', page.name);
         }
-    }, [open, role, setData]);
+    }, [open, page, setData]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        put(route('pages.update', role.id), {
+        put(route('pages.update', page?.id), {
             preserveScroll: true,
             onSuccess: () => {
                 reset();
@@ -57,9 +58,9 @@ export default function DialogEditPage({
             <DialogContent>
                 <form onSubmit={handleSubmit}>
                     <DialogHeader>
-                        <DialogTitle>Edit Role</DialogTitle>
+                        <DialogTitle>Edit Page</DialogTitle>
                         <DialogDescription>
-                            Update role information
+                            Update Page information
                         </DialogDescription>
                     </DialogHeader>
 
