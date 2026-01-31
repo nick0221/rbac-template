@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { toast } from 'sonner';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { tabListMenu } from '@/data/tab-menu-items';
 import AppLayout from '@/layouts/app-layout';
 
 import TabContentPage from './tab/tab-page';
@@ -32,53 +33,34 @@ export default function RolesPermissionsPage({
         if (flash?.success) toast.success(flash.success);
     }, [flash]);
 
-    const tabListMenu = [
-        {
-            label: 'Roles',
-            value: 'roles',
-        },
-        {
-            label: 'Permissions',
-            value: 'permissions',
-        },
-        {
-            label: 'Pages',
-            value: 'pages',
-        },
-    ];
-
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Roles, Permissions & Pages" />
             <div className="flex h-full flex-1 flex-col gap-10 overflow-x-auto rounded-xl p-4">
                 {/* Tabs */}
-                <div>
-                    <Tabs defaultValue="roles" className="w-full">
-                        <TabsList>
-                            {tabListMenu.map((menu) => (
-                                <TabsTrigger
-                                    key={menu.value}
-                                    value={menu.value}
-                                >
-                                    {menu.label}
-                                </TabsTrigger>
-                            ))}
-                        </TabsList>
 
-                        <TabsContent value="roles" className="p-2">
-                            <TabContentRole roles={roles} />
-                        </TabsContent>
-                        <TabsContent value="permissions" className="p-2">
-                            <TabContentPermission
-                                allRoles={allRoles}
-                                permissions={permissions}
-                            />
-                        </TabsContent>
-                        <TabsContent value="pages" className="p-2">
-                            <TabContentPage pages={pages} />
-                        </TabsContent>
-                    </Tabs>
-                </div>
+                <Tabs defaultValue="roles" className="w-full">
+                    <TabsList>
+                        {tabListMenu.map((menu) => (
+                            <TabsTrigger key={menu.value} value={menu.value}>
+                                {menu.label}
+                            </TabsTrigger>
+                        ))}
+                    </TabsList>
+
+                    <TabsContent value="roles" className="p-2">
+                        <TabContentRole roles={roles} />
+                    </TabsContent>
+                    <TabsContent value="permissions" className="p-2">
+                        <TabContentPermission
+                            allRoles={allRoles}
+                            permissions={permissions}
+                        />
+                    </TabsContent>
+                    <TabsContent value="pages" className="p-2">
+                        <TabContentPage pages={pages} />
+                    </TabsContent>
+                </Tabs>
             </div>
         </AppLayout>
     );
