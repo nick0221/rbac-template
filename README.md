@@ -29,7 +29,7 @@ This template provides a solid foundation for building admin panels or internal 
 - **Frontend:** React + Inertia.js
 - **Auth / RBAC:** Spatie Laravel-Permission
 - **UI:** Tailwind CSS + shadcn/ui
-- **Database:** MySQL / PostgreSQL / SQLite
+- **Database:** MySQL / SQLite
 - **Build Tool:** Vite
 
 ---
