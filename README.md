@@ -191,22 +191,6 @@ Sidebar / Footer UI
 
 ---
 
-## 📄 License
-
-This project is open-sourced under the MIT license.
-
-### 🙌 Credits
-
-Built with ❤️ using:
-
-- Laravel
-- Inertia.js
-- React
-- Spatie Laravel-Permission
-- shadcn/ui
-
----
-
 ### 🔐 Demo Credentials
 
 > After running the seeders, you can log in using the following demo accounts:
@@ -247,3 +231,69 @@ Page slug: users
 If a user has the <code>users.view</code> permission:
 
 - <code>/users</code> route is accessible
+- Users link appears in sidebar/footer
+- UI stays consistent with backend authorization
+
+### 🧭 Navigation Filtering (Important)
+
+Navigation visibility is controlled by Inertia shared props:
+
+```bash
+allowedPages: ['dashboard', 'users', 'roles']
+```
+
+Both **sidebar** and **footer navigation** are filtered using this array.
+
+This means:
+
+- No role checks in React
+- No duplicated permission logic
+- Backend is the single source of truth
+
+### 🐞 Troubleshooting
+
+Sidebar links not showing?
+
+- Check the page slug matches <code>nav-items.ts</code>
+- Verify permission → page mapping
+- Clear permission cache:
+
+```bash
+php artisan permission:cache-reset
+
+```
+
+---
+
+### 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork the repo
+2. Create a feature branch
+3. Commit your changes
+4. Open a Pull Request
+
+### 📌 Best Practices Used
+
+- Backend-driven permissions
+- Permission-based UI rendering
+- Single source of truth
+- Strict TypeScript compatibility
+- Clean separation of concerns
+
+---
+
+## 📄 License
+
+This project is open-sourced under the MIT license.
+
+### 🙌 Credits
+
+Built with ❤️ using:
+
+- Laravel
+- Inertia.js
+- React
+- Spatie Laravel-Permission
+- shadcn/ui
