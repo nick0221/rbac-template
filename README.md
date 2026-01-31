@@ -244,6 +244,6 @@ Page slug: users
 
 ```
 
-If a user has the **users.view** permission:
+If a user has the <code>users.view</code> permission:
 
-- <code>/users</code route is accessible
+- <code>/users</code> route is accessible
