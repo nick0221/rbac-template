@@ -11,11 +11,11 @@ use App\Http\Controllers\DbResetController;
 use App\Http\Controllers\PermissionController;
 
 Route::get('/', function () {
-    return Inertia::render('welcome', [
-        'canRegister' => Features::enabled(Features::registration()),
-    ]);
+    // return Inertia::render('welcome', [
+    //     'canRegister' => Features::enabled(Features::registration()),
+    // ]);
 
-    //  return redirect()->route(Auth::check() ? 'dashboard' : 'login');
+     return redirect()->route(Auth::check() ? 'dashboard' : 'login');
 
 })->name('home');
 
